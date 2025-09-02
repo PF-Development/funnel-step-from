@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #0A0A0A;
+            background: white;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,30 +25,10 @@
             overflow: hidden;
         }
 
-        /* Animated grid background */
-        .grid-bg {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-image: 
-         linear-gradient(black 1px, transparent 1px),
-linear-gradient(90deg, black 1px, transparent 1px);
-
-            background-size: 50px 50px;
-            
-            animation: gridMove 10s linear infinite;
-            z-index: 1;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
         /* Floating geometric shapes */
         .shape {
             position: fixed;
-            border: 2px solid rgba(255, 0, 0, 1);
+            border: 2px solid #4CAF50;
             animation: shapeFloat 20s infinite linear;
             z-index: 2;
         }
@@ -58,7 +38,6 @@ linear-gradient(90deg, black 1px, transparent 1px);
             height: 100px;
             top: 10%;
             left: 5%;
-
             animation-duration: 15s;
             transform: rotate(45deg);
         }
@@ -93,7 +72,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .neon-line {
             position: fixed;
             height: 1px;
-            background: linear-gradient(90deg, transparent, white, transparent);
+            background: linear-gradient(90deg, transparent, rgb(0, 255, 21), transparent);
             box-shadow: 0 0 10px white;
             opacity: 0.5;
             z-index: 3;
@@ -121,6 +100,76 @@ linear-gradient(90deg, black 1px, transparent 1px);
             to { transform: translateX(calc(-100vw - 400px)); }
         }
 
+        /* Page transition overlay */
+        .transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            display: none;
+            pointer-events: none;
+        }
+
+        .transition-overlay.active {
+            display: block;
+            pointer-events: all;
+        }
+
+        /* Liquid transition */
+        .liquid-transition {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .liquid-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: #ABFF00;
+            transform: scale(0);
+        }
+
+        .liquid-circle.animate {
+            animation: liquidExpand 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes liquidExpand {
+            0%   { transform: scale(0); opacity: 1; }
+            60%  { transform: scale(30); opacity: 0.8; }
+            100% { transform: scale(50); opacity: 0; }
+        }
+
+        /* Loader spinner */
+        .transition-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+        }
+
+        .transition-loader.show {
+            animation: loaderFade 1.5s ease-in-out;
+        }
+
+        @keyframes loaderFade {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .loader-ring {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(171, 255, 0, 0.2);
+            border-top-color: #ABFF00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
         .container {
             max-width: 600px;
             width: 100%;
@@ -131,21 +180,22 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         /* Main card with glassmorphism */
         .form-card {
-            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            /* background-color: whitesmoke; */
             border-radius: 30px;
             padding: 60px;
             position: relative;
             transform-style: preserve-3d;
             animation: cardFloat 6s ease-in-out infinite, cardEntrance 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-          box-shadow: 
-    0 8px 32px rgba(171, 255, 0, 0.1),      /* neon green outer shadow */
-    inset 0 1px 0 rgba(255, 255, 255, 0.1), /* white inner top */
-    inset 0 -1px 0 rgba(0, 255, 0, 0.1),    /* green inner bottom */
-    inset 0 -2px 4px rgba(255, 0, 0, 0.2);  /* red subtle inner */
-
+            box-shadow: 
+                0 8px 32px rgba(171, 255, 0, 0.1),
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                inset 0 1px 0 rgba(0, 0, 0, 0.1),
+                inset 0 -1px 0 rgba(0, 255, 0, 0.1),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.1);
         }
 
         @keyframes cardFloat {
@@ -162,41 +212,6 @@ linear-gradient(90deg, black 1px, transparent 1px);
             100% {
                 opacity: 1;
                 transform: scale(1) rotateY(0);
-            }
-        }
-
-        /* Holographic effect overlay */
-        .holo-overlay {
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                /* cardoverlay */
-                rgba(255, 0, 0, 0.1),
-                rgba(255, 0, 0, 0.1),
-                rgba(255, 0, 0, 0.1),
-                transparent 70%
-            );
-            border-radius: 30px;
-            opacity: 0;
-            animation: holoShine 4s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes holoShine {
-            0%, 100% { 
-                opacity: 0;
-                transform: translateX(-100%) translateY(-100%);
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateX(100%) translateY(100%);
             }
         }
 
@@ -243,10 +258,10 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .progress-step.active {
-            background: #ABFF00;
-            border-color: #ABFF00;
+            background: #4CAF50;
+            border-color: #4CAF50;
             box-shadow: 
-                0 0 30px #ABFF00,
+                0 0 30px #4CAF50,
                 inset 0 0 10px rgba(255, 255, 255, 0.5);
             animation: stepPulse 1.5s ease-in-out infinite;
         }
@@ -254,17 +269,17 @@ linear-gradient(90deg, black 1px, transparent 1px);
         @keyframes stepPulse {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 0 0 30px #ABFF00, inset 0 0 10px rgba(255, 255, 255, 0.5);
+                box-shadow: 0 0 30px #4CAF50, inset 0 0 10px rgba(255, 255, 255, 0.5);
             }
             50% {
                 transform: scale(1.3);
-                box-shadow: 0 0 50px #ABFF00, inset 0 0 20px rgba(255, 255, 255, 0.7);
+                box-shadow: 0 0 50px #4CAF50, inset 0 0 20px rgba(255, 255, 255, 0.7);
             }
         }
 
         .progress-step.completed {
-            background: #ABFF00;
-            border-color: #ABFF00;
+            background: #4CAF50;
+            border-color: #4CAF50;
         }
 
         .progress-step::after {
@@ -283,27 +298,20 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .progress-step.active::after {
-            background: linear-gradient(90deg, #ABFF00, transparent);
-            animation: lineGlow 2s linear infinite;
-        }
-
-        @keyframes lineGlow {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+            background: linear-gradient(90deg, #4CAF50, transparent);
         }
 
         /* Typography */
         .brand-tagline {
             text-align: center;
             font-size: 11px;
-            color: #ABFF00;
+            color: black;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
             margin-bottom: 20px;
             opacity: 0;
-            animation: fadeIn 0.8s ease-out 0.3s forwards;
+            animation: fadeIn 0.8s ease-out 0.5s forwards;
         }
 
         @keyframes fadeIn {
@@ -317,31 +325,17 @@ linear-gradient(90deg, black 1px, transparent 1px);
             text-align: center;
             margin-bottom: 20px;
             position: relative;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from {
-                text-shadow: 
-                    0 0 10px rgba(171, 255, 0, 0.5),
-                    0 0 20px rgba(171, 255, 0, 0.3);
-            }
-            to {
-                text-shadow: 
-                    0 0 20px rgba(171, 255, 0, 0.6),
-                    0 0 30px rgba(171, 255, 0, 0.4);
-            }
         }
 
         .text-white {
-            color: #ffffff;
+            color: black;
             display: block;
             opacity: 0;
             animation: wordSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards;
         }
 
         .text-green {
-            color: #ABFF00;
+            color: #4CAF50;
             display: block;
             font-size: 48px;
             opacity: 0;
@@ -362,7 +356,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         h2 {
             font-size: 32px;
             font-weight: 700;
-            color: #ffffff;
+            color: #2b2a2a;
             margin-bottom: 20px;
             text-align: center;
         }
@@ -370,7 +364,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .description {
             font-size: 16px;
             line-height: 1.8;
-            color: rgba(255, 255, 255, 0.8);
+            color: black;
             text-align: center;
             margin-bottom: 30px;
             max-width: 450px;
@@ -392,7 +386,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .description strong {
-            color: #ABFF00;
+            color: #4CAF50;
             font-weight: 700;
         }
 
@@ -405,10 +399,10 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         .challenge-card {
             background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             padding: 20px;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.9);
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -418,15 +412,15 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         .challenge-card:hover {
             background: rgba(171, 255, 0, 0.1);
-            border-color: #ABFF00;
+            border-color: #4CAF50;
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(171, 255, 0, 0.2);
         }
 
         .challenge-card.selected {
             background: rgba(171, 255, 0, 0.2);
-            border-color: #ABFF00;
-            color: #ABFF00;
+            border-color: #4CAF50;
+            color: #4CAF50;
         }
 
         /* Form elements */
@@ -436,7 +430,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         label {
             display: block;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.9);
             font-size: 14px;
             font-weight: 600;
             margin-bottom: 8px;
@@ -449,10 +443,10 @@ linear-gradient(90deg, black 1px, transparent 1px);
         select {
             width: 100%;
             padding: 16px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.2);
             border-radius: 12px;
-            color: #ffffff;
+            color: #000000;
             font-size: 16px;
             transition: all 0.3s ease;
         }
@@ -460,20 +454,20 @@ linear-gradient(90deg, black 1px, transparent 1px);
         input:focus,
         select:focus {
             outline: none;
-            border-color: #ABFF00;
-            background: rgba(255, 255, 255, 0.08);
+            border-color: #4CAF50;
+            background: rgba(0, 0, 0, 0.08);
             box-shadow: 0 0 20px rgba(171, 255, 0, 0.2);
         }
 
         input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(0, 0, 0, 0.4);
         }
 
         /* Buttons */
         .cta-button {
             width: 100%;
             padding: 20px;
-            background: linear-gradient(135deg, #ABFF00 0%, #88CC00 100%);
+            background: linear-gradient(135deg, #4CAF50 0%, #4CAF50 100%);
             color: #000;
             border: none;
             border-radius: 15px;
@@ -488,7 +482,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             opacity: 0;
             animation: buttonSlideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.4s forwards;
             box-shadow: 
-                0 10px 40px rgba(171, 255, 0, 0.3),
+                0 10px 40px rgba(88, 88, 87, 0.3),
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
@@ -527,7 +521,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         /* Report slider */
         .report-slider {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 16px;
             padding: 30px;
             margin: 30px 0;
@@ -537,7 +531,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             justify-content: center;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(171, 255, 0, 0.2);
+            border: 9px solid rgba(0, 0, 0, 0);
         }
 
         .slide-content {
@@ -560,14 +554,14 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .slide-title {
             font-size: 22px;
             font-weight: 700;
-            color: #ABFF00;
+            color: #4CAF50;
             margin-bottom: 12px;
         }
 
         .slide-desc {
             font-size: 14px;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(0, 0, 0, 0.7);
         }
 
         /* Footer text */
@@ -575,12 +569,12 @@ linear-gradient(90deg, black 1px, transparent 1px);
             text-align: center;
             padding: 16px;
             margin: 20px 0;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
             font-size: 13px;
         }
 
         .footer-text strong {
-            color: #ABFF00;
+            color: #4CAF50;
         }
 
         /* Urgency */
@@ -607,10 +601,10 @@ linear-gradient(90deg, black 1px, transparent 1px);
             align-items: center;
             gap: 10px;
             padding: 10px 20px;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgb(0, 0, 0);
             border-radius: 100px;
-            color: #ffffff;
+            color: black;
             font-size: 13px;
             font-weight: 600;
         }
@@ -618,20 +612,20 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .live-indicator {
             width: 8px;
             height: 8px;
-            background: #EF4444;
+            background: black;
             border-radius: 50%;
-            box-shadow: 0 0 10px #EF4444;
+            box-shadow: 0 0 10px #4CAF50;
             animation: livePulse 1.5s ease-in-out infinite;
         }
 
         @keyframes livePulse {
             0%, 100% {
                 transform: scale(1);
-                box-shadow: 0 0 10px #EF4444;
+                box-shadow: 0 0 10px #4CAF50;
             }
             50% {
                 transform: scale(1.2);
-                box-shadow: 0 0 20px #EF4444;
+                box-shadow: 0 0 20px #4CAF50;
             }
         }
 
@@ -642,7 +636,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             border-radius: 12px;
             padding: 16px;
             margin-bottom: 24px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(0, 0, 0, 0.8);
             font-size: 13px;
             text-align: center;
         }
@@ -653,7 +647,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             height: 80px;
             margin: 40px auto;
             border: 4px solid rgba(171, 255, 0, 0.2);
-            border-top-color: #ABFF00;
+            border-top-color: #4CAF50;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -664,7 +658,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
         .loading-message {
             font-size: 20px;
-            color: #ABFF00;
+            color: #4CAF50;
             text-align: center;
             margin-top: 30px;
             opacity: 0;
@@ -685,6 +679,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 24px;
+            color: #000;
         }
 
         .metric-grid {
@@ -701,24 +696,23 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .metric-value {
             font-size: 32px;
             font-weight: 900;
-            color: #ABFF00;
-            text-shadow: 0 0 20px rgba(171, 255, 0, 0.5);
+            color: #4CAF50;
         }
 
         .metric-label {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
             text-transform: uppercase;
             margin-top: 8px;
         }
 
         .issue-item {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid #ABFF00;
+            background: rgba(0, 0, 0, 0.03);
+            border-left: 3px solid #4CAF50;
             padding: 16px;
             margin-bottom: 12px;
             border-radius: 8px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(0, 0, 0, 0.8);
             filter: blur(2px);
             user-select: none;
         }
@@ -731,10 +725,15 @@ linear-gradient(90deg, black 1px, transparent 1px);
             display: flex;
             justify-content: space-between;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 0, 0, 0.03);
             border-radius: 8px;
             margin-bottom: 12px;
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(0, 0, 0, 0.8);
+        }
+
+        .cta-button {
+            background-color: black;
+            color: white;
         }
 
         .score-grid {
@@ -745,7 +744,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .score-item {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 12px;
             padding: 16px;
             text-align: center;
@@ -754,12 +753,12 @@ linear-gradient(90deg, black 1px, transparent 1px);
         .score-value {
             font-size: 24px;
             font-weight: 700;
-            color: #ABFF00;
+            color: #4CAF50;
         }
 
         .score-label {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(0, 0, 0, 0.6);
             margin-top: 4px;
         }
 
@@ -769,7 +768,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .value-list {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 12px;
             padding: 20px;
             margin: 20px 0;
@@ -781,7 +780,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
             align-items: center;
             gap: 12px;
             margin-bottom: 16px;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(0, 0, 0, 0.9);
         }
 
         .value-item:last-child {
@@ -789,15 +788,15 @@ linear-gradient(90deg, black 1px, transparent 1px);
         }
 
         .check-icon {
-            color: #ABFF00;
+            color: #4CAF50;
             font-size: 20px;
         }
 
         .urgency-badge {
             display: inline-block;
             background: rgba(239, 68, 68, 0.2);
-            border: 1px solid #EF4444;
-            color: #ffffff;
+            border: 1px solid black;
+            color: #000000;
             padding: 8px 16px;
             border-radius: 100px;
             font-size: 14px;
@@ -825,9 +824,18 @@ linear-gradient(90deg, black 1px, transparent 1px);
     </style>
 </head>
 <body>
+    <!-- Page transition overlay -->
+    <div class="transition-overlay" id="transitionOverlay">
+        <div class="liquid-transition">
+            <div class="liquid-circle" id="liquidCircle"></div>
+        </div>
+        <div class="transition-loader" id="transitionLoader">
+            <div class="loader-ring"></div>
+        </div>
+    </div>
+
     <!-- Animated background elements -->
-    <div class="grid-bg" style="background-color: black;"></div>
-    
+    <div class="grid-bg"></div>
     <!-- Floating shapes -->
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
@@ -839,10 +847,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
     <div class="container">
         <div class="form-card" id="formCard">
-            <!-- Holographic overlay -->
-            <div class="holo-overlay"></div>
-
-            <!-- Progress indicator (hidden for hero, shown for form steps) -->
+            <!-- Progress indicator -->
             <div class="progress-container" id="progressContainer" style="display: none;">
                 <div class="progress-step" data-step="1"></div>
                 <div class="progress-step" data-step="2"></div>
@@ -863,26 +868,19 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     Claim your AI Conversion Report mapping all growth opportunities on your Shopify Store with exclusive focus on how you can convert your traffic into dollars.
                 </p>
 
-                <div class="report-slider">
-                    <div class="slide-content" id="slideContent">
-                        <div class="slide-title">📊 Conversion Analysis</div>
-                        <div class="slide-desc">Detailed breakdown of your store's conversion funnel</div>
-                    </div>
-                </div>
-
-                <button class="cta-button" onclick="nextStep()">
-                    Start Free Audit Now →
-                </button>
-
+                <button class="cta-button">Start Free Audit Now →</button>
                 <div class="urgency-box">
                     <div class="urgency-content">
                         <div class="live-indicator"></div>
                         <span>Only 7 free audits remaining today</span>
                     </div>
                 </div>
+                <div class="report-slider">
+                    <div class="slide-content" id="slideContent"></div>
+                </div>
             </div>
 
-            <!-- Step 2: Multi-Step Form (1/4) - Challenge Selection -->
+            <!-- Step 2: Challenge Selection -->
             <div class="step" id="step2">
                 <h2>Got it! What are you struggling with?</h2>
 
@@ -902,13 +900,11 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     <strong>We've audited +1,000 Shopify Stores</strong> using AI.
                 </div>
 
-                <button class="cta-button" onclick="nextStep()">
-                    Continue →
-                </button>
+                <button class="cta-button">Continue →</button>
             </div>
 
-            <!-- Step 3: Multi-Step Form (2/4) - Revenue & Ad Spend -->
-            <div class="step" id="step3">
+            <!-- Step 3: Revenue & Ad Spend -->
+            <!-- <div class="step" id="step3">
                 <h2>Let's get started with your numbers!</h2>
 
                 <div class="form-group">
@@ -925,13 +921,11 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     The audit will not work if you do not submit real numbers.
                 </div>
 
-                <button class="cta-button" onclick="nextStep()">
-                    Continue →
-                </button>
-            </div>
+                <button class="cta-button">Continue →</button>
+            </div> -->
 
-            <!-- Step 4: Multi-Step Form (3/4) - Shopify Metrics -->
-            <div class="step" id="step4">
+            <!-- Step 4: Shopify Metrics -->
+            <!-- <div class="step" id="step4">
                 <h2>Perfect! Now add your Shopify metrics</h2>
 
                 <div class="form-group">
@@ -953,13 +947,11 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     <strong>We've audited +1,000 Shopify Stores</strong> using AI.
                 </div>
 
-                <button class="cta-button" onclick="nextStep()">
-                    Continue →
-                </button>
-            </div>
+                <button class="cta-button">Continue →</button>
+            </div> -->
 
-            <!-- Step 5: Multi-Step Form (4/4) - Website & Industry -->
-            <div class="step" id="step5">
+            <!-- Step 5: Website & Industry -->
+            <!-- <div class="step" id="step5">
                 <h2>Let's fix that! You're almost done.</h2>
                 <p class="description">Add a valuable URL (best-selling product page) for the most valuable insights.</p>
 
@@ -969,7 +961,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
 
                 <div class="form-group">
                     <label>Website URL</label>
-                    <input type="url" id="websiteUrl" placeholder="The website URL you want to be audited" required>
+                    <input type="url" id="websiteUrl" placeholder="https://www.yourstore.com" required>
                 </div>
 
                 <div class="form-group">
@@ -1003,13 +995,11 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     That way the AI is better at analyzing it.
                 </div>
 
-                <button class="cta-button" onclick="startAnalysis()">
-                    Generate My AI Report →
-                </button>
-            </div>
+                <button class="cta-button">Generate My AI Report →</button>
+            </div> -->
 
             <!-- Step 6: AI Analysis Loading Screen -->
-            <div class="step" id="step6">
+            <!-- <div class="step" id="step6">
                 <h2>Analyzing your store</h2>
                 
                 <div class="loading-spinner"></div>
@@ -1017,15 +1007,15 @@ linear-gradient(90deg, black 1px, transparent 1px);
                 <div class="loading-message" id="loadingMsg">
                     Crawling your website structure...
                 </div>
-            </div>
+            </div> -->
 
             <!-- Step 7: Report Teaser / Results Page -->
-            <div class="step" id="step7">
+            <!-- <div class="step" id="step7">
                 <h2>AI Conversion Report is completed!</h2>
                 <p class="description">AI has detected <strong>21 improvements</strong> on <span id="userDomain">yourstore.com</span></p>
 
                 <div class="results-card">
-                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Estimated CRO Results</h3>
+                    <h3 style="color: #4CAF50; margin-bottom: 20px;">Estimated CRO Results</h3>
                     <div class="metric-grid">
                         <div class="metric-box">
                             <div class="metric-value" id="revenuePotential">$151,828</div>
@@ -1047,7 +1037,7 @@ linear-gradient(90deg, black 1px, transparent 1px);
                 </div>
 
                 <div class="results-card">
-                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Critical Issues Found (Preview)</h3>
+                    <h3 style="color: #4CAF50; margin-bottom: 20px;">Critical Issues Found (Preview)</h3>
                     <div class="issue-item priority-high">
                         🔴 High Priority: Site speed is 68% slower than competitors
                     </div>
@@ -1060,19 +1050,19 @@ linear-gradient(90deg, black 1px, transparent 1px);
                 </div>
 
                 <div class="results-card">
-                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Competitor Gap Analysis</h3>
+                    <h3 style="color: #4CAF50; margin-bottom: 20px;">Competitor Gap Analysis</h3>
                     <div class="competitor-item">
                         <span>Competitor #1</span>
-                        <span style="color: #ABFF00;">145,000 monthly organic visitors</span>
+                        <span style="color: #4CAF50;">145,000 monthly organic visitors</span>
                     </div>
                     <div class="competitor-item">
                         <span>Competitor #2</span>
-                        <span style="color: #ABFF00;">89,000 monthly organic visitors</span>
+                        <span style="color: #4CAF50;">89,000 monthly organic visitors</span>
                     </div>
                 </div>
 
                 <div class="results-card">
-                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Performance Scorecards</h3>
+                    <h3 style="color: #4CAF50; margin-bottom: 20px;">Performance Scorecards</h3>
                     <div class="score-grid">
                         <div class="score-item">
                             <div class="score-value">32/100</div>
@@ -1093,17 +1083,15 @@ linear-gradient(90deg, black 1px, transparent 1px);
                     </div>
                 </div>
 
-                <h3 style="color: #ABFF00; text-align: center; margin: 30px 0;">
+                <h3 style="color: #4CAF50; text-align: center; margin: 30px 0;">
                     Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo Opportunity?
                 </h3>
 
-                <button class="cta-button" onclick="showBooking()">
-                    Book Your Free Strategy Call →
-                </button>
-            </div>
+                <button class="cta-button">Book Your Free Strategy Call →</button>
+            </div> -->
 
             <!-- Step 8: Booking Modal/Page -->
-            <div class="step" id="step8">
+            <!-- <div class="step" id="step8">
                 <div class="booking-section">
                     <h2>Get your complete audit report + 90-day growth roadmap in a free 30-minute strategy call</h2>
 
@@ -1134,168 +1122,169 @@ linear-gradient(90deg, black 1px, transparent 1px);
                         <strong>Meeting description:</strong> 30-minute meeting to review your Conversion Report
                     </p>
 
-                    <!-- Calendly integration would go here -->
-                    <button class="cta-button" onclick="alert('Integrate Calendly widget here')">
-                        Select a Time →
-                    </button>
+                    <button class="cta-button">Select a Time →</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <script>
         let currentStep = 1;
-        let selectedChallenge = null;
-        let userRevenue = 0;
+        const totalSteps = 2;
+        const steps = document.querySelectorAll('.step');
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const progressContainer = document.getElementById('progressContainer');
 
-        // Report slider content
-        const slides = [
-            {
-                title: "📊 Conversion Analysis",
-                desc: "Detailed breakdown of your store's conversion funnel"
-            },
-            {
-                title: "🎯 Competitor Analysis",
-                desc: "See how you stack up against top competitors"
-            },
-            {
-                title: "💰 Revenue Opportunities",
-                desc: "Discover untapped revenue streams"
-            },
-            {
-                title: "📈 90-Day Roadmap",
-                desc: "Step-by-step implementation plan"
+        function showStep(stepNumber) {
+            steps.forEach(step => step.classList.remove('active'));
+            const activeStep = document.getElementById(`step${stepNumber}`);
+            if (activeStep) {
+                activeStep.classList.add('active');
             }
-        ];
 
-        let currentSlide = 0;
-
-        // Auto-rotate slides
-        setInterval(() => {
-            if (currentStep === 1) {
-                currentSlide = (currentSlide + 1) % slides.length;
-                const slideContent = document.getElementById('slideContent');
-                if (slideContent) {
-                    slideContent.innerHTML = `
-                        <div class="slide-title">${slides[currentSlide].title}</div>
-                        <div class="slide-desc">${slides[currentSlide].desc}</div>
-                    `;
-                }
-            }
-        }, 4000);
-
-        function updateProgressBar() {
-            const progressContainer = document.getElementById('progressContainer');
-            
-            // Show progress for form steps only
-            if (currentStep >= 2 && currentStep <= 5) {
+            if (stepNumber >= 2 && stepNumber <= 5) {
                 progressContainer.style.display = 'flex';
-                document.querySelectorAll('.progress-step').forEach((step, index) => {
-                    if (index < currentStep - 2) {
-                        step.classList.add('completed');
-                        step.classList.remove('active');
-                    } else if (index === currentStep - 2) {
-                        step.classList.add('active');
-                        step.classList.remove('completed');
-                    } else {
-                        step.classList.remove('active', 'completed');
-                    }
-                });
             } else {
                 progressContainer.style.display = 'none';
             }
+
+            progressSteps.forEach((progress, index) => {
+                const stepIndex = index + 2;
+                progress.classList.remove('active', 'completed');
+                if (stepNumber > stepIndex) {
+                    progress.classList.add('completed');
+                } else if (stepNumber === stepIndex) {
+                    progress.classList.add('active');
+                }
+            });
         }
 
-        function showStep(stepNumber) {
-            document.querySelectorAll('.step').forEach(step => {
-                step.classList.remove('active');
-            });
+        function handlePageTransition(event, callback) {
+            const button = event.currentTarget;
+            const rect = button.getBoundingClientRect();
+            const overlay = document.getElementById('transitionOverlay');
+            const liquidCircle = document.getElementById('liquidCircle');
+            const loader = document.getElementById('transitionLoader');
             
-            const currentStepElement = document.getElementById(`step${stepNumber}`);
-            if (currentStepElement) {
-                currentStepElement.classList.add('active');
-            }
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            liquidCircle.style.left = centerX + 'px';
+            liquidCircle.style.top = centerY + 'px';
+            liquidCircle.style.width = '20px';
+            liquidCircle.style.height = '20px';
+            liquidCircle.style.marginLeft = '-10px';
+            liquidCircle.style.marginTop = '-10px';
             
-            updateProgressBar();
+            overlay.classList.add('active');
+            liquidCircle.classList.add('animate');
+
+            setTimeout(() => {
+                loader.classList.add('show');
+            }, 200);
+            
+            setTimeout(() => {
+                if (callback) callback();
+                overlay.classList.remove('active');
+                liquidCircle.classList.remove('animate');
+                loader.classList.remove('show');
+            }, 1500);
         }
 
         function nextStep() {
-            // Validation
-            if (currentStep === 2 && !selectedChallenge) {
-                alert('Please select your main challenge');
-                return;
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
             }
-            
-            if (currentStep === 3) {
-                userRevenue = document.getElementById('monthlyRevenue').value;
-                if (!userRevenue) {
-                    alert('Please enter your monthly revenue');
-                    return;
-                }
-            }
-            
-            currentStep++;
-            showStep(currentStep);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function selectChallenge(element, value) {
-            document.querySelectorAll('.challenge-card').forEach(card => {
-                card.classList.remove('selected');
-            });
+        function selectChallenge(element) {
+            const allChallenges = document.querySelectorAll('.challenge-card');
+            allChallenges.forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
-            selectedChallenge = value;
         }
 
         function startAnalysis() {
-            // Get website URL for display
-            const url = document.getElementById('websiteUrl').value;
-            if (url) {
-                const domain = new URL(url).hostname.replace('www.', '');
-                document.getElementById('userDomain').textContent = domain;
-            }
-
-            // Calculate dynamic values
-            const revenue = parseInt(userRevenue) || 50000;
-            const potential = Math.round(revenue * 1.25); // 25% uplift
-            const costInaction = Math.round(revenue * 4.15); // Yearly loss potential
-            
-            document.getElementById('revenuePotential').textContent = `$${potential.toLocaleString()}`;
-            document.getElementById('costInaction').textContent = `-$${costInaction.toLocaleString()}`;
-            document.getElementById('monthlyOpportunity').textContent = `$${Math.round(potential/1000)}K`;
-
             currentStep = 6;
-            showStep(6);
-            
-            // Loading messages sequence
-            const messages = [
-                "Crawling your website structure...",
-                "Analyzing technical SEO health...",
-                "Reviewing CRO improvements...",
-                "Comparing with Industry Benchmarks...",
-                "Generating AI Conversion Report..."
-            ];
-            
-            let messageIndex = 0;
-            const messageInterval = setInterval(() => {
-                if (messageIndex < messages.length) {
-                    document.getElementById('loadingMsg').textContent = messages[messageIndex];
-                    messageIndex++;
-                } else {
-                    clearInterval(messageInterval);
-                    setTimeout(() => {
-                        currentStep = 7;
-                        showStep(7);
-                    }, 2000);
+            showStep(currentStep);
+
+            const websiteUrl = document.getElementById('websiteUrl').value;
+            if (websiteUrl) {
+                try {
+                    const domain = new URL(websiteUrl).hostname;
+                    document.getElementById('userDomain').textContent = domain;
+                } catch (e) {
+                    document.getElementById('userDomain').textContent = "your website";
                 }
-            }, 3000);
+            }
+            
+            const loadingMessages = [
+                'Analyzing competitor landscape...',
+                'Calculating conversion potential...',
+                'Scanning for UX bottlenecks...',
+                'Compiling performance scores...',
+                'Finalizing your report...'
+            ];
+            let msgIndex = 0;
+            const loadingMsgEl = document.getElementById('loadingMsg');
+
+            const msgInterval = setInterval(() => {
+                msgIndex++;
+                if (msgIndex < loadingMessages.length) {
+                    loadingMsgEl.textContent = loadingMessages[msgIndex];
+                }
+            }, 1500);
+
+            setTimeout(() => {
+                clearInterval(msgInterval);
+                currentStep = 7;
+                showStep(currentStep);
+            }, loadingMessages.length * 1500 + 500);
         }
 
         function showBooking() {
             currentStep = 8;
-            showStep(8);
+            showStep(currentStep);
         }
+
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const stepId = button.closest('.step').id;
+                let callback = null;
+
+                if (stepId === 'step1' || stepId === 'step2' || stepId === 'step3' || stepId === 'step4') {
+                    callback = nextStep;
+                } else if (stepId === 'step5') {
+                    callback = startAnalysis;
+                } else if (stepId === 'step7') {
+                    callback = showBooking;
+                } else if (stepId === 'step8') {
+                    callback = () => alert('Integrate Calendly widget here');
+                }
+
+                handlePageTransition(event, callback);
+            });
+        });
+
+        const sliderContent = [
+            { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+            { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+            { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+            { title: "Slides Of What Is Inside Of An AI Report", desc: "" }
+        ];
+        let currentSlide = 0;
+        const slideContainer = document.getElementById('slideContent');
+        
+        function updateSlider() {
+            slideContainer.innerHTML = `
+                <div class="slide-title">${sliderContent[currentSlide].title}</div>
+                <div class="slide-desc">${sliderContent[currentSlide].desc}</div>
+            `;
+            currentSlide = (currentSlide + 1) % sliderContent.length;
+        }
+
+        updateSlider();
+        setInterval(updateSlider, 4000);
     </script>
 </body>
 </html>
-
