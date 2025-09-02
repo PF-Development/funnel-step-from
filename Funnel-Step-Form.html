@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI-Generated Conversion Report - Pimento</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0A0A0A;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animated grid background */
+        .grid-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-image: 
+         linear-gradient(black 1px, transparent 1px),
+linear-gradient(90deg, black 1px, transparent 1px);
+
+            background-size: 50px 50px;
+            
+            animation: gridMove 10s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating geometric shapes */
+        .shape {
+            position: fixed;
+            border: 2px solid rgba(255, 0, 0, 1);
+            animation: shapeFloat 20s infinite linear;
+            z-index: 2;
+        }
+
+        .shape-1 {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 5%;
+
+            animation-duration: 15s;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            right: 10%;
+            border-radius: 50%;
+            animation-duration: 20s;
+            animation-direction: reverse;
+        }
+
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            top: 50%;
+            right: 5%;
+            transform: rotate(30deg);
+            animation-duration: 25s;
+        }
+
+        @keyframes shapeFloat {
+            0% { transform: rotate(0deg) translateY(0px); }
+            33% { transform: rotate(120deg) translateY(-20px); }
+            66% { transform: rotate(240deg) translateY(20px); }
+            100% { transform: rotate(360deg) translateY(0px); }
+        }
+
+        /* Neon glow lines */
+        .neon-line {
+            position: fixed;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, white, transparent);
+            box-shadow: 0 0 10px white;
+            opacity: 0.5;
+            z-index: 3;
+        }
+
+        .neon-line-1 {
+            width: 300px;
+            top: 30%;
+            left: -300px;
+            animation: neonSlide 6s linear infinite;
+        }
+
+        .neon-line-2 {
+            width: 200px;
+            bottom: 40%;
+            right: -200px;
+            animation: neonSlideReverse 8s linear infinite;
+        }
+
+        @keyframes neonSlide {
+            to { transform: translateX(calc(100vw + 600px)); }
+        }
+
+        @keyframes neonSlideReverse {
+            to { transform: translateX(calc(-100vw - 400px)); }
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+            perspective: 2000px;
+        }
+
+        /* Main card with glassmorphism */
+        .form-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            /* background-color: whitesmoke; */
+            border-radius: 30px;
+            padding: 60px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: cardFloat 6s ease-in-out infinite, cardEntrance 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          box-shadow: 
+    0 8px 32px rgba(171, 255, 0, 0.1),      /* neon green outer shadow */
+    inset 0 1px 0 rgba(255, 255, 255, 0.1), /* white inner top */
+    inset 0 -1px 0 rgba(0, 255, 0, 0.1),    /* green inner bottom */
+    inset 0 -2px 4px rgba(255, 0, 0, 0.2);  /* red subtle inner */
+
+        }
+
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-10px); }
+            75% { transform: translateY(5px); }
+        }
+
+        @keyframes cardEntrance {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) rotateY(90deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotateY(0);
+            }
+        }
+
+        /* Holographic effect overlay */
+        .holo-overlay {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                /* cardoverlay */
+                rgba(255, 0, 0, 0.1),
+                rgba(255, 0, 0, 0.1),
+                rgba(255, 0, 0, 0.1),
+                transparent 70%
+            );
+            border-radius: 30px;
+            opacity: 0;
+            animation: holoShine 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes holoShine {
+            0%, 100% { 
+                opacity: 0;
+                transform: translateX(-100%) translateY(-100%);
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateX(100%) translateY(100%);
+            }
+        }
+
+        /* Hide all steps by default */
+        .step {
+            display: none;
+            animation: stepFadeIn 0.5s ease-out;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        @keyframes stepFadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Animated progress dots */
+        .progress-container {
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .progress-step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .progress-step.active {
+            background: #ABFF00;
+            border-color: #ABFF00;
+            box-shadow: 
+                0 0 30px #ABFF00,
+                inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: stepPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes stepPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 30px #ABFF00, inset 0 0 10px rgba(255, 255, 255, 0.5);
+            }
+            50% {
+                transform: scale(1.3);
+                box-shadow: 0 0 50px #ABFF00, inset 0 0 20px rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        .progress-step.completed {
+            background: #ABFF00;
+            border-color: #ABFF00;
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .progress-step:last-child::after {
+            display: none;
+        }
+
+        .progress-step.active::after {
+            background: linear-gradient(90deg, #ABFF00, transparent);
+            animation: lineGlow 2s linear infinite;
+        }
+
+        @keyframes lineGlow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* Typography */
+        .brand-tagline {
+            text-align: center;
+            font-size: 11px;
+            color: #ABFF00;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out 0.3s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 
+                    0 0 10px rgba(171, 255, 0, 0.5),
+                    0 0 20px rgba(171, 255, 0, 0.3);
+            }
+            to {
+                text-shadow: 
+                    0 0 20px rgba(171, 255, 0, 0.6),
+                    0 0 30px rgba(171, 255, 0, 0.4);
+            }
+        }
+
+        .text-white {
+            color: #ffffff;
+            display: block;
+            opacity: 0;
+            animation: wordSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.8s forwards;
+        }
+
+        .text-green {
+            color: #ABFF00;
+            display: block;
+            font-size: 48px;
+            opacity: 0;
+            animation: wordSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s forwards;
+        }
+
+        @keyframes wordSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-30px) rotateY(-30deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotateY(0);
+            }
+        }
+
+        h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 30px;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out 1.2s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+        }
+
+        .description strong {
+            color: #ABFF00;
+            font-weight: 700;
+        }
+
+        /* Challenge cards */
+        .challenge-grid {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .challenge-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .challenge-card:hover {
+            background: rgba(171, 255, 0, 0.1);
+            border-color: #ABFF00;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(171, 255, 0, 0.2);
+        }
+
+        .challenge-card.selected {
+            background: rgba(171, 255, 0, 0.2);
+            border-color: #ABFF00;
+            color: #ABFF00;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="url"],
+        select {
+            width: 100%;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ABFF00;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(171, 255, 0, 0.2);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Buttons */
+        .cta-button {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #ABFF00 0%, #88CC00 100%);
+            color: #000;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            animation: buttonSlideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.4s forwards;
+            box-shadow: 
+                0 10px 40px rgba(171, 255, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes buttonSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 20px 60px rgba(171, 255, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        /* Report slider */
+        .report-slider {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 30px 0;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(171, 255, 0, 0.2);
+        }
+
+        .slide-content {
+            text-align: center;
+            color: black;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #ABFF00;
+            margin-bottom: 12px;
+        }
+
+        .slide-desc {
+            font-size: 14px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Footer text */
+        .footer-text {
+            text-align: center;
+            padding: 16px;
+            margin: 20px 0;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+        }
+
+        .footer-text strong {
+            color: #ABFF00;
+        }
+
+        /* Urgency */
+        .urgency-box {
+            margin-top: 20px;
+            text-align: center;
+            opacity: 0;
+            animation: urgencyPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.6s forwards;
+        }
+
+        @keyframes urgencyPop {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .urgency-content {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 100px;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #EF4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #EF4444;
+            animation: livePulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 10px #EF4444;
+            }
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 20px #EF4444;
+            }
+        }
+
+        /* Warning box */
+        .warning-box {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 24px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        /* Loading screen */
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            margin: 40px auto;
+            border: 4px solid rgba(171, 255, 0, 0.2);
+            border-top-color: #ABFF00;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-message {
+            font-size: 20px;
+            color: #ABFF00;
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0;
+            animation: loadingFade 3s ease-in-out;
+        }
+
+        @keyframes loadingFade {
+            0% { opacity: 0; transform: translateY(20px); }
+            20% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        /* Results page */
+        .results-card {
+            background: rgba(171, 255, 0, 0.05);
+            border: 1px solid rgba(171, 255, 0, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-box {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ABFF00;
+            text-shadow: 0 0 20px rgba(171, 255, 0, 0.5);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        .issue-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid #ABFF00;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            filter: blur(2px);
+            user-select: none;
+        }
+
+        .priority-high { border-left-color: #EF4444; }
+        .priority-medium { border-left-color: #F59E0B; }
+        .priority-low { border-left-color: #10B981; }
+
+        .competitor-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .score-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ABFF00;
+        }
+
+        .score-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* Booking modal styles */
+        .booking-section {
+            text-align: center;
+        }
+
+        .value-list {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .value-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .value-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .check-icon {
+            color: #ABFF00;
+            font-size: 20px;
+        }
+
+        .urgency-badge {
+            display: inline-block;
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #EF4444;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 640px) {
+            .form-card {
+                padding: 40px 30px;
+            }
+            
+            h1 {
+                font-size: 32px;
+            }
+
+            .text-green {
+                font-size: 38px;
+            }
+
+            .metric-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="grid-bg" style="background-color: black;"></div>
+    
+    <!-- Floating shapes -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    
+    <!-- Neon lines -->
+    <div class="neon-line neon-line-1"></div>
+    <div class="neon-line neon-line-2"></div>
+
+    <div class="container">
+        <div class="form-card" id="formCard">
+            <!-- Holographic overlay -->
+            <div class="holo-overlay"></div>
+
+            <!-- Progress indicator (hidden for hero, shown for form steps) -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-step" data-step="1"></div>
+                <div class="progress-step" data-step="2"></div>
+                <div class="progress-step" data-step="3"></div>
+                <div class="progress-step" data-step="4"></div>
+            </div>
+
+            <!-- Step 1: Hero Section -->
+            <div class="step active" id="step1">
+                <div class="brand-tagline">FOR SHOPIFY BRANDS DOING OVER $50K A MONTH</div>
+                
+                <h1>
+                    <span class="text-white">FREE AI-GENERATED</span>
+                    <span class="text-green">CONVERSION REPORT</span>
+                </h1>
+
+                <p class="description">
+                    Claim your AI Conversion Report mapping all growth opportunities on your Shopify Store with exclusive focus on how you can convert your traffic into dollars.
+                </p>
+
+                <div class="report-slider">
+                    <div class="slide-content" id="slideContent">
+                        <div class="slide-title">📊 Conversion Analysis</div>
+                        <div class="slide-desc">Detailed breakdown of your store's conversion funnel</div>
+                    </div>
+                </div>
+
+                <button class="cta-button" onclick="nextStep()">
+                    Start Free Audit Now →
+                </button>
+
+                <div class="urgency-box">
+                    <div class="urgency-content">
+                        <div class="live-indicator"></div>
+                        <span>Only 7 free audits remaining today</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Multi-Step Form (1/4) - Challenge Selection -->
+            <div class="step" id="step2">
+                <h2>Got it! What are you struggling with?</h2>
+
+                <div class="challenge-grid">
+                    <div class="challenge-card" onclick="selectChallenge(this, 'low-conversion')">
+                        Low conversion rate
+                    </div>
+                    <div class="challenge-card" onclick="selectChallenge(this, 'low-aov')">
+                        Low Average Order Value
+                    </div>
+                    <div class="challenge-card" onclick="selectChallenge(this, 'low-subscription')">
+                        Low Subscription rate
+                    </div>
+                </div>
+
+                <div class="footer-text">
+                    <strong>We've audited +1,000 Shopify Stores</strong> using AI.
+                </div>
+
+                <button class="cta-button" onclick="nextStep()">
+                    Continue →
+                </button>
+            </div>
+
+            <!-- Step 3: Multi-Step Form (2/4) - Revenue & Ad Spend -->
+            <div class="step" id="step3">
+                <h2>Let's get started with your numbers!</h2>
+
+                <div class="form-group">
+                    <label>Monthly revenue ($)</label>
+                    <input type="number" id="monthlyRevenue" placeholder="Total revenue generated per month" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Monthly ad spend ($)</label>
+                    <input type="number" id="monthlyAdSpend" placeholder="Total ad spend on all channels" required>
+                </div>
+
+                <div class="footer-text" style="color: #F59E0B;">
+                    The audit will not work if you do not submit real numbers.
+                </div>
+
+                <button class="cta-button" onclick="nextStep()">
+                    Continue →
+                </button>
+            </div>
+
+            <!-- Step 4: Multi-Step Form (3/4) - Shopify Metrics -->
+            <div class="step" id="step4">
+                <h2>Perfect! Now add your Shopify metrics</h2>
+
+                <div class="form-group">
+                    <label>Conversion rate (%)</label>
+                    <input type="number" id="conversionRate" step="0.01" placeholder="Percentage of visitors who make a purchase" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Average order value ($)</label>
+                    <input type="number" id="aov" placeholder="Average $ amount per order" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Subscription rate (%) - Optional</label>
+                    <input type="number" id="subscriptionRate" step="0.01" placeholder="For subscription brands">
+                </div>
+
+                <div class="footer-text">
+                    <strong>We've audited +1,000 Shopify Stores</strong> using AI.
+                </div>
+
+                <button class="cta-button" onclick="nextStep()">
+                    Continue →
+                </button>
+            </div>
+
+            <!-- Step 5: Multi-Step Form (4/4) - Website & Industry -->
+            <div class="step" id="step5">
+                <h2>Let's fix that! You're almost done.</h2>
+                <p class="description">Add a valuable URL (best-selling product page) for the most valuable insights.</p>
+
+                <div class="warning-box">
+                    ⚠️ Audit will not work if fake numbers are used.
+                </div>
+
+                <div class="form-group">
+                    <label>Website URL</label>
+                    <input type="url" id="websiteUrl" placeholder="The website URL you want to be audited" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Type of page</label>
+                    <select id="pageType" required>
+                        <option value="">Select page type</option>
+                        <option value="pdf">PDF</option>
+                        <option value="lander">Lander</option>
+                        <option value="collection">Collection page</option>
+                        <option value="product">Product page</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Industry</label>
+                    <select id="industry" required>
+                        <option value="">Select Industry</option>
+                        <option value="fashion">Fashion & Apparel</option>
+                        <option value="health">Health & Beauty</option>
+                        <option value="home">Home & Garden</option>
+                        <option value="electronics">Electronics</option>
+                        <option value="food">Food & Beverage</option>
+                        <option value="jewelry">Jewelry & Accessories</option>
+                        <option value="sports">Sports & Recreation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="footer-text">
+                    That way the AI is better at analyzing it.
+                </div>
+
+                <button class="cta-button" onclick="startAnalysis()">
+                    Generate My AI Report →
+                </button>
+            </div>
+
+            <!-- Step 6: AI Analysis Loading Screen -->
+            <div class="step" id="step6">
+                <h2>Analyzing your store</h2>
+                
+                <div class="loading-spinner"></div>
+                
+                <div class="loading-message" id="loadingMsg">
+                    Crawling your website structure...
+                </div>
+            </div>
+
+            <!-- Step 7: Report Teaser / Results Page -->
+            <div class="step" id="step7">
+                <h2>AI Conversion Report is completed!</h2>
+                <p class="description">AI has detected <strong>21 improvements</strong> on <span id="userDomain">yourstore.com</span></p>
+
+                <div class="results-card">
+                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Estimated CRO Results</h3>
+                    <div class="metric-grid">
+                        <div class="metric-box">
+                            <div class="metric-value" id="revenuePotential">$151,828</div>
+                            <div class="metric-label">Revenue Potential / Month</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-value">+1.82%</div>
+                            <div class="metric-label">Conversion Rate Uplift</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-value" id="costInaction">-$629,606</div>
+                            <div class="metric-label">Cost of Inaction / Month</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-value">-18,640</div>
+                            <div class="metric-label">Orders Lost / Month</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-card">
+                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Critical Issues Found (Preview)</h3>
+                    <div class="issue-item priority-high">
+                        🔴 High Priority: Site speed is 68% slower than competitors
+                    </div>
+                    <div class="issue-item priority-medium">
+                        🟡 Medium Priority: 234 product pages have duplicate content
+                    </div>
+                    <div class="issue-item priority-low">
+                        🟢 Quick Win: 89 high-value keywords ranking on page 2
+                    </div>
+                </div>
+
+                <div class="results-card">
+                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Competitor Gap Analysis</h3>
+                    <div class="competitor-item">
+                        <span>Competitor #1</span>
+                        <span style="color: #ABFF00;">145,000 monthly organic visitors</span>
+                    </div>
+                    <div class="competitor-item">
+                        <span>Competitor #2</span>
+                        <span style="color: #ABFF00;">89,000 monthly organic visitors</span>
+                    </div>
+                </div>
+
+                <div class="results-card">
+                    <h3 style="color: #ABFF00; margin-bottom: 20px;">Performance Scorecards</h3>
+                    <div class="score-grid">
+                        <div class="score-item">
+                            <div class="score-value">32/100</div>
+                            <div class="score-label">Site Performance (Desktop: 32 | Mobile: 28)</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value">23</div>
+                            <div class="score-label">Mobile Usability Issues</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value">45/100</div>
+                            <div class="score-label">Technical SEO</div>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-value">62/100</div>
+                            <div class="score-label">UX Score</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="color: #ABFF00; text-align: center; margin: 30px 0;">
+                    Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo Opportunity?
+                </h3>
+
+                <button class="cta-button" onclick="showBooking()">
+                    Book Your Free Strategy Call →
+                </button>
+            </div>
+
+            <!-- Step 8: Booking Modal/Page -->
+            <div class="step" id="step8">
+                <div class="booking-section">
+                    <h2>Get your complete audit report + 90-day growth roadmap in a free 30-minute strategy call</h2>
+
+                    <div class="value-list">
+                        <div class="value-item">
+                            <span class="check-icon">✓</span>
+                            <span>Full 50+ page audit report (valued at $2,500)</span>
+                        </div>
+                        <div class="value-item">
+                            <span class="check-icon">✓</span>
+                            <span>Competitor strategy breakdown</span>
+                        </div>
+                        <div class="value-item">
+                            <span class="check-icon">✓</span>
+                            <span>90-day implementation roadmap</span>
+                        </div>
+                        <div class="value-item">
+                            <span class="check-icon">✓</span>
+                            <span>Revenue projection model</span>
+                        </div>
+                    </div>
+
+                    <div class="urgency-badge">
+                        ⚠️ Limited slots available this week (2 spots left)
+                    </div>
+
+                    <p class="description">
+                        <strong>Meeting description:</strong> 30-minute meeting to review your Conversion Report
+                    </p>
+
+                    <!-- Calendly integration would go here -->
+                    <button class="cta-button" onclick="alert('Integrate Calendly widget here')">
+                        Select a Time →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let selectedChallenge = null;
+        let userRevenue = 0;
+
+        // Report slider content
+        const slides = [
+            {
+                title: "📊 Conversion Analysis",
+                desc: "Detailed breakdown of your store's conversion funnel"
+            },
+            {
+                title: "🎯 Competitor Analysis",
+                desc: "See how you stack up against top competitors"
+            },
+            {
+                title: "💰 Revenue Opportunities",
+                desc: "Discover untapped revenue streams"
+            },
+            {
+                title: "📈 90-Day Roadmap",
+                desc: "Step-by-step implementation plan"
+            }
+        ];
+
+        let currentSlide = 0;
+
+        // Auto-rotate slides
+        setInterval(() => {
+            if (currentStep === 1) {
+                currentSlide = (currentSlide + 1) % slides.length;
+                const slideContent = document.getElementById('slideContent');
+                if (slideContent) {
+                    slideContent.innerHTML = `
+                        <div class="slide-title">${slides[currentSlide].title}</div>
+                        <div class="slide-desc">${slides[currentSlide].desc}</div>
+                    `;
+                }
+            }
+        }, 4000);
+
+        function updateProgressBar() {
+            const progressContainer = document.getElementById('progressContainer');
+            
+            // Show progress for form steps only
+            if (currentStep >= 2 && currentStep <= 5) {
+                progressContainer.style.display = 'flex';
+                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    if (index < currentStep - 2) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === currentStep - 2) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            } else {
+                progressContainer.style.display = 'none';
+            }
+        }
+
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            const currentStepElement = document.getElementById(`step${stepNumber}`);
+            if (currentStepElement) {
+                currentStepElement.classList.add('active');
+            }
+            
+            updateProgressBar();
+        }
+
+        function nextStep() {
+            // Validation
+            if (currentStep === 2 && !selectedChallenge) {
+                alert('Please select your main challenge');
+                return;
+            }
+            
+            if (currentStep === 3) {
+                userRevenue = document.getElementById('monthlyRevenue').value;
+                if (!userRevenue) {
+                    alert('Please enter your monthly revenue');
+                    return;
+                }
+            }
+            
+            currentStep++;
+            showStep(currentStep);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectChallenge(element, value) {
+            document.querySelectorAll('.challenge-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            selectedChallenge = value;
+        }
+
+        function startAnalysis() {
+            // Get website URL for display
+            const url = document.getElementById('websiteUrl').value;
+            if (url) {
+                const domain = new URL(url).hostname.replace('www.', '');
+                document.getElementById('userDomain').textContent = domain;
+            }
+
+            // Calculate dynamic values
+            const revenue = parseInt(userRevenue) || 50000;
+            const potential = Math.round(revenue * 1.25); // 25% uplift
+            const costInaction = Math.round(revenue * 4.15); // Yearly loss potential
+            
+            document.getElementById('revenuePotential').textContent = `$${potential.toLocaleString()}`;
+            document.getElementById('costInaction').textContent = `-$${costInaction.toLocaleString()}`;
+            document.getElementById('monthlyOpportunity').textContent = `$${Math.round(potential/1000)}K`;
+
+            currentStep = 6;
+            showStep(6);
+            
+            // Loading messages sequence
+            const messages = [
+                "Crawling your website structure...",
+                "Analyzing technical SEO health...",
+                "Reviewing CRO improvements...",
+                "Comparing with Industry Benchmarks...",
+                "Generating AI Conversion Report..."
+            ];
+            
+            let messageIndex = 0;
+            const messageInterval = setInterval(() => {
+                if (messageIndex < messages.length) {
+                    document.getElementById('loadingMsg').textContent = messages[messageIndex];
+                    messageIndex++;
+                } else {
+                    clearInterval(messageInterval);
+                    setTimeout(() => {
+                        currentStep = 7;
+                        showStep(7);
+                    }, 2000);
+                }
+            }, 3000);
+        }
+
+        function showBooking() {
+            currentStep = 8;
+            showStep(8);
+        }
+    </script>
+</body>
+</html>
+
