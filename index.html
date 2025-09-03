@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Funnel Step Form</title>
+    <title>Free AI-Generated Conversion Report - Pimento</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
 
@@ -940,6 +940,45 @@
         font-size: 14px;
       }
 
+      /* Screenshot in Step 7 */
+      .screenshot-wrap {
+        max-width: 500px;
+        margin: 20px auto;
+        text-align: center;
+      }
+      .screenshot-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--brand);
+        margin-bottom: 10px;
+      }
+      .screenshot-url {
+        font-size: 14px;
+        color: #6b7280;
+        margin-bottom: 10px;
+      }
+      .screenshot-browser {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+        border: 1px solid #e5e7eb;
+      }
+      .screenshot-content {
+        height: calc(100% - 34px);
+        background: #e5e7eb;
+        filter: blur(2px);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+      }
+
       /* Results */
       .results-card {
         background: rgba(171, 255, 0, 0.05);
@@ -1302,7 +1341,7 @@
             <input
               type="url"
               id="websiteUrl"
-              placeholder="https://www.yourstore.com"
+              placeholder="https://yourstore.com"
               required
             />
             <div
@@ -1396,26 +1435,24 @@
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
-            <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
-              Estimated CRO Results
-            </h3>
-            <div class="metric-grid">
-              <div class="metric-box">
-                <div class="metric-value" id="revenuePotential">$151,828</div>
-                <div class="metric-label">Revenue Potential / Month</div>
+          <div class="screenshot-wrap">
+            <h3 class="screenshot-title">Analyzed Page</h3>
+            <p class="screenshot-url" id="screenshot-url">https://www.yourstore.com</p>
+            <div class="screenshot-browser">
+              <div class="browser-header">
+                <div class="browser-controls">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                </div>
+                <div class="browser-url-bar">
+                  <span id="screenshot-browser-url">https://www.yourstore.com</span>
+                </div>
               </div>
-              <div class="metric-box">
-                <div class="metric-value">+1.82%</div>
-                <div class="metric-label">Conversion Rate Uplift</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value" id="costInaction">-$629,606</div>
-                <div class="metric-label">Cost of Inaction / Month</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value">-18,640</div>
-                <div class="metric-label">Orders Lost / Month</div>
+              <div class="screenshot-content">
+                <div class="mock-image"></div>
+                <div class="mock-text"></div>
+                <div class="mock-text short"></div>
               </div>
             </div>
           </div>
@@ -1646,6 +1683,37 @@
         el.addEventListener("change", () => clearFieldError(el));
       });
 
+      // Auto-prepend https:// to website URL
+      const websiteUrlInput = document.getElementById("websiteUrl");
+      websiteUrlInput.addEventListener("input", (e) => {
+        let value = e.target.value.trim();
+        
+        // Check if the input is empty or doesn't start with http:// or https://
+        if (value && !/^https?:\/\//i.test(value)) {
+          // Prevent infinite loop by checking if we're not already processing
+          if (!e.target.dataset.isProcessing) {
+            e.target.dataset.isProcessing = "true";
+            
+            // Prepend https:// and preserve the rest of the input
+            const cursorPosition = e.target.selectionStart;
+            const beforeCursor = value.slice(0, cursorPosition);
+            const afterCursor = value.slice(cursorPosition);
+            
+            // Only prepend if the input doesn't already have a protocol
+            e.target.value = "https://" + value;
+            
+            // Adjust cursor position to account for added "https://"
+            const newCursorPosition = cursorPosition + "https://".length;
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+            
+            delete e.target.dataset.isProcessing;
+          }
+        }
+        
+        // Ensure validation errors are cleared on input
+        clearFieldError(e.target);
+      });
+
       function validateStep(stepId) {
         if (stepId === "step1") return true;
         if (stepId === "step2") {
@@ -1716,7 +1784,7 @@
             okUrl = false;
           }
           if (!okUrl) {
-            showFieldError(urlEl, "Please enter a valid URL[](https://...)");
+            showFieldError(urlEl, "Please enter a valid URL (https://...)");
             valid = false;
           }
           if (!pageTypeEl.value) {
@@ -1800,6 +1868,10 @@
           domain = new URL(websiteUrl).hostname;
         } catch (e) {}
         document.getElementById("userDomain").textContent = domain;
+
+        // Set screenshot URL
+        document.getElementById("screenshot-url").textContent = websiteUrl;
+        document.getElementById("screenshot-browser-url").textContent = websiteUrl;
 
         const minMs = 10000,
           maxMs = 20000;
@@ -1912,4 +1984,3 @@
     </script>
   </body>
 </html>
-
