@@ -140,7 +140,6 @@
         height: 100%;
         overflow: hidden;
       }
-     
       @keyframes liquidExpand {
         0% {
           transform: scale(0);
@@ -335,7 +334,12 @@
         border-radius: 999px;
         overflow: hidden;
       }
-      
+      .progress-fill {
+        height: 100%;
+        background: var(--brand);
+        width: 0;
+        transition: width 0.3s ease;
+      }
 
       /* Typography */
       .brand-tagline {
@@ -700,7 +704,7 @@
         text-align: center;
       }
 
-      /* ANALYSIS (Step 6) – GTMetrix like */
+      /* ANALYSIS (Step 6) – GTMetrix-like Scanning */
       .analysis-wrap {
         max-width: 520px;
         margin: 0 auto;
@@ -710,7 +714,7 @@
         font-size: 28px;
         font-weight: 900;
         margin: 18px 0 10px;
-        color: #3b82f6; /* blue like in image */
+        color: #3b82f6; /* blue like in GTMetrix */
       }
       .analyzing-url {
         font-size: 18px;
@@ -718,68 +722,108 @@
         margin-bottom: 20px;
       }
       .gt-browser-window {
-        background: var(--gt-dark);
+        background: #fff;
         border-radius: 8px;
-        padding: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        position: relative;
+        height: 300px;
+        width: 100%;
+        max-width: 500px;
+        margin: 20px auto;
+        border: 1px solid #e5e7eb;
+      }
+      .browser-header {
+        background: #f3f4f6;
+        padding: 8px 12px;
         display: flex;
         align-items: center;
-        justify-content: center;
-        height: 200px; /* approximate */
+        border-bottom: 1px solid #e5e7eb;
+      }
+      .browser-controls {
+        display: flex;
+        gap: 6px;
+        margin-right: 12px;
+      }
+      .browser-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+      .browser-dot.red {
+        background: #ef4444;
+      }
+      .browser-dot.yellow {
+        background: #f59e0b;
+      }
+      .browser-dot.green {
+        background: #10b981;
+      }
+      .browser-url-bar {
+        flex: 1;
+        background: #fff;
+        border-radius: 4px;
+        padding: 6px 10px;
+        font-size: 12px;
+        color: #374151;
+        border: 1px solid #d1d5db;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .browser-content {
         position: relative;
-      }
-      .gt-grid-icon {
-        position: absolute;
-        left: 20px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 4px;
-        width: 40px;
-        height: 40px;
-      }
-      .gt-grid-icon div {
-        background: #9ca3af;
-        border-radius: 2px;
-      }
-      .gt-progress-text {
-        color: #fff;
-        font-size: 16px;
-        margin-bottom: 10px;
-      }
-      .gt-progress-bar {
-        width: 100%;
-        height: 4px;
-        background: var(--gt-light);
-        border-radius: 2px;
+        height: calc(100% - 34px); /* Adjust for header height */
+        background: #fff;
         overflow: hidden;
       }
-      .gt-progress-fill {
+      .scan-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
-        background: var(--gt-blue);
-        width: 0;
-        transition: width 0.3s ease;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(76, 175, 80, 0.3) 50%,
+          transparent 100%
+        );
+        transform: translateX(-100%);
+        animation: scan 2s linear infinite;
+        z-index: 1;
       }
-      .test-info {
-        background: #fff;
-        border: 1px solid #e5e7eb;
-        border-radius: 8px;
-        padding: 10px;
-        margin: 20px 0;
-        text-align: left;
-        width: fit-content;
+      @keyframes scan {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
       }
-      .test-info p {
-        font-size: 14px;
-        color: #374151;
-        margin: 5px 0;
+      .mock-content {
+        padding: 20px;
+        filter: blur(2px); /* Simulate content being analyzed */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
-      .analysis-note {
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.55);
-        margin-top: 6px;
+      .mock-image {
+        width: 100%;
+        height: 120px;
+        background: #e5e7eb;
+        border-radius: 4px;
       }
-
+      .mock-text {
+        width: 100%;
+        height: 20px;
+        background: #e5e7eb;
+        border-radius: 4px;
+      }
+      .mock-text.short {
+        width: 60%;
+      }
       .analysis-meta {
         margin-top: 10px;
         display: flex;
@@ -798,6 +842,11 @@
       }
       .meta-chip strong {
         color: var(--brand);
+      }
+      .analysis-note {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.55);
+        margin-top: 6px;
       }
 
       /* Timeline list */
@@ -1303,22 +1352,31 @@
           <button class="cta-button">Generate My AI Report →</button>
         </div>
 
-        <!-- Step 6: ANALYSIS (GTMetrix-like) -->
+        <!-- Step 6: ANALYSIS (GTMetrix-like Scanning) -->
         <div class="step" id="step6">
           <div class="analysis-wrap">
             <h3 class="analysis-title">Analyzing your URL...</h3>
             <p class="analyzing-url" id="analyzing-url">https://www.yourstore.com</p>
             <div class="gt-browser-window">
-              <div class="gt-grid-icon">
-                <div></div><div></div>
-                <div></div><div></div>
+              <div class="browser-header">
+                <div class="browser-controls">
+                  <span class="browser-dot red"></span>
+                  <span class="browser-dot yellow"></span>
+                  <span class="browser-dot green"></span>
+                </div>
+                <div class="browser-url-bar">
+                  <span id="browser-url">https://www.yourstore.com</span>
+                </div>
               </div>
-              <p class="gt-progress-text" id="progress-step">1. Crawling your website structure...</p>
-              <div class="gt-progress-bar">
-                <div class="gt-progress-fill" id="gtProgressFill"></div>
+              <div class="browser-content">
+                <div class="scan-overlay" id="scanOverlay"></div>
+                <div class="mock-content">
+                  <div class="mock-image"></div>
+                  <div class="mock-text"></div>
+                  <div class="mock-text short"></div>
+                </div>
               </div>
             </div>
-           
             <div class="analysis-meta">
               <div class="meta-chip">
                 Est. time left: <strong id="timeLeft">—</strong>
@@ -1326,9 +1384,7 @@
               <div class="meta-chip">Live tasks updating</div>
             </div>
             <p class="analysis-note">This typically takes 10–20 seconds.</p>
-
             <ul class="analysis-list" id="analysisList"></ul>
-
             <div id="ariaLive" class="sr-only" aria-live="polite"></div>
           </div>
         </div>
@@ -1340,7 +1396,7 @@
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
-<div class="results-card">
+            <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
               Estimated CRO Results
             </h3>
@@ -1363,7 +1419,6 @@
               </div>
             </div>
           </div>
-
           <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
               Estimated CRO Results
@@ -1387,9 +1442,8 @@
               </div>
             </div>
           </div>
-
           <div class="results-card">
-            <h3 style="color: blac; margin-bottom: 20px">
+            <h3 style="color: black; margin-bottom: 20px">
               Critical Issues Found (Preview)
             </h3>
             <div class="issue-item priority-high">
@@ -1402,7 +1456,6 @@
               🟢 Quick Win: 89 high-value keywords ranking on page 2
             </div>
           </div>
-
           <div class="results-card">
             <h3 style="color: var(--brand); margin-bottom: 20px">
               Competitor Gap Analysis
@@ -1420,7 +1473,6 @@
               >
             </div>
           </div>
-
           <div class="results-card">
             <h3 style="color: var(--brand); margin-bottom: 20px">
               Performance Scorecards
@@ -1446,7 +1498,6 @@
               </div>
             </div>
           </div>
-
           <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
             Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
             Opportunity?
@@ -1704,6 +1755,7 @@
         "Calculating revenue potential",
         "Generating your custom roadmap",
       ];
+
       function buildAnalysisList() {
         const list = document.getElementById("analysisList");
         list.innerHTML = "";
@@ -1718,43 +1770,17 @@
       function setAnalysisState(stepIndex) {
         const items = document.querySelectorAll("#analysisList .analysis-item");
         const aria = document.getElementById("ariaLive");
-        const progressStepEl = document.getElementById("progress-step");
         items.forEach((li, i) => {
           li.classList.remove("pending", "active", "done");
           if (i < stepIndex) li.classList.add("done");
           else if (i === stepIndex) li.classList.add("active");
           else li.classList.add("pending");
         });
-        if (progressStepEl) {
-          progressStepEl.textContent = (stepIndex + 1) + ". " + analysisItems[stepIndex] + "...";
-        }
         const activeItem = items[stepIndex];
         if (activeItem && aria) {
           aria.textContent =
             "Now: " + activeItem.querySelector(".analysis-text").textContent;
         }
-      }
-
-      function animateProgressBar(totalMs) {
-        const progressFill = document.getElementById("gtProgressFill");
-        const timeLeft = document.getElementById("timeLeft");
-        analysis.startTime = performance.now();
-        analysis.totalDuration = totalMs;
-
-        function frame(t) {
-          if (!analysis.running) return;
-          const elapsed = Math.min(t - analysis.startTime, totalMs);
-          const p = elapsed / totalMs;
-          progressFill.style.width = (p * 100) + "%";
-          const remainingMs = Math.max(0, totalMs - elapsed);
-          timeLeft.textContent =
-            (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") +
-            "s";
-          if (elapsed < totalMs) {
-            analysis.rafId = requestAnimationFrame(frame);
-          }
-        }
-        analysis.rafId = requestAnimationFrame(frame);
       }
 
       function startAnalysis() {
@@ -1763,11 +1789,12 @@
         showStep(currentStep);
         buildAnalysisList();
 
-        // set URL
+        // Set URL
         const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
         document.getElementById("analyzing-url").textContent = websiteUrl;
+        document.getElementById("browser-url").textContent = websiteUrl;
 
-        // domain for results
+        // Domain for results
         let domain = "yourstore.com";
         try {
           domain = new URL(websiteUrl).hostname;
@@ -1803,7 +1830,20 @@
           }, totalMs + 120)
         );
 
-        animateProgressBar(totalMs);
+        // Countdown timer
+        const timeLeft = document.getElementById("timeLeft");
+        let remainingMs = totalMs;
+        timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
+        analysis.countdownId = setInterval(() => {
+          remainingMs -= 100;
+          if (remainingMs <= 0) {
+            timeLeft.textContent = "0s";
+            clearInterval(analysis.countdownId);
+            return;
+          }
+          timeLeft.textContent =
+            (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
+        }, 100);
       }
 
       function showBooking() {
