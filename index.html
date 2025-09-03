@@ -12,6 +12,9 @@
         --brand2: #4caf50;
         --text: #111827;
         --muted: #e5e7eb;
+        --gt-dark: #1f2937; /* approximate dark navy */
+        --gt-blue: #3b82f6; /* blue for progress */
+        --gt-light: #e5e7eb; /* light for progress bg */
       }
 
       * {
@@ -697,7 +700,7 @@
         text-align: center;
       }
 
-      /* ANALYSIS (Step 6) – refined design */
+      /* ANALYSIS (Step 6) – GTMetrix like */
       .analysis-wrap {
         max-width: 520px;
         margin: 0 auto;
@@ -707,10 +710,69 @@
         font-size: 28px;
         font-weight: 900;
         margin: 18px 0 10px;
-        background: linear-gradient(45deg, var(--brand), var(--brand2));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: #3b82f6; /* blue like in image */
+      }
+      .analyzing-url {
+        font-size: 18px;
+        color: #6b7280;
+        margin-bottom: 20px;
+      }
+      .gt-browser-window {
+        background: var(--gt-dark);
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 200px; /* approximate */
+        position: relative;
+      }
+      .gt-grid-icon {
+        position: absolute;
+        left: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 4px;
+        width: 40px;
+        height: 40px;
+      }
+      .gt-grid-icon div {
+        background: #9ca3af;
+        border-radius: 2px;
+      }
+      .gt-progress-text {
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+      .gt-progress-bar {
+        width: 100%;
+        height: 4px;
+        background: var(--gt-light);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+      .gt-progress-fill {
+        height: 100%;
+        background: var(--gt-blue);
+        width: 0;
+        transition: width 0.3s ease;
+      }
+      .test-info {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 10px;
+        margin: 20px 0;
+        text-align: left;
+        width: fit-content;
+      }
+      .test-info p {
+        font-size: 14px;
+        color: #374151;
+        margin: 5px 0;
       }
       .analysis-note {
         font-size: 12px;
@@ -718,44 +780,6 @@
         margin-top: 6px;
       }
 
-      .radial-wrap {
-        display: flex;
-        justify-content: center;
-        margin-top: 4px;
-      }
-      .radial {
-        width: 108px;
-        height: 108px;
-        border-radius: 50%;
-        position: relative;
-        display: grid;
-        place-items: center;
-        background: conic-gradient(
-          var(--brand) 0deg,
-          var(--brand2) 0deg,
-          var(--muted) 0 360deg
-        );
-        box-shadow: 0 0 0 8px rgba(76, 175, 80, 0.06),
-          0 8px 30px rgba(76, 175, 80, 0.12);
-      }
-      .radial::before {
-        content: "";
-        position: absolute;
-        inset: 10px;
-        background: #fff;
-        border-radius: 50%;
-        box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.05);
-      }
-      .radial-center {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        font-size: 14px;
-        color: var(--brand);
-        font-weight: 800;
-        pointer-events: none;
-      }
       .analysis-meta {
         margin-top: 10px;
         display: flex;
@@ -1279,15 +1303,22 @@
           <button class="cta-button">Generate My AI Report →</button>
         </div>
 
-        <!-- Step 6: ANALYSIS (refined) -->
+        <!-- Step 6: ANALYSIS (GTMetrix-like) -->
         <div class="step" id="step6">
           <div class="analysis-wrap">
-            <div class="radial-wrap">
-              <div class="radial" id="radial">
-                <div class="radial-center" id="radialText">0%</div>
+            <h3 class="analysis-title">Analyzing your URL...</h3>
+            <p class="analyzing-url" id="analyzing-url">https://www.yourstore.com</p>
+            <div class="gt-browser-window">
+              <div class="gt-grid-icon">
+                <div></div><div></div>
+                <div></div><div></div>
+              </div>
+              <p class="gt-progress-text" id="progress-step">1. Crawling your website structure...</p>
+              <div class="gt-progress-bar">
+                <div class="gt-progress-fill" id="gtProgressFill"></div>
               </div>
             </div>
-            <h3 class="analysis-title">AI Analysis in Progress...</h3>
+           
             <div class="analysis-meta">
               <div class="meta-chip">
                 Est. time left: <strong id="timeLeft">—</strong>
@@ -1309,6 +1340,29 @@
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
+<div class="results-card">
+            <h3 style="color: black; margin-bottom: 20px">
+              Estimated CRO Results
+            </h3>
+            <div class="metric-grid">
+              <div class="metric-box">
+                <div class="metric-value" id="revenuePotential">$151,828</div>
+                <div class="metric-label">Revenue Potential / Month</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value">+1.82%</div>
+                <div class="metric-label">Conversion Rate Uplift</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="costInaction">-$629,606</div>
+                <div class="metric-label">Cost of Inaction / Month</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value">-18,640</div>
+                <div class="metric-label">Orders Lost / Month</div>
+              </div>
+            </div>
+          </div>
 
           <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
@@ -1440,7 +1494,7 @@
 
     <script>
       let currentStep = 1;
-      const totalSteps = 2;
+      const totalSteps = 8;
       const steps = document.querySelectorAll(".step");
       const progressSteps = document.querySelectorAll(".progress-step");
       const progressContainer = document.getElementById("progressContainer");
@@ -1494,33 +1548,6 @@
         const percent = Math.round(((stepNumber - 1) / (totalSteps - 1)) * 100);
         progressFillEl.style.width = percent + "%";
         progressPercentEl.textContent = percent + "%";
-      }
-
-      function handlePageTransition(event, cb) {
-        const button = event.currentTarget;
-        const rect = button.getBoundingClientRect();
-        const overlay = document.getElementById("transitionOverlay");
-        const liquidCircle = document.getElementById("liquidCircle");
-        const loader = document.getElementById("transitionLoader");
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        liquidCircle.style.left = centerX + "px";
-        liquidCircle.style.top = centerY + "px";
-        liquidCircle.style.width = "20px";
-        liquidCircle.style.height = "20px";
-        liquidCircle.style.marginLeft = "-10px";
-        liquidCircle.style.marginTop = "-10px";
-        overlay.classList.add("active");
-        liquidCircle.classList.add("animate");
-        setTimeout(() => {
-          loader.classList.add("show");
-        }, 200);
-        setTimeout(() => {
-          if (cb) cb();
-          overlay.classList.remove("active");
-          liquidCircle.classList.remove("animate");
-          loader.classList.remove("show");
-        }, 1500);
       }
 
       function nextStep() {
@@ -1638,7 +1665,7 @@
             okUrl = false;
           }
           if (!okUrl) {
-            showFieldError(urlEl, "Please enter a valid URL (https://...)");
+            showFieldError(urlEl, "Please enter a valid URL[](https://...)");
             valid = false;
           }
           if (!pageTypeEl.value) {
@@ -1669,18 +1696,18 @@
       }
 
       // Analysis list
+      const analysisItems = [
+        "Crawling your website structure",
+        "Analyzing technical SEO health",
+        "Scanning competitor strategies",
+        "Finding keyword opportunities",
+        "Calculating revenue potential",
+        "Generating your custom roadmap",
+      ];
       function buildAnalysisList() {
         const list = document.getElementById("analysisList");
-        const items = [
-          "Crawling your website structure",
-          "Analyzing technical SEO health",
-          "Scanning competitor strategies",
-          "Finding keyword opportunities",
-          "Calculating revenue potential",
-          "Generating your custom roadmap",
-        ];
         list.innerHTML = "";
-        items.forEach((txt, i) => {
+        analysisItems.forEach((txt, i) => {
           const li = document.createElement("li");
           li.className = "analysis-item " + (i === 0 ? "active" : "pending");
           li.innerHTML = `<span class="status-icon"></span><span class="analysis-text">${txt}</span>`;
@@ -1691,12 +1718,16 @@
       function setAnalysisState(stepIndex) {
         const items = document.querySelectorAll("#analysisList .analysis-item");
         const aria = document.getElementById("ariaLive");
+        const progressStepEl = document.getElementById("progress-step");
         items.forEach((li, i) => {
           li.classList.remove("pending", "active", "done");
           if (i < stepIndex) li.classList.add("done");
           else if (i === stepIndex) li.classList.add("active");
           else li.classList.add("pending");
         });
+        if (progressStepEl) {
+          progressStepEl.textContent = (stepIndex + 1) + ". " + analysisItems[stepIndex] + "...";
+        }
         const activeItem = items[stepIndex];
         if (activeItem && aria) {
           aria.textContent =
@@ -1704,9 +1735,8 @@
         }
       }
 
-      function animateRadial(totalMs) {
-        const radial = document.getElementById("radial");
-        const radialText = document.getElementById("radialText");
+      function animateProgressBar(totalMs) {
+        const progressFill = document.getElementById("gtProgressFill");
         const timeLeft = document.getElementById("timeLeft");
         analysis.startTime = performance.now();
         analysis.totalDuration = totalMs;
@@ -1715,9 +1745,7 @@
           if (!analysis.running) return;
           const elapsed = Math.min(t - analysis.startTime, totalMs);
           const p = elapsed / totalMs;
-          const deg = Math.floor(p * 360);
-          radial.style.background = `conic-gradient(var(--brand) 0deg, var(--brand2) ${deg}deg, var(--muted) ${deg}deg 360deg)`;
-          radialText.textContent = Math.min(100, Math.round(p * 100)) + "%";
+          progressFill.style.width = (p * 100) + "%";
           const remainingMs = Math.max(0, totalMs - elapsed);
           timeLeft.textContent =
             (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") +
@@ -1735,23 +1763,23 @@
         showStep(currentStep);
         buildAnalysisList();
 
+        // set URL
+        const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
+        document.getElementById("analyzing-url").textContent = websiteUrl;
+
         // domain for results
-        const websiteUrl = document.getElementById("websiteUrl")?.value;
-        if (websiteUrl) {
-          try {
-            const domain = new URL(websiteUrl).hostname;
-            document.getElementById("userDomain").textContent = domain;
-          } catch (e) {
-            document.getElementById("userDomain").textContent = "your website";
-          }
-        }
+        let domain = "yourstore.com";
+        try {
+          domain = new URL(websiteUrl).hostname;
+        } catch (e) {}
+        document.getElementById("userDomain").textContent = domain;
 
         const minMs = 10000,
           maxMs = 20000;
         const totalMs = Math.floor(minMs + Math.random() * (maxMs - minMs));
         analysis.running = true;
 
-        const stepsCount = 6;
+        const stepsCount = analysisItems.length;
         const weights = Array.from(
           { length: stepsCount },
           () => 0.8 + Math.random() * 1.2
@@ -1775,7 +1803,7 @@
           }, totalMs + 120)
         );
 
-        animateRadial(totalMs);
+        animateProgressBar(totalMs);
       }
 
       function showBooking() {
@@ -1804,14 +1832,14 @@
           } else if (stepId === "step8") {
             cb = () => alert("Integrate Calendly widget here");
           }
-          handlePageTransition(e, cb);
+          if (cb) cb();
         });
       });
 
       // Back buttons
       function createBackButtons() {
         steps.forEach((step) => {
-          if (step.id !== "step1" && !step.querySelector(".back-button")) {
+          if (step.id !== "step1" && !['step6', 'step7', 'step8'].includes(step.id) && !step.querySelector(".back-button")) {
             const backBtn = document.createElement("button");
             backBtn.className = "back-button";
             backBtn.type = "button";
@@ -1819,7 +1847,7 @@
             step.insertBefore(backBtn, step.firstElementChild);
             backBtn.addEventListener("click", (e) => {
               e.preventDefault();
-              handlePageTransition(e, previousStep);
+              previousStep();
             });
           }
         });
