@@ -233,6 +233,9 @@
       .step {
         display: none;
         animation: stepFadeIn 0.5s ease-out;
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 10px;
       }
       .step.active {
         display: block;
@@ -248,58 +251,25 @@
         }
       }
 
-      #step3, #step4, #step5 {
-        max-height: 70vh;
-        overflow-y: auto;
-        padding-right: 10px;
-      }
-      #step3::-webkit-scrollbar,
-      #step4::-webkit-scrollbar,
-      #step5::-webkit-scrollbar {
+      .step::-webkit-scrollbar {
         width: 8px;
       }
-      #step3::-webkit-scrollbar-track,
-      #step4::-webkit-scrollbar-track,
-      #step5::-webkit-scrollbar-track {
+      .step::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.05);
         border-radius: 4px;
       }
-      #step3::-webkit-scrollbar-thumb,
-      #step4::-webkit-scrollbar-thumb,
-      #step5::-webkit-scrollbar-thumb {
+      .step::-webkit-scrollbar-thumb {
         background: #000000;
         border-radius: 4px;
       }
-      #step3::-webkit-scrollbar-thumb:hover,
-      #step4::-webkit-scrollbar-thumb:hover,
-      #step5::-webkit-scrollbar-thumb:hover {
+      .step::-webkit-scrollbar-thumb:hover {
         background: #333333;
       }
-
-      #step7 {
-        max-height: 70vh;
-        overflow-y: auto;
-        padding-right: 10px;
-      }
-      #step7::-webkit-scrollbar {
-        width: 8px;
-      }
-      #step7::-webkit-scrollbar-track {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 4px;
-      }
-      #step7::-webkit-scrollbar-thumb {
-        background: #000000;
-        border-radius: 4px;
-      }
-      #step7::-webkit-scrollbar-thumb:hover {
-        background: #333333;
-      }
-      #step7.no-scroll {
+      .step.no-scroll {
         overflow-y: hidden;
         padding-right: 0;
       }
-      #step7.no-scroll::-webkit-scrollbar {
+      .step.no-scroll::-webkit-scrollbar {
         display: none;
       }
 
