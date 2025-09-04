@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Free AI-Generated Conversion Report - Pimento</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
@@ -233,32 +233,73 @@
       .step {
         display: none;
         animation: stepFadeIn 0.5s ease-out;
-        max-height: 70vh;
-        overflow-y: auto;
-        padding-right: 10px;
       }
       .step.active {
         display: block;
       }
-      .step::-webkit-scrollbar {
+      @keyframes stepFadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      #step3, #step4, #step5 {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+      #step3::-webkit-scrollbar,
+      #step4::-webkit-scrollbar,
+      #step5::-webkit-scrollbar {
         width: 8px;
       }
-      .step::-webkit-scrollbar-track {
+      #step3::-webkit-scrollbar-track,
+      #step4::-webkit-scrollbar-track,
+      #step5::-webkit-scrollbar-track {
         background: rgba(0, 0, 0, 0.05);
         border-radius: 4px;
       }
-      .step::-webkit-scrollbar-thumb {
+      #step3::-webkit-scrollbar-thumb,
+      #step4::-webkit-scrollbar-thumb,
+      #step5::-webkit-scrollbar-thumb {
         background: #000000;
         border-radius: 4px;
       }
-      .step::-webkit-scrollbar-thumb:hover {
+      #step3::-webkit-scrollbar-thumb:hover,
+      #step4::-webkit-scrollbar-thumb:hover,
+      #step5::-webkit-scrollbar-thumb:hover {
         background: #333333;
       }
-      .step.no-scroll {
+
+      #step7 {
+        max-height: 70vh;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+      #step7::-webkit-scrollbar {
+        width: 8px;
+      }
+      #step7::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+      }
+      #step7::-webkit-scrollbar-thumb {
+        background: #000000;
+        border-radius: 4px;
+      }
+      #step7::-webkit-scrollbar-thumb:hover {
+        background: #333333;
+      }
+      #step7.no-scroll {
         overflow-y: hidden;
         padding-right: 0;
       }
-      .step.no-scroll::-webkit-scrollbar {
+      #step7.no-scroll::-webkit-scrollbar {
         display: none;
       }
 
@@ -332,7 +373,7 @@
         margin-bottom: 8px;
         font-weight: 700;
         color: #000;
-        font-size: clamp(11px, 2vw, 13px);
+        font-size: 13px;
       }
       .progress-bar {
         width: 100%;
@@ -350,7 +391,7 @@
 
       .brand-tagline {
         text-align: center;
-        font-size: clamp(10px, 1.8vw, 11px);
+        font-size: 11px;
         color: #000;
         letter-spacing: 2px;
         text-transform: uppercase;
@@ -365,7 +406,7 @@
         }
       }
       h1 {
-        font-size: clamp(28px, 5vw, 36px);
+        font-size: 42px;
         font-weight: 900;
         line-height: 1.1;
         text-align: center;
@@ -382,7 +423,7 @@
       .text-green {
         color: var(--brand);
         display: block;
-        font-size: clamp(34px, 6vw, 42px);
+        font-size: 48px;
         opacity: 0;
         animation: wordSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s
           forwards;
@@ -398,19 +439,19 @@
         }
       }
       h2 {
-        font-size: clamp(24px, 4vw, 30px);
+        font-size: 32px;
         font-weight: 700;
         color: #2b2a2a;
         margin-bottom: 20px;
         text-align: center;
       }
       .description {
-        font-size: clamp(14px, 2.5vw, 16px);
+        font-size: 16px;
         line-height: 1.8;
         color: #000;
         text-align: center;
         margin-bottom: 30px;
-        max-width: 90%;
+        max-width: 450px;
         margin-left: auto;
         margin-right: auto;
         opacity: 0;
@@ -432,35 +473,32 @@
       }
 
       .challenge-grid {
-        display: flex;
-        flex-direction: column;
+        display: grid;
         gap: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 8px;
       }
       .challenge-card {
         background: rgba(255, 255, 255, 0.05);
-        border: 2px solid rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(0, 0, 0, 0.1);
         border-radius: 12px;
         padding: 20px;
-        color: #000;
-        font-size: clamp(14px, 2.5vw, 16px);
+        color: rgba(0, 0, 0, 0.9);
+        font-size: 16px;
         font-weight: 600;
         cursor: pointer;
         text-align: center;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .challenge-card:hover {
         background: rgba(171, 255, 0, 0.1);
         border-color: var(--brand);
         transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(171, 255, 0, 0.2);
+        box-shadow: 0 10px 30px rgba(171, 255, 0, 0.2);
       }
       .challenge-card.selected {
-        background: var(--brand);
+        background: rgba(171, 255, 0, 0.2);
         border-color: var(--brand);
-        color: #fff;
-        box-shadow: 0 8px 24px rgba(171, 255, 0, 0.3);
+        color: var(--brand);
       }
 
       .form-group {
@@ -469,7 +507,7 @@
       label {
         display: block;
         color: rgba(0, 0, 0, 0.9);
-        font-size: clamp(12px, 2vw, 14px);
+        font-size: 14px;
         font-weight: 600;
         margin-bottom: 8px;
       }
@@ -484,7 +522,7 @@
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 12px;
         color: #000;
-        font-size: clamp(14px, 2.5vw, 16px);
+        font-size: 16px;
         transition: all 0.3s ease;
       }
       input:focus,
@@ -503,12 +541,12 @@
         background: rgba(239, 68, 68, 0.06) !important;
       }
       .error-text {
-        font-size: clamp(10px, 1.8vw, 12px);
+        font-size: 12px;
         color: #ef4444;
         margin-top: 6px;
       }
       .error-banner {
-        font-size: clamp(11px, 2vw, 13px);
+        font-size: 13px;
         color: #ef4444;
         margin-top: 8px;
         text-align: center;
@@ -517,11 +555,11 @@
       .cta-button {
         width: 100%;
         padding: 20px;
-        background: #000;
-        color: #fff;
+        background: linear-gradient(135deg, var(--brand) 0%, var(--brand) 100%);
+        color: #000;
         border: none;
         border-radius: 15px;
-        font-size: clamp(14px, 2.5vw, 16px);
+        font-size: 16px;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 1.5px;
@@ -534,6 +572,8 @@
           1.4s forwards;
         box-shadow: 0 10px 40px rgba(88, 88, 87, 0.3),
           inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        background-color: #000;
+        color: #fff;
       }
       @keyframes buttonSlideUp {
         from {
@@ -564,7 +604,6 @@
         left: 100%;
       }
       .cta-button:hover {
-        background: var(--brand);
         transform: translateY(-5px) scale(1.02);
         box-shadow: 0 20px 60px rgba(171, 255, 0, 0.5),
           inset 0 1px 0 rgba(255, 255, 255, 0.5);
@@ -579,7 +618,7 @@
         border: 1px solid rgba(0, 0, 0, 0.15);
         background: rgba(0, 0, 0, 0.04);
         color: #000;
-        font-size: clamp(12px, 2vw, 14px);
+        font-size: 14px;
         font-weight: 600;
         cursor: pointer;
         margin-bottom: 16px;
@@ -621,13 +660,13 @@
         }
       }
       .slide-title {
-        font-size: clamp(18px, 3vw, 22px);
+        font-size: 22px;
         font-weight: 700;
         color: var(--brand);
         margin-bottom: 12px;
       }
       .slide-desc {
-        font-size: clamp(12px, 2vw, 14px);
+        font-size: 14px;
         line-height: 1.6;
         color: rgba(0, 0, 0, 0.7);
       }
@@ -637,7 +676,7 @@
         padding: 16px;
         margin: 20px 0;
         color: rgba(0, 0, 0, 0.6);
-        font-size: clamp(11px, 2vw, 13px);
+        font-size: 13px;
       }
       .footer-text strong {
         color: var(--brand);
@@ -669,7 +708,7 @@
         border: 1px solid #000;
         border-radius: 100px;
         color: #000;
-        font-size: clamp(11px, 2vw, 13px);
+        font-size: 13px;
         font-weight: 600;
       }
       .live-indicator {
@@ -699,7 +738,7 @@
         padding: 16px;
         margin-bottom: 16px;
         color: rgba(0, 0, 0, 0.8);
-        font-size: clamp(11px, 2vw, 13px);
+        font-size: 13px;
         text-align: center;
       }
 
@@ -709,13 +748,13 @@
         text-align: center;
       }
       .analysis-title {
-        font-size: clamp(24px, 4vw, 28px);
+        font-size: 28px;
         font-weight: 900;
         margin: 18px 0 10px;
         color: #3b82f6;
       }
       .analyzing-url {
-        font-size: clamp(16px, 2.5vw, 18px);
+        font-size: 18px;
         color: #6b7280;
         margin-bottom: 20px;
       }
@@ -725,7 +764,7 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         position: relative;
-        height: clamp(250px, 40vw, 300px);
+        height: 300px;
         width: 100%;
         max-width: 500px;
         margin: 20px auto;
@@ -762,7 +801,7 @@
         background: #fff;
         border-radius: 4px;
         padding: 6px 10px;
-        font-size: clamp(10px, 1.8vw, 12px);
+        font-size: 12px;
         color: #374151;
         border: 1px solid #d1d5db;
         overflow: hidden;
@@ -830,7 +869,7 @@
         flex-wrap: wrap;
       }
       .meta-chip {
-        font-size: clamp(10px, 1.8vw, 12px);
+        font-size: 12px;
         font-weight: 700;
         color: #000;
         background: rgba(0, 0, 0, 0.05);
@@ -842,7 +881,7 @@
         color: var(--brand);
       }
       .analysis-note {
-        font-size: clamp(10px, 1.8vw, 12px);
+        font-size: 12px;
         color: rgba(0, 0, 0, 0.55);
         margin-top: 6px;
       }
@@ -934,7 +973,96 @@
         text-align: left;
         color: var(--text);
         font-weight: 600;
-        font-size: clamp(12px, 2vw, 14px);
+        font-size: 14px;
+      }
+
+      .results-card {
+        background: rgba(171, 255, 0, 0.05);
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        color: #000;
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .metric-box {
+        text-align: center;
+      }
+      .metric-value {
+        font-size: 32px;
+        font-weight: 900;
+        color: var(--brand);
+      }
+      .metric-label {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        text-transform: uppercase;
+        margin-top: 8px;
+      }
+      .issue-item {
+        background: rgba(0, 0, 0, 0.03);
+        border-left: 3px solid var(--brand);
+        padding: 16px;
+        margin-bottom: 12px;
+        border-radius: 8px;
+        color: rgba(0, 0, 0, 0.8);
+        filter: blur(2px);
+        user-select: none;
+      }
+      .priority-high {
+        border-left-color: #ef4444;
+      }
+      .priority-medium {
+        border-left-color: #f59e0b;
+      }
+      .priority-low {
+        border-left-color: #10b981;
+      }
+      .competitor-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px;
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        color: rgba(0, 0, 0, 0.8);
+      }
+
+      .score-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .score-item {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 12px;
+        padding: 16px;
+        text-align: center;
+      }
+      .score-value {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--brand);
+      }
+      .score-label {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+        margin-top: 4px;
+      }
+      .results-image {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 16px;
+        margin: 20px auto;
+        display: block;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       }
 
       .calendly-container {
@@ -964,39 +1092,84 @@
       }
 
       @media (max-width: 640px) {
-        body {
-          padding: 10px;
-        }
         .form-card {
           padding: 30px 20px;
         }
-        .container {
+        h1 {
+          font-size: 28px;
+        }
+        .text-green {
+          font-size: 32px;
+        }
+        h2 {
+          font-size: 24px;
+        }
+        .description {
+          font-size: 14px;
           max-width: 100%;
         }
-        .step {
-          max-height: 80vh;
-          padding-right: 5px;
+        .challenge-grid {
+          grid-template-columns: 1fr;
+        }
+        .metric-grid {
+          grid-template-columns: 1fr;
+        }
+        .score-grid {
+          grid-template-columns: 1fr;
         }
         .report-slider {
           height: 150px;
+          padding: 20px;
+        }
+        .slide-title {
+          font-size: 18px;
+        }
+        .slide-desc {
+          font-size: 12px;
+        }
+        .form-group {
+          margin-bottom: 12px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="url"],
+        select {
+          padding: 12px;
+          font-size: 14px;
+        }
+        .cta-button {
+          padding: 16px;
+          font-size: 14px;
+        }
+        .back-button {
+          padding: 8px 12px;
+          font-size: 12px;
+        }
+        .analysis-title {
+          font-size: 24px;
+        }
+        .analyzing-url {
+          font-size: 16px;
         }
         .gt-browser-window {
           height: 250px;
+          max-width: 100%;
         }
-      }
-
-      @media (max-width: 480px) {
-        .form-card {
-          padding: 20px 15px;
+        .browser-url-bar {
+          font-size: 10px;
         }
-        .challenge-grid {
-          flex-direction: column;
+        .container {
+          padding: 10px;
         }
-        .progress-container {
-          gap: 20px;
+        .shape-1,
+        .shape-2,
+        .shape-3 {
+          display: none; /* Hide floating shapes on small screens */
         }
-        .progress-step::after {
-          width: 20px;
+        .neon-line-1,
+        .neon-line-2 {
+          display: none; /* Hide neon lines on small screens */
         }
       }
     </style>
@@ -1025,10 +1198,10 @@
           id="progressContainer"
           style="display: none"
         >
+          <div class="progress-step" data-step="1"></div>
           <div class="progress-step" data-step="2"></div>
           <div class="progress-step" data-step="3"></div>
           <div class="progress-step" data-step="4"></div>
-          <div class="progress-step" data-step="5"></div>
         </div>
 
         <div class="top-progress" id="topProgress">
@@ -1057,7 +1230,7 @@
             your Shopify Store with exclusive focus on how you can convert your
             traffic into dollars.
           </p>
-          <button class="cta-button" onclick="nextStep()">Start Free Audit Now →</button>
+          <button class="cta-button">Start Free Audit Now →</button>
           <div class="urgency-box">
             <div class="urgency-content">
               <div class="live-indicator"></div>
@@ -1070,27 +1243,23 @@
         </div>
 
         <div class="step" id="step2">
-          <button class="back-button" onclick="previousStep()">← Back</button>
           <h2>Got it! What are you struggling with?</h2>
-          <p class="description">
-            Select the primary challenge your Shopify store is facing to tailor the AI audit to your needs.
-          </p>
           <div class="challenge-grid" id="challengeGrid">
             <div
               class="challenge-card"
-              onclick="selectChallenge(this, 'low-conversion')"
+              onclick="selectChallenge(this,'low-conversion')"
             >
               Low conversion rate
             </div>
             <div
               class="challenge-card"
-              onclick="selectChallenge(this, 'low-aov')"
+              onclick="selectChallenge(this,'low-aov')"
             >
               Low Average Order Value
             </div>
             <div
               class="challenge-card"
-              onclick="selectChallenge(this, 'low-subscription')"
+              onclick="selectChallenge(this,'low-subscription')"
             >
               Low Subscription rate
             </div>
@@ -1101,14 +1270,13 @@
           <div class="footer-text">
             <strong>We've audited +1,000 Shopify Stores</strong> using AI.
           </div>
-          <button class="cta-button" onclick="handleStep2()">Continue →</button>
+          <button class="cta-button">Continue →</button>
         </div>
 
         <div class="step" id="step3">
-          <button class="back-button" onclick="previousStep()">← Back</button>
           <h2>Let's get started with your numbers!</h2>
           <div class="form-group">
-            <label for="monthlyRevenue">Monthly revenue ($)</label>
+            <label>Monthly revenue ($)</label>
             <input
               type="number"
               id="monthlyRevenue"
@@ -1124,7 +1292,7 @@
             ></div>
           </div>
           <div class="form-group">
-            <label for="monthlyAdSpend">Monthly ad spend ($)</label>
+            <label>Monthly ad spend ($)</label>
             <input
               type="number"
               id="monthlyAdSpend"
@@ -1142,14 +1310,13 @@
           <div class="footer-text" style="color: #f59e0b">
             The audit will not work if you do not submit real numbers.
           </div>
-          <button class="cta-button" onclick="handleStep3()">Continue →</button>
+          <button class="cta-button">Continue →</button>
         </div>
 
         <div class="step" id="step4">
-          <button class="back-button" onclick="previousStep()">← Back</button>
           <h2>Perfect! Now add your Shopify metrics</h2>
           <div class="form-group">
-            <label for="conversionRate">Conversion rate (%)</label>
+            <label>Conversion rate (%)</label>
             <input
               type="number"
               id="conversionRate"
@@ -1166,7 +1333,7 @@
             ></div>
           </div>
           <div class="form-group">
-            <label for="aov">Average order value ($)</label>
+            <label>Average order value ($)</label>
             <input
               type="number"
               id="aov"
@@ -1178,7 +1345,7 @@
             <div class="error-text" id="err-aov" style="display: none"></div>
           </div>
           <div class="form-group">
-            <label for="subscriptionRate">Subscription rate (%)</label>
+            <label>Subscription rate (%)</label>
             <input
               type="number"
               id="subscriptionRate"
@@ -1197,11 +1364,10 @@
           <div class="footer-text">
             <strong>We've audited +1,000 Shopify Stores</strong> using AI.
           </div>
-          <button class="cta-button" onclick="handleStep4()">Continue →</button>
+          <button class="cta-button">Continue →</button>
         </div>
 
         <div class="step" id="step5">
-          <button class="back-button" onclick="previousStep()">← Back</button>
           <h2>Let's fix that! You're almost done.</h2>
           <p class="description">
             Add a valuable URL (best-selling product page) for the most valuable
@@ -1211,7 +1377,7 @@
             ⚠️ Audit will not work if fake numbers are used.
           </div>
           <div class="form-group">
-            <label for="websiteUrl">Website URL</label>
+            <label>Website URL</label>
             <input
               type="url"
               id="websiteUrl"
@@ -1225,7 +1391,7 @@
             ></div>
           </div>
           <div class="form-group">
-            <label for="pageType">Type of page</label>
+            <label>Type of page</label>
             <select id="pageType" required>
               <option value="">Select page type</option>
               <option value="pdf">PDF</option>
@@ -1241,7 +1407,7 @@
             ></div>
           </div>
           <div class="form-group">
-            <label for="industry">Industry</label>
+            <label>Industry</label>
             <select id="industry" required>
               <option value="">Select Industry</option>
               <option value="fashion">Fashion & Apparel</option>
@@ -1262,7 +1428,7 @@
           <div class="footer-text">
             That way the AI is better at analyzing it.
           </div>
-          <button class="cta-button" onclick="handleStep5()">Generate My AI Report →</button>
+          <button class="cta-button">Generate My AI Report →</button>
         </div>
 
         <div class="step" id="step6">
@@ -1301,11 +1467,97 @@
           </div>
         </div>
 
-        <div class="step no-scroll" id="step7">
-           <div class="calendly-container">
-            <div class="calendly-inline-widget" data-url="https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+        <div class="step" id="step7">
+          <h2>AI Conversion Report is completed!</h2>
+          <p class="description">
+            AI has detected <strong>21 improvements</strong> on
+            <span id="userDomain">yourstore.com</span>
+          </p>
+          <img src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
+          <div class="results-card">
+            <h3 style="color: black; margin-bottom: 20px">
+              Estimated CRO Results
+            </h3>
+            <div class="metric-grid">
+              <div class="metric-box">
+                <div class="metric-value" id="revenuePotential">$151,828</div>
+                <div class="metric-label">Revenue Potential / Month</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value">+1.82%</div>
+                <div class="metric-label">Conversion Rate Uplift</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value" id="costInaction">-$629,606</div>
+                <div class="metric-label">Cost of Inaction / Month</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-value">-18,640</div>
+                <div class="metric-label">Orders Lost / Month</div>
+              </div>
+            </div>
           </div>
-          <button class="cta-button" onclick="loadCalendlyWidget()">Book Your Free Strategy Call →</button>
+          <div class="results-card">
+            <h3 style="color: black; margin-bottom: 20px">
+              Critical Issues Found (Preview)
+            </h3>
+            <div class="issue-item priority-high">
+              🔴 High Priority: Site speed is 68% slower than competitors
+            </div>
+            <div class="issue-item priority-medium">
+              🟡 Medium Priority: 234 product pages have duplicate content
+            </div>
+            <div class="issue-item priority-low">
+              🟢 Quick Win: 89 high-value keywords ranking on page 2
+            </div>
+          </div>
+          <div class="results-card">
+            <h3 style="color: var(--brand); margin-bottom: 20px">
+              Competitor Gap Analysis
+            </h3>
+            <div class="competitor-item">
+              <span>Competitor #1</span
+              ><span style="color: var(--brand)"
+                >145,000 monthly organic visitors</span
+              >
+            </div>
+            <div class="competitor-item">
+              <span>Competitor #2</span
+              ><span style="color: var(--brand)"
+                >89,000 monthly organic visitors</span
+              >
+            </div>
+          </div>
+          <div class="results-card">
+            <h3 style="color: var(--brand); margin-bottom: 20px">
+              Performance Scorecards
+            </h3>
+            <div class="score-grid">
+              <div class="score-item">
+                <div class="score-value">32/100</div>
+                <div class="score-label">
+                  Site Performance (Desktop: 32 | Mobile: 28)
+                </div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">23</div>
+                <div class="score-label">Mobile Usability Issues</div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">45/100</div>
+                <div class="score-label">Technical SEO</div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">62/100</div>
+                <div class="score-label">UX Score</div>
+              </div>
+            </div>
+          </div>
+          <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
+            Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
+            Opportunity?
+          </h3>
+          <button class="cta-button">Book Your Free Strategy Call →</button>
         </div>
       </div>
     </div>
@@ -1369,7 +1621,6 @@
           showStep(currentStep);
         }
       }
-
       function previousStep() {
         cancelAnalysis();
         if (currentStep > 1) {
@@ -1378,12 +1629,11 @@
         }
       }
 
-      function selectChallenge(el, value) {
+      function selectChallenge(el) {
         document
           .querySelectorAll(".challenge-card")
           .forEach((c) => c.classList.remove("selected"));
         el.classList.add("selected");
-        el.dataset.value = value;
       }
 
       function showFieldError(inputEl, msg) {
@@ -1395,7 +1645,6 @@
           err.style.display = "block";
         }
       }
-
       function clearFieldError(inputEl) {
         if (!inputEl) return;
         inputEl.classList.remove("input-error");
@@ -1405,8 +1654,7 @@
           err.style.display = "none";
         }
       }
-
-      document.querySelectorAll("input, select").forEach((el) => {
+      document.querySelectorAll("input,select").forEach((el) => {
         el.addEventListener("input", () => clearFieldError(el));
         el.addEventListener("change", () => clearFieldError(el));
       });
@@ -1429,11 +1677,11 @@
           const ad = document.getElementById("monthlyAdSpend");
           const revVal = parseFloat(rev.value);
           const adVal = parseFloat(ad.value);
-          if (!rev.value || isNaN(revVal) || revVal < 0) {
+          if (!(revVal >= 0)) {
             showFieldError(rev, "Please enter a valid monthly revenue (>= 0).");
             valid = false;
           }
-          if (!ad.value || isNaN(adVal) || adVal < 0) {
+          if (!(adVal >= 0)) {
             showFieldError(ad, "Please enter a valid monthly ad spend (>= 0).");
             valid = false;
           }
@@ -1447,18 +1695,18 @@
           const crVal = parseFloat(cr.value);
           const aovVal = parseFloat(aov.value);
           const subVal = parseFloat(sub.value);
-          if (!cr.value || isNaN(crVal) || crVal < 0 || crVal > 100) {
+          if (!(crVal >= 0 && crVal <= 100)) {
             showFieldError(
               cr,
               "Enter a valid conversion rate between 0 and 100."
             );
             valid = false;
           }
-          if (!aov.value || isNaN(aovVal) || aovVal <= 0) {
+          if (!(aovVal > 0)) {
             showFieldError(aov, "Enter a valid AOV (> 0).");
             valid = false;
           }
-          if (!sub.value || isNaN(subVal) || subVal < 0 || subVal > 100) {
+          if (!(subVal >= 0 && subVal <= 100)) {
             showFieldError(
               sub,
               "Enter a valid subscription rate between 0 and 100."
@@ -1480,18 +1728,32 @@
           } catch (e) {
             okUrl = false;
           }
-          if (!urlEl.value || !okUrl) {
-            showFieldError(urlEl, "Please enter a valid URL (https://...)");
+          if (!okUrl) {
+            showFieldError(urlEl, "Please enter a valid URL[](https://...)");
             valid = false;
           }
           if (!pageTypeEl.value) {
-            showFieldError(pageTypeEl, "Please select a page type.");
+            pageTypeEl.classList.add("input-error");
+            const e1 = document.getElementById("err-pageType");
+            e1.textContent = "Please select a page type.";
+            e1.style.display = "block";
             valid = false;
           }
           if (!industryEl.value) {
-            showFieldError(industryEl, "Please select an industry.");
+            industryEl.classList.add("input-error");
+            const e2 = document.getElementById("err-industry");
+            e2.textContent = "Please select an industry.";
+            e2.style.display = "block";
             valid = false;
           }
+          pageTypeEl.addEventListener("change", () => {
+            pageTypeEl.classList.remove("input-error");
+            document.getElementById("err-pageType").style.display = "none";
+          });
+          industryEl.addEventListener("change", () => {
+            industryEl.classList.remove("input-error");
+            document.getElementById("err-industry").style.display = "none";
+          });
           return valid;
         }
         return true;
@@ -1508,7 +1770,6 @@
 
       function buildAnalysisList() {
         const list = document.getElementById("analysisList");
-        if (!list) return;
         list.innerHTML = "";
         analysisItems.forEach((txt, i) => {
           const li = document.createElement("li");
@@ -1541,17 +1802,14 @@
         buildAnalysisList();
 
         const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
-        const analyzingUrl = document.getElementById("analyzing-url");
-        const browserUrl = document.getElementById("browser-url");
-        if (analyzingUrl) analyzingUrl.textContent = websiteUrl;
-        if (browserUrl) browserUrl.textContent = websiteUrl;
+        document.getElementById("analyzing-url").textContent = websiteUrl;
+        document.getElementById("browser-url").textContent = websiteUrl;
 
         let domain = "yourstore.com";
         try {
           domain = new URL(websiteUrl).hostname;
         } catch (e) {}
-        const userDomain = document.getElementById("userDomain");
-        if (userDomain) userDomain.textContent = domain;
+        document.getElementById("userDomain").textContent = domain;
 
         const minMs = 10000,
           maxMs = 20000;
@@ -1579,86 +1837,81 @@
             analysis.running = false;
             currentStep = 7;
             showStep(currentStep);
-            loadCalendlyWidget();
           }, totalMs + 120)
         );
 
         const timeLeft = document.getElementById("timeLeft");
-        if (timeLeft) {
-          let remainingMs = totalMs;
-          timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
-          analysis.countdownId = setInterval(() => {
-            remainingMs -= 100;
-            if (remainingMs <= 0) {
-              timeLeft.textContent = "0s";
-              clearInterval(analysis.countdownId);
-              return;
-            }
-            timeLeft.textContent =
-              (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
-          }, 100);
-        }
+        let remainingMs = totalMs;
+        timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
+        analysis.countdownId = setInterval(() => {
+          remainingMs -= 100;
+          if (remainingMs <= 0) {
+            timeLeft.textContent = "0s";
+            clearInterval(analysis.countdownId);
+            return;
+          }
+          timeLeft.textContent =
+            (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
+        }, 100);
       }
 
       function loadCalendlyWidget() {
         const step7 = document.getElementById("step7");
-        if (!step7) return;
+        const logoContainer = document.createElement("div");
+        
+        const calendlyContainer = document.createElement("div");
+        calendlyContainer.className = "calendly-container";
+        calendlyContainer.style.marginTop = "20px";
+        calendlyContainer.innerHTML = `
+          <div class="calendly-inline-widget" data-url="https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+        `;
+        step7.innerHTML = "";
         step7.classList.add("no-scroll");
+        step7.appendChild(logoContainer);
+        step7.appendChild(calendlyContainer);
         if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
           const script = document.createElement("script");
           script.type = "text/javascript";
           script.src = "https://assets.calendly.com/assets/external/widget.js";
           script.async = true;
-          script.onload = () => {
-            if (window.Calendly) {
-              window.Calendly.initInlineWidget({
-                url: "https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1",
-                parentElement: document.querySelector(".calendly-container"),
-              });
-            }
-          };
           document.body.appendChild(script);
-        } else if (window.Calendly) {
-          window.Calendly.initInlineWidget({
-            url: "https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1",
-            parentElement: document.querySelector(".calendly-container"),
-          });
         }
       }
 
-      function handleStep2() {
-        if (validateStep("step2")) {
-          nextStep();
-        }
-      }
-
-      function handleStep3() {
-        if (validateStep("step3")) {
-          nextStep();
-        }
-      }
-
-      function handleStep4() {
-        if (validateStep("step4")) {
-          nextStep();
-        }
-      }
-
-      function handleStep5() {
-        if (validateStep("step5")) {
-          startAnalysis();
-        }
-      }
+      document.querySelectorAll(".cta-button").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          const stepId = btn.closest(".step").id;
+          if (!validateStep(stepId)) return;
+          let cb = null;
+          if (
+            stepId === "step1" ||
+            stepId === "step2" ||
+            stepId === "step3" ||
+            stepId === "step4"
+          ) {
+            cb = nextStep;
+          } else if (stepId === "step5") {
+            cb = startAnalysis;
+          } else if (stepId === "step7") {
+            cb = loadCalendlyWidget;
+          }
+          if (cb) cb();
+        });
+      });
 
       function createBackButtons() {
         steps.forEach((step) => {
-          if (step.id !== "step1" && !["step6", "step7"].includes(step.id) && !step.querySelector(".back-button")) {
+          if (step.id !== "step1" && !['step6', 'step7'].includes(step.id) && !step.querySelector(".back-button")) {
             const backBtn = document.createElement("button");
             backBtn.className = "back-button";
             backBtn.type = "button";
             backBtn.innerHTML = "← Back";
-            backBtn.onclick = previousStep;
             step.insertBefore(backBtn, step.firstElementChild);
+            backBtn.addEventListener("click", (e) => {
+              e.preventDefault();
+              previousStep();
+            });
           }
         });
       }
@@ -1673,31 +1926,29 @@
       let currentSlideIdx = 0;
       const slideContainer = document.getElementById("slideContent");
       function updateSlider() {
-        if (slideContainer) {
-          slideContainer.innerHTML = `<div class="slide-title">${sliderContent[currentSlideIdx].title}</div><div class="slide-desc">${sliderContent[currentSlideIdx].desc}</div>`;
-          currentSlideIdx = (currentSlideIdx + 1) % sliderContent.length;
-        }
+        slideContainer.innerHTML = `<div class="slide-title">${sliderContent[currentSlideIdx].title}</div><div class="slide-desc">${sliderContent[currentSlideIdx].desc}</div>`;
+        currentSlideIdx = (currentSlideIdx + 1) % sliderContent.length;
       }
       updateSlider();
       setInterval(updateSlider, 4000);
 
       const websiteUrlInput = document.getElementById("websiteUrl");
-      if (websiteUrlInput) {
-        websiteUrlInput.addEventListener("input", (e) => {
-          let value = e.target.value.trim();
-          if (value && !/^https?:\/\//i.test(value)) {
-            if (!e.target.dataset.isProcessing) {
-              e.target.dataset.isProcessing = "true";
-              const cursorPosition = e.target.selectionStart;
-              e.target.value = "https://" + value;
-              const newCursorPosition = cursorPosition + "https://".length;
-              e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-              delete e.target.dataset.isProcessing;
-            }
+      websiteUrlInput.addEventListener("input", (e) => {
+        let value = e.target.value.trim();
+        if (value && !/^https?:\/\//i.test(value)) {
+          if (!e.target.dataset.isProcessing) {
+            e.target.dataset.isProcessing = "true";
+            const cursorPosition = e.target.selectionStart;
+            const beforeCursor = value.slice(0, cursorPosition);
+            const afterCursor = value.slice(cursorPosition);
+            e.target.value = "https://" + value;
+            const newCursorPosition = cursorPosition + "https://".length;
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+            delete e.target.dataset.isProcessing;
           }
-          clearFieldError(e.target);
-        });
-      }
+        }
+        clearFieldError(e.target);
+      });
     </script>
   </body>
 </html>
