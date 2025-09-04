@@ -12,9 +12,9 @@
         --brand2: #4caf50;
         --text: #111827;
         --muted: #e5e7eb;
-        --gt-dark: #1f2937; /* approximate dark navy */
-        --gt-blue: #3b82f6; /* blue for progress */
-        --gt-light: #e5e7eb; /* light for progress bg */
+        --gt-dark: #1f2937;
+        --gt-blue: #3b82f6;
+        --gt-light: #e5e7eb;
       }
 
       * {
@@ -34,7 +34,6 @@
         overflow: hidden;
       }
 
-      /* Floating geometric shapes */
       .shape {
         position: fixed;
         border: 2px solid var(--brand);
@@ -81,7 +80,6 @@
         }
       }
 
-      /* Neon lines */
       .neon-line {
         position: fixed;
         height: 1px;
@@ -118,7 +116,6 @@
         }
       }
 
-      /* Page transition overlay */
       .transition-overlay {
         position: fixed;
         top: 0;
@@ -195,7 +192,6 @@
         perspective: 2000px;
       }
 
-      /* Card */
       .form-card {
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
@@ -234,7 +230,6 @@
         }
       }
 
-      /* Steps */
       .step {
         display: none;
         animation: stepFadeIn 0.5s ease-out;
@@ -253,7 +248,33 @@
         }
       }
 
-      /* Dots (2–5) */
+      #step7 {
+        max-height: 600px;
+        overflow-y: auto;
+        padding-right: 10px;
+      }
+      #step7::-webkit-scrollbar {
+        width: 8px;
+      }
+      #step7::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.05);
+        border-radius: 4px;
+      }
+      #step7::-webkit-scrollbar-thumb {
+        background: #000000;
+        border-radius: 4px;
+      }
+      #step7::-webkit-scrollbar-thumb:hover {
+        background: #333333;
+      }
+      #step7.no-scroll {
+        overflow-y: hidden;
+        padding-right: 0;
+      }
+      #step7.no-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
       .progress-container {
         position: absolute;
         top: -50px;
@@ -313,12 +334,11 @@
         background: linear-gradient(90deg, var(--brand), transparent);
       }
 
-      /* Top progress (from step 1) */
       .top-progress {
         display: block;
         margin-bottom: 24px;
       }
-      .top-progress .progress-header {
+      .progress-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -341,7 +361,6 @@
         transition: width 0.3s ease;
       }
 
-      /* Typography */
       .brand-tagline {
         text-align: center;
         font-size: 11px;
@@ -425,7 +444,6 @@
         font-weight: 700;
       }
 
-      /* Challenge cards */
       .challenge-grid {
         display: grid;
         gap: 16px;
@@ -455,7 +473,6 @@
         color: var(--brand);
       }
 
-      /* Form elements */
       .form-group {
         margin-bottom: 16px;
       }
@@ -491,7 +508,6 @@
         color: rgba(0, 0, 0, 0.4);
       }
 
-      /* Validation */
       .input-error {
         border-color: #ef4444 !important;
         background: rgba(239, 68, 68, 0.06) !important;
@@ -508,7 +524,6 @@
         text-align: center;
       }
 
-      /* Buttons */
       .cta-button {
         width: 100%;
         padding: 20px;
@@ -566,7 +581,6 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.5);
       }
 
-      /* Back button */
       .back-button {
         display: inline-flex;
         align-items: center;
@@ -589,7 +603,6 @@
         transform: translateY(-1px);
       }
 
-      /* Report slider */
       .report-slider {
         background: rgba(0, 0, 0, 0.05);
         border-radius: 16px;
@@ -630,7 +643,6 @@
         color: rgba(0, 0, 0, 0.7);
       }
 
-      /* Footer text */
       .footer-text {
         text-align: center;
         padding: 16px;
@@ -642,7 +654,6 @@
         color: var(--brand);
       }
 
-      /* Urgency */
       .urgency-box {
         margin-top: 20px;
         text-align: center;
@@ -692,7 +703,6 @@
         }
       }
 
-      /* Warning box */
       .warning-box {
         background: rgba(239, 68, 68, 0.1);
         border: 1px solid rgba(239, 68, 68, 0.3);
@@ -704,7 +714,6 @@
         text-align: center;
       }
 
-      /* ANALYSIS (Step 6) – GTMetrix-like Scanning */
       .analysis-wrap {
         max-width: 520px;
         margin: 0 auto;
@@ -714,7 +723,7 @@
         font-size: 28px;
         font-weight: 900;
         margin: 18px 0 10px;
-        color: #3b82f6; /* blue like in GTMetrix */
+        color: #3b82f6;
       }
       .analyzing-url {
         font-size: 18px;
@@ -773,7 +782,7 @@
       }
       .browser-content {
         position: relative;
-        height: calc(100% - 34px); /* Adjust for header height */
+        height: calc(100% - 34px);
         background: #fff;
         overflow: hidden;
       }
@@ -803,7 +812,7 @@
       }
       .mock-content {
         padding: 20px;
-        filter: blur(2px); /* Simulate content being analyzed */
+        filter: blur(2px);
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -849,7 +858,6 @@
         margin-top: 6px;
       }
 
-      /* Timeline list */
       .analysis-list {
         list-style: none;
         margin-top: 18px;
@@ -940,7 +948,6 @@
         font-size: 14px;
       }
 
-      /* Results */
       .results-card {
         background: rgba(171, 255, 0, 0.05);
         border: 1px solid rgb(0, 0, 0);
@@ -1020,50 +1027,21 @@
         color: rgba(0, 0, 0, 0.6);
         margin-top: 4px;
       }
-.results-image {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 16px;
-  margin: 20px auto;
-  display: block;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-}
-      /* Booking */
-      .booking-section {
-        text-align: center;
+      .results-image {
+        width: 100%;
+        max-width: 500px;
+        height: auto;
+        border-radius: 16px;
+        margin: 20px auto;
+        display: block;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       }
-      .value-list {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 12px;
-        padding: 20px;
-        margin: 20px 0;
-        text-align: left;
-      }
-      .value-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 16px;
-        color: rgba(0, 0, 0, 0.9);
-      }
-      .value-item:last-child {
-        margin-bottom: 0;
-      }
-      .check-icon {
-        color: var(--brand);
-        font-size: 20px;
-      }
-      .urgency-badge {
-        display: inline-block;
-        background: rgba(239, 68, 68, 0.2);
-        border: 1px solid #000;
-        color: #000;
-        padding: 8px 16px;
-        border-radius: 100px;
-        font-size: 14px;
-        font-weight: 600;
-        margin: 20px 0;
+
+      .calendly-container {
+        margin-top: 20px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
       }
 
       .sr-only {
@@ -1095,7 +1073,6 @@
     </style>
   </head>
   <body>
-    <!-- Page transition overlay -->
     <div class="transition-overlay" id="transitionOverlay">
       <div class="liquid-transition">
         <div class="liquid-circle" id="liquidCircle"></div>
@@ -1105,7 +1082,6 @@
       </div>
     </div>
 
-    <!-- Background bits -->
     <div class="grid-bg"></div>
     <div class="shape shape-1"></div>
     <div class="shape shape-2"></div>
@@ -1115,7 +1091,6 @@
 
     <div class="container">
       <div class="form-card" id="formCard">
-        <!-- Dots (2–5) -->
         <div
           class="progress-container"
           id="progressContainer"
@@ -1127,12 +1102,11 @@
           <div class="progress-step" data-step="4"></div>
         </div>
 
-        <!-- Top progress (from Step 1) -->
         <div class="top-progress" id="topProgress">
           <div class="progress-header">
             <span
               >Step <span id="currentStepText">1</span> of
-              <span id="totalStepsText">8</span></span
+              <span id="totalStepsText">7</span></span
             >
             <span id="progressPercent">0%</span>
           </div>
@@ -1141,7 +1115,6 @@
           </div>
         </div>
 
-        <!-- Step 1 -->
         <div class="step active" id="step1">
           <div class="brand-tagline">
             FOR SHOPIFY BRANDS DOING OVER $50K A MONTH
@@ -1167,7 +1140,6 @@
           </div>
         </div>
 
-        <!-- Step 2 -->
         <div class="step" id="step2">
           <h2>Got it! What are you struggling with?</h2>
           <div class="challenge-grid" id="challengeGrid">
@@ -1199,7 +1171,6 @@
           <button class="cta-button">Continue →</button>
         </div>
 
-        <!-- Step 3 -->
         <div class="step" id="step3">
           <h2>Let's get started with your numbers!</h2>
           <div class="form-group">
@@ -1240,7 +1211,6 @@
           <button class="cta-button">Continue →</button>
         </div>
 
-        <!-- Step 4 -->
         <div class="step" id="step4">
           <h2>Perfect! Now add your Shopify metrics</h2>
           <div class="form-group">
@@ -1295,7 +1265,6 @@
           <button class="cta-button">Continue →</button>
         </div>
 
-        <!-- Step 5 -->
         <div class="step" id="step5">
           <h2>Let's fix that! You're almost done.</h2>
           <p class="description">
@@ -1360,7 +1329,6 @@
           <button class="cta-button">Generate My AI Report →</button>
         </div>
 
-        <!-- Step 6: ANALYSIS (GTMetrix-like Scanning) -->
         <div class="step" id="step6">
           <div class="analysis-wrap">
             <h3 class="analysis-title">Analyzing your URL...</h3>
@@ -1397,169 +1365,108 @@
           </div>
         </div>
 
-        <!-- Step 7 -->
-       <!-- Step 7 -->
-<div class="step" id="step7">
-  <h2>AI Conversion Report is completed!</h2>
-  <p class="description">
-    AI has detected <strong>21 improvements</strong> on
-    <span id="userDomain">yourstore.com</span>
-  </p>
-  <img src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
-  <div class="results-card">
-    <h3 style="color: black; margin-bottom: 20px">
-      Estimated CRO Results
-    </h3>
-    <div class="metric-grid">
-      <div class="metric-box">
-        <div class="metric-value" id="revenuePotential">$151,828</div>
-        <div class="metric-label">Revenue Potential / Month</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value">+1.82%</div>
-        <div class="metric-label">Conversion Rate Uplift</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value" id="costInaction">-$629,606</div>
-        <div class="metric-label">Cost of Inaction / Month</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value">-18,640</div>
-        <div class="metric-label">Orders Lost / Month</div>
-      </div>
-    </div>
-  </div>
-  <div class="results-card">
-    <h3 style="color: black; margin-bottom: 20px">
-      Estimated CRO Results
-    </h3>
-    <div class="metric-grid">
-      <div class="metric-box">
-        <div class="metric-value" id="revenuePotential">$151,828</div>
-        <div class="metric-label">Revenue Potential / Month</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value">+1.82%</div>
-        <div class="metric-label">Conversion Rate Uplift</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value" id="costInaction">-$629,606</div>
-        <div class="metric-label">Cost of Inaction / Month</div>
-      </div>
-      <div class="metric-box">
-        <div class="metric-value">-18,640</div>
-        <div class="metric-label">Orders Lost / Month</div>
-      </div>
-    </div>
-  </div>
-  <div class="results-card">
-    <h3 style="color: black; margin-bottom: 20px">
-      Critical Issues Found (Preview)
-    </h3>
-    <div class="issue-item priority-high">
-      🔴 High Priority: Site speed is 68% slower than competitors
-    </div>
-    <div class="issue-item priority-medium">
-      🟡 Medium Priority: 234 product pages have duplicate content
-    </div>
-    <div class="issue-item priority-low">
-      🟢 Quick Win: 89 high-value keywords ranking on page 2
-    </div>
-  </div>
-  <div class="results-card">
-    <h3 style="color: var(--brand); margin-bottom: 20px">
-      Competitor Gap Analysis
-    </h3>
-    <div class="competitor-item">
-      <span>Competitor #1</span
-      ><span style="color: var(--brand)"
-        >145,000 monthly organic visitors</span
-      >
-    </div>
-    <div class="competitor-item">
-      <span>Competitor #2</span
-      ><span style="color: var(--brand)"
-        >89,000 monthly organic visitors</span
-      >
-    </div>
-  </div>
-  <div class="results-card">
-    <h3 style="color: var(--brand); margin-bottom: 20px">
-      Performance Scorecards
-    </h3>
-    <div class="score-grid">
-      <div class="score-item">
-        <div class="score-value">32/100</div>
-        <div class="score-label">
-          Site Performance (Desktop: 32 | Mobile: 28)
-        </div>
-      </div>
-      <div class="score-item">
-        <div class="score-value">23</div>
-        <div class="score-label">Mobile Usability Issues</div>
-      </div>
-      <div class="score-item">
-        <div class="score-value">45/100</div>
-        <div class="score-label">Technical SEO</div>
-      </div>
-      <div class="score-item">
-        <div class="score-value">62/100</div>
-        <div class="score-label">UX Score</div>
-      </div>
-    </div>
-  </div>
-  <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
-    Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
-    Opportunity?
-  </h3>
-  <button class="cta-button">Book Your Free Strategy Call →</button>
-</div>
-        <!-- Step 8 -->
-        <div class="step" id="step8">
-          <div class="booking-section">
-            <h2>
-              Get your complete audit report + 90-day growth roadmap in a free
-              30-minute strategy call
-            </h2>
-            <div class="value-list">
-              <div class="value-item">
-                <span class="check-icon">✓</span
-                ><span>Full 50+ page audit report (valued at $2,500)</span>
+        <div class="step" id="step7">
+          <h2>AI Conversion Report is completed!</h2>
+          <p class="description">
+            AI has detected <strong>21 improvements</strong> on
+            <span id="userDomain">yourstore.com</span>
+          </p>
+          <img src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
+          <div class="results-card">
+            <h3 style="color: black; margin-bottom: 20px">
+              Estimated CRO Results
+            </h3>
+            <div class="metric-grid">
+              <div class="metric-box">
+                <div class="metric-value" id="revenuePotential">$151,828</div>
+                <div class="metric-label">Revenue Potential / Month</div>
               </div>
-              <div class="value-item">
-                <span class="check-icon">✓</span
-                ><span>Competitor strategy breakdown</span>
+              <div class="metric-box">
+                <div class="metric-value">+1.82%</div>
+                <div class="metric-label">Conversion Rate Uplift</div>
               </div>
-              <div class="value-item">
-                <span class="check-icon">✓</span
-                ><span>90-day implementation roadmap</span>
+              <div class="metric-box">
+                <div class="metric-value" id="costInaction">-$629,606</div>
+                <div class="metric-label">Cost of Inaction / Month</div>
               </div>
-              <div class="value-item">
-                <span class="check-icon">✓</span
-                ><span>Revenue projection model</span>
+              <div class="metric-box">
+                <div class="metric-value">-18,640</div>
+                <div class="metric-label">Orders Lost / Month</div>
               </div>
             </div>
-            <div class="urgency-badge">
-              ⚠️ Limited slots available this week (2 spots left)
-            </div>
-            <p class="description">
-              <strong>Meeting description:</strong> 30-minute meeting to review
-              your Conversion Report
-            </p>
-            <button class="cta-button">Select a Time →</button>
           </div>
+          <div class="results-card">
+            <h3 style="color: black; margin-bottom: 20px">
+              Critical Issues Found (Preview)
+            </h3>
+            <div class="issue-item priority-high">
+              🔴 High Priority: Site speed is 68% slower than competitors
+            </div>
+            <div class="issue-item priority-medium">
+              🟡 Medium Priority: 234 product pages have duplicate content
+            </div>
+            <div class="issue-item priority-low">
+              🟢 Quick Win: 89 high-value keywords ranking on page 2
+            </div>
+          </div>
+          <div class="results-card">
+            <h3 style="color: var(--brand); margin-bottom: 20px">
+              Competitor Gap Analysis
+            </h3>
+            <div class="competitor-item">
+              <span>Competitor #1</span
+              ><span style="color: var(--brand)"
+                >145,000 monthly organic visitors</span
+              >
+            </div>
+            <div class="competitor-item">
+              <span>Competitor #2</span
+              ><span style="color: var(--brand)"
+                >89,000 monthly organic visitors</span
+              >
+            </div>
+          </div>
+          <div class="results-card">
+            <h3 style="color: var(--brand); margin-bottom: 20px">
+              Performance Scorecards
+            </h3>
+            <div class="score-grid">
+              <div class="score-item">
+                <div class="score-value">32/100</div>
+                <div class="score-label">
+                  Site Performance (Desktop: 32 | Mobile: 28)
+                </div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">23</div>
+                <div class="score-label">Mobile Usability Issues</div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">45/100</div>
+                <div class="score-label">Technical SEO</div>
+              </div>
+              <div class="score-item">
+                <div class="score-value">62/100</div>
+                <div class="score-label">UX Score</div>
+              </div>
+            </div>
+          </div>
+          <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
+            Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
+            Opportunity?
+          </h3>
+          <button class="cta-button">Book Your Free Strategy Call →</button>
         </div>
       </div>
     </div>
 
     <script>
       let currentStep = 1;
-      const totalSteps = 8;
+      const totalSteps = 7;
       const steps = document.querySelectorAll(".step");
       const progressSteps = document.querySelectorAll(".progress-step");
       const progressContainer = document.getElementById("progressContainer");
 
-      // Top progress
       const topProgressEl = document.getElementById("topProgress");
       const currentStepText = document.getElementById("currentStepText");
       const totalStepsText = document.getElementById("totalStepsText");
@@ -1567,7 +1474,6 @@
       const progressPercentEl = document.getElementById("progressPercent");
       if (totalStepsText) totalStepsText.textContent = totalSteps;
 
-      // Analysis state
       const analysis = {
         rafId: null,
         timeouts: [],
@@ -1590,11 +1496,9 @@
         const active = document.getElementById(`step${stepNumber}`);
         if (active) active.classList.add("active");
 
-        // Dots between 2–5
         progressContainer.style.display =
           stepNumber >= 2 && stepNumber <= 5 ? "flex" : "none";
 
-        // Update dots
         progressSteps.forEach((p, i) => {
           const idx = i + 2;
           p.classList.remove("active", "completed");
@@ -1602,7 +1506,6 @@
           else if (stepNumber === idx) p.classList.add("active");
         });
 
-        // Top progress
         topProgressEl.style.display = "block";
         currentStepText.textContent = Math.min(stepNumber, totalSteps);
         const percent = Math.round(((stepNumber - 1) / (totalSteps - 1)) * 100);
@@ -1631,7 +1534,6 @@
         el.classList.add("selected");
       }
 
-      // Validation helpers
       function showFieldError(inputEl, msg) {
         if (!inputEl) return;
         inputEl.classList.add("input-error");
@@ -1755,7 +1657,6 @@
         return true;
       }
 
-      // Analysis list
       const analysisItems = [
         "Crawling your website structure",
         "Analyzing technical SEO health",
@@ -1798,12 +1699,10 @@
         showStep(currentStep);
         buildAnalysisList();
 
-        // Set URL
         const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
         document.getElementById("analyzing-url").textContent = websiteUrl;
         document.getElementById("browser-url").textContent = websiteUrl;
 
-        // Domain for results
         let domain = "yourstore.com";
         try {
           domain = new URL(websiteUrl).hostname;
@@ -1839,7 +1738,6 @@
           }, totalMs + 120)
         );
 
-        // Countdown timer
         const timeLeft = document.getElementById("timeLeft");
         let remainingMs = totalMs;
         timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
@@ -1855,12 +1753,29 @@
         }, 100);
       }
 
-      function showBooking() {
-        currentStep = 8;
-        showStep(currentStep);
+      function loadCalendlyWidget() {
+        const step7 = document.getElementById("step7");
+        const calendlyContainer = document.createElement("div");
+        calendlyContainer.className = "calendly-container";
+        calendlyContainer.style.marginTop = "20px";
+
+        calendlyContainer.innerHTML = `
+      <div class="calendly-inline-widget" data-url="https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
+        `;
+
+        step7.innerHTML = "";
+        step7.classList.add("no-scroll");
+        step7.appendChild(calendlyContainer);
+
+        if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
+          const script = document.createElement("script");
+          script.type = "text/javascript";
+          script.src = "https://assets.calendly.com/assets/external/widget.js";
+          script.async = true;
+          document.body.appendChild(script);
+        }
       }
 
-      // CTA behavior + validation
       document.querySelectorAll(".cta-button").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
@@ -1877,18 +1792,15 @@
           } else if (stepId === "step5") {
             cb = startAnalysis;
           } else if (stepId === "step7") {
-            cb = showBooking;
-          } else if (stepId === "step8") {
-            cb = () => alert("Integrate Calendly widget here");
+            cb = loadCalendlyWidget;
           }
           if (cb) cb();
         });
       });
 
-      // Back buttons
       function createBackButtons() {
         steps.forEach((step) => {
-          if (step.id !== "step1" && !['step6', 'step7', 'step8'].includes(step.id) && !step.querySelector(".back-button")) {
+          if (step.id !== "step1" && !['step6', 'step7'].includes(step.id) && !step.querySelector(".back-button")) {
             const backBtn = document.createElement("button");
             backBtn.className = "back-button";
             backBtn.type = "button";
@@ -1903,7 +1815,6 @@
       }
       createBackButtons();
 
-      // Slider filler
       const sliderContent = [
         { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
         { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
@@ -1918,36 +1829,24 @@
       }
       updateSlider();
       setInterval(updateSlider, 4000);
-      // Auto-prepend https:// to website URL
-const websiteUrlInput = document.getElementById("websiteUrl");
-websiteUrlInput.addEventListener("input", (e) => {
-  let value = e.target.value.trim();
-  
-  // Check if the input is empty or doesn't start with http:// or https://
-  if (value && !/^https?:\/\//i.test(value)) {
-    // Prevent infinite loop by checking if we're not already processing
-    if (!e.target.dataset.isProcessing) {
-      e.target.dataset.isProcessing = "true";
-      
-      // Prepend https:// and preserve the rest of the input
-      const cursorPosition = e.target.selectionStart;
-      const beforeCursor = value.slice(0, cursorPosition);
-      const afterCursor = value.slice(cursorPosition);
-      
-      // Only prepend if the input doesn't already have a protocol
-      e.target.value = "https://" + value;
-      
-      // Adjust cursor position to account for added "https://"
-      const newCursorPosition = cursorPosition + "https://".length;
-      e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-      
-      delete e.target.dataset.isProcessing;
-    }
-  }
-  
-  // Ensure validation errors are cleared on input
-  clearFieldError(e.target);
-});
+
+      const websiteUrlInput = document.getElementById("websiteUrl");
+      websiteUrlInput.addEventListener("input", (e) => {
+        let value = e.target.value.trim();
+        if (value && !/^https?:\/\//i.test(value)) {
+          if (!e.target.dataset.isProcessing) {
+            e.target.dataset.isProcessing = "true";
+            const cursorPosition = e.target.selectionStart;
+            const beforeCursor = value.slice(0, cursorPosition);
+            const afterCursor = value.slice(cursorPosition);
+            e.target.value = "https://" + value;
+            const newCursorPosition = cursorPosition + "https://".length;
+            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+            delete e.target.dataset.isProcessing;
+          }
+        }
+        clearFieldError(e.target);
+      });
     </script>
   </body>
 </html>
