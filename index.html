@@ -1827,18 +1827,20 @@
 
       function loadCalendlyWidget() {
         const step7 = document.getElementById("step7");
+        step7.innerHTML = "";
+        step7.classList.remove("no-scroll"); // Remove no-scroll to allow scrolling
+
         const logoContainer = document.createElement("div");
-        
         const calendlyContainer = document.createElement("div");
         calendlyContainer.className = "calendly-container";
         calendlyContainer.style.marginTop = "20px";
         calendlyContainer.innerHTML = `
           <div class="calendly-inline-widget" data-url="https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
         `;
-        step7.innerHTML = "";
-        step7.classList.add("no-scroll");
+        
         step7.appendChild(logoContainer);
         step7.appendChild(calendlyContainer);
+
         if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
           const script = document.createElement("script");
           script.type = "text/javascript";
