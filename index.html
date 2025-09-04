@@ -940,45 +940,6 @@
         font-size: 14px;
       }
 
-      /* Screenshot in Step 7 */
-      .screenshot-wrap {
-        max-width: 500px;
-        margin: 20px auto;
-        text-align: center;
-      }
-      .screenshot-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--brand);
-        margin-bottom: 10px;
-      }
-      .screenshot-url {
-        font-size: 14px;
-        color: #6b7280;
-        margin-bottom: 10px;
-      }
-      .screenshot-browser {
-        background: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        position: relative;
-        height: 300px;
-        width: 100%;
-        max-width: 500px;
-        margin: 0 auto;
-        border: 1px solid #e5e7eb;
-      }
-      .screenshot-content {
-        height: calc(100% - 34px);
-        background: #e5e7eb;
-        filter: blur(2px);
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding: 20px;
-      }
-
       /* Results */
       .results-card {
         background: rgba(171, 255, 0, 0.05);
@@ -1059,7 +1020,15 @@
         color: rgba(0, 0, 0, 0.6);
         margin-top: 4px;
       }
-
+.results-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  border-radius: 16px;
+  margin: 20px auto;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
       /* Booking */
       .booking-section {
         text-align: center;
@@ -1341,7 +1310,7 @@
             <input
               type="url"
               id="websiteUrl"
-              placeholder="https://yourstore.com"
+              placeholder="https://www.yourstore.com"
               required
             />
             <div
@@ -1429,119 +1398,122 @@
         </div>
 
         <!-- Step 7 -->
-        <div class="step" id="step7">
-          <h2>AI Conversion Report is completed!</h2>
-          <p class="description">
-            AI has detected <strong>21 improvements</strong> on
-            <span id="userDomain">yourstore.com</span>
-          </p>
-          <div class="screenshot-wrap">
-            <h3 class="screenshot-title">Analyzed Page</h3>
-            <p class="screenshot-url" id="screenshot-url">https://www.yourstore.com</p>
-            <div class="screenshot-browser">
-              <div class="browser-header">
-                <div class="browser-controls">
-                  <span class="browser-dot red"></span>
-                  <span class="browser-dot yellow"></span>
-                  <span class="browser-dot green"></span>
-                </div>
-                <div class="browser-url-bar">
-                  <span id="screenshot-browser-url">https://www.yourstore.com</span>
-                </div>
-              </div>
-              <div class="screenshot-content">
-                <div class="mock-image"></div>
-                <div class="mock-text"></div>
-                <div class="mock-text short"></div>
-              </div>
-            </div>
-          </div>
-          <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
-              Estimated CRO Results
-            </h3>
-            <div class="metric-grid">
-              <div class="metric-box">
-                <div class="metric-value" id="revenuePotential">$151,828</div>
-                <div class="metric-label">Revenue Potential / Month</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value">+1.82%</div>
-                <div class="metric-label">Conversion Rate Uplift</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value" id="costInaction">-$629,606</div>
-                <div class="metric-label">Cost of Inaction / Month</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value">-18,640</div>
-                <div class="metric-label">Orders Lost / Month</div>
-              </div>
-            </div>
-          </div>
-          <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
-              Critical Issues Found (Preview)
-            </h3>
-            <div class="issue-item priority-high">
-              🔴 High Priority: Site speed is 68% slower than competitors
-            </div>
-            <div class="issue-item priority-medium">
-              🟡 Medium Priority: 234 product pages have duplicate content
-            </div>
-            <div class="issue-item priority-low">
-              🟢 Quick Win: 89 high-value keywords ranking on page 2
-            </div>
-          </div>
-          <div class="results-card">
-            <h3 style="color: var(--brand); margin-bottom: 20px">
-              Competitor Gap Analysis
-            </h3>
-            <div class="competitor-item">
-              <span>Competitor #1</span
-              ><span style="color: var(--brand)"
-                >145,000 monthly organic visitors</span
-              >
-            </div>
-            <div class="competitor-item">
-              <span>Competitor #2</span
-              ><span style="color: var(--brand)"
-                >89,000 monthly organic visitors</span
-              >
-            </div>
-          </div>
-          <div class="results-card">
-            <h3 style="color: var(--brand); margin-bottom: 20px">
-              Performance Scorecards
-            </h3>
-            <div class="score-grid">
-              <div class="score-item">
-                <div class="score-value">32/100</div>
-                <div class="score-label">
-                  Site Performance (Desktop: 32 | Mobile: 28)
-                </div>
-              </div>
-              <div class="score-item">
-                <div class="score-value">23</div>
-                <div class="score-label">Mobile Usability Issues</div>
-              </div>
-              <div class="score-item">
-                <div class="score-value">45/100</div>
-                <div class="score-label">Technical SEO</div>
-              </div>
-              <div class="score-item">
-                <div class="score-value">62/100</div>
-                <div class="score-label">UX Score</div>
-              </div>
-            </div>
-          </div>
-          <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
-            Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
-            Opportunity?
-          </h3>
-          <button class="cta-button">Book Your Free Strategy Call →</button>
+       <!-- Step 7 -->
+<div class="step" id="step7">
+  <h2>AI Conversion Report is completed!</h2>
+  <p class="description">
+    AI has detected <strong>21 improvements</strong> on
+    <span id="userDomain">yourstore.com</span>
+  </p>
+  <img src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
+  <div class="results-card">
+    <h3 style="color: black; margin-bottom: 20px">
+      Estimated CRO Results
+    </h3>
+    <div class="metric-grid">
+      <div class="metric-box">
+        <div class="metric-value" id="revenuePotential">$151,828</div>
+        <div class="metric-label">Revenue Potential / Month</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value">+1.82%</div>
+        <div class="metric-label">Conversion Rate Uplift</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value" id="costInaction">-$629,606</div>
+        <div class="metric-label">Cost of Inaction / Month</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value">-18,640</div>
+        <div class="metric-label">Orders Lost / Month</div>
+      </div>
+    </div>
+  </div>
+  <div class="results-card">
+    <h3 style="color: black; margin-bottom: 20px">
+      Estimated CRO Results
+    </h3>
+    <div class="metric-grid">
+      <div class="metric-box">
+        <div class="metric-value" id="revenuePotential">$151,828</div>
+        <div class="metric-label">Revenue Potential / Month</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value">+1.82%</div>
+        <div class="metric-label">Conversion Rate Uplift</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value" id="costInaction">-$629,606</div>
+        <div class="metric-label">Cost of Inaction / Month</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-value">-18,640</div>
+        <div class="metric-label">Orders Lost / Month</div>
+      </div>
+    </div>
+  </div>
+  <div class="results-card">
+    <h3 style="color: black; margin-bottom: 20px">
+      Critical Issues Found (Preview)
+    </h3>
+    <div class="issue-item priority-high">
+      🔴 High Priority: Site speed is 68% slower than competitors
+    </div>
+    <div class="issue-item priority-medium">
+      🟡 Medium Priority: 234 product pages have duplicate content
+    </div>
+    <div class="issue-item priority-low">
+      🟢 Quick Win: 89 high-value keywords ranking on page 2
+    </div>
+  </div>
+  <div class="results-card">
+    <h3 style="color: var(--brand); margin-bottom: 20px">
+      Competitor Gap Analysis
+    </h3>
+    <div class="competitor-item">
+      <span>Competitor #1</span
+      ><span style="color: var(--brand)"
+        >145,000 monthly organic visitors</span
+      >
+    </div>
+    <div class="competitor-item">
+      <span>Competitor #2</span
+      ><span style="color: var(--brand)"
+        >89,000 monthly organic visitors</span
+      >
+    </div>
+  </div>
+  <div class="results-card">
+    <h3 style="color: var(--brand); margin-bottom: 20px">
+      Performance Scorecards
+    </h3>
+    <div class="score-grid">
+      <div class="score-item">
+        <div class="score-value">32/100</div>
+        <div class="score-label">
+          Site Performance (Desktop: 32 | Mobile: 28)
         </div>
-
+      </div>
+      <div class="score-item">
+        <div class="score-value">23</div>
+        <div class="score-label">Mobile Usability Issues</div>
+      </div>
+      <div class="score-item">
+        <div class="score-value">45/100</div>
+        <div class="score-label">Technical SEO</div>
+      </div>
+      <div class="score-item">
+        <div class="score-value">62/100</div>
+        <div class="score-label">UX Score</div>
+      </div>
+    </div>
+  </div>
+  <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
+    Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
+    Opportunity?
+  </h3>
+  <button class="cta-button">Book Your Free Strategy Call →</button>
+</div>
         <!-- Step 8 -->
         <div class="step" id="step8">
           <div class="booking-section">
@@ -1683,37 +1655,6 @@
         el.addEventListener("change", () => clearFieldError(el));
       });
 
-      // Auto-prepend https:// to website URL
-      const websiteUrlInput = document.getElementById("websiteUrl");
-      websiteUrlInput.addEventListener("input", (e) => {
-        let value = e.target.value.trim();
-        
-        // Check if the input is empty or doesn't start with http:// or https://
-        if (value && !/^https?:\/\//i.test(value)) {
-          // Prevent infinite loop by checking if we're not already processing
-          if (!e.target.dataset.isProcessing) {
-            e.target.dataset.isProcessing = "true";
-            
-            // Prepend https:// and preserve the rest of the input
-            const cursorPosition = e.target.selectionStart;
-            const beforeCursor = value.slice(0, cursorPosition);
-            const afterCursor = value.slice(cursorPosition);
-            
-            // Only prepend if the input doesn't already have a protocol
-            e.target.value = "https://" + value;
-            
-            // Adjust cursor position to account for added "https://"
-            const newCursorPosition = cursorPosition + "https://".length;
-            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-            
-            delete e.target.dataset.isProcessing;
-          }
-        }
-        
-        // Ensure validation errors are cleared on input
-        clearFieldError(e.target);
-      });
-
       function validateStep(stepId) {
         if (stepId === "step1") return true;
         if (stepId === "step2") {
@@ -1784,7 +1725,7 @@
             okUrl = false;
           }
           if (!okUrl) {
-            showFieldError(urlEl, "Please enter a valid URL (https://...)");
+            showFieldError(urlEl, "Please enter a valid URL[](https://...)");
             valid = false;
           }
           if (!pageTypeEl.value) {
@@ -1868,10 +1809,6 @@
           domain = new URL(websiteUrl).hostname;
         } catch (e) {}
         document.getElementById("userDomain").textContent = domain;
-
-        // Set screenshot URL
-        document.getElementById("screenshot-url").textContent = websiteUrl;
-        document.getElementById("screenshot-browser-url").textContent = websiteUrl;
 
         const minMs = 10000,
           maxMs = 20000;
@@ -1981,6 +1918,36 @@
       }
       updateSlider();
       setInterval(updateSlider, 4000);
+      // Auto-prepend https:// to website URL
+const websiteUrlInput = document.getElementById("websiteUrl");
+websiteUrlInput.addEventListener("input", (e) => {
+  let value = e.target.value.trim();
+  
+  // Check if the input is empty or doesn't start with http:// or https://
+  if (value && !/^https?:\/\//i.test(value)) {
+    // Prevent infinite loop by checking if we're not already processing
+    if (!e.target.dataset.isProcessing) {
+      e.target.dataset.isProcessing = "true";
+      
+      // Prepend https:// and preserve the rest of the input
+      const cursorPosition = e.target.selectionStart;
+      const beforeCursor = value.slice(0, cursorPosition);
+      const afterCursor = value.slice(cursorPosition);
+      
+      // Only prepend if the input doesn't already have a protocol
+      e.target.value = "https://" + value;
+      
+      // Adjust cursor position to account for added "https://"
+      const newCursorPosition = cursorPosition + "https://".length;
+      e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+      
+      delete e.target.dataset.isProcessing;
+    }
+  }
+  
+  // Ensure validation errors are cleared on input
+  clearFieldError(e.target);
+});
     </script>
   </body>
 </html>
