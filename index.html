@@ -199,25 +199,12 @@
         padding: 60px;
         position: relative;
         transform-style: preserve-3d;
-        animation: cardFloat 6s ease-in-out infinite,
-          cardEntrance 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        animation: cardEntrance 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         box-shadow: 0 8px 32px rgba(171, 255, 0, 0.1),
           0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1),
           inset 0 1px 0 rgba(0, 255, 0, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.1),
           inset 0 -2px 4px rgba(0, 0, 0, 0.2),
           inset 0 -2px 4px rgba(0, 0, 0, 0.1);
-      }
-      @keyframes cardFloat {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        25% {
-          transform: translateY(-10px);
-        }
-        75% {
-          transform: translateY(5px);
-        }
       }
       @keyframes cardEntrance {
         0% {
@@ -473,6 +460,7 @@
 
       .form-group {
         margin-bottom: 16px;
+        position: relative;
       }
       label {
         display: block;
@@ -485,6 +473,7 @@
       input[type="number"],
       input[type="email"],
       input[type="url"],
+      input[type="tel"],
       select {
         width: 100%;
         padding: 16px;
@@ -520,6 +509,50 @@
         color: #ef4444;
         margin-top: 8px;
         text-align: center;
+      }
+
+      .tooltip {
+        display: inline-block;
+        position: relative;
+        width: 16px;
+        height: 16px;
+        margin-left: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        color: #fff;
+        background: var(--brand);
+        border-radius: 50%;
+        text-align: center;
+        line-height: 16px;
+      }
+      .tooltip:hover .tooltip-text {
+        visibility: visible;
+        opacity: 1;
+      }
+      .tooltip-text {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: -10px;
+        left: 24px;
+        background: rgba(0, 0, 0, 0.9);
+        color: #fff;
+        font-size: 12px;
+        padding: 8px;
+        border-radius: 6px;
+        width: 200px;
+        z-index: 10;
+        transition: opacity 0.2s ease;
+      }
+      .tooltip-text::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 100%;
+        margin-top: -5px;
+        border: 5px solid transparent;
+        border-right-color: rgba(0, 0, 0, 0.9);
       }
 
       .cta-button {
@@ -734,9 +767,8 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         overflow: hidden;
         position: relative;
-        height: 300px;
-        width: 100%;
-        max-width: 500px;
+        max-width: 900px; /* Match screenshot width */
+        width: 100%; /* Responsive */
         margin: 20px auto;
         border: 1px solid #e5e7eb;
       }
@@ -780,9 +812,8 @@
       }
       .browser-content {
         position: relative;
-        height: calc(100% - 34px);
         background: #fff;
-        overflow: hidden;
+        overflow: hidden; /* For scan overlay */
       }
       .scan-overlay {
         position: absolute;
@@ -793,7 +824,7 @@
         background: linear-gradient(
           90deg,
           transparent 0%,
-          rgba(76, 175, 80, 0.3) 50%,
+          rgba(76, 175, 80, 0.1) 50%,
           transparent 100%
         );
         transform: translateX(-100%);
@@ -808,28 +839,21 @@
           transform: translateX(100%);
         }
       }
-      .mock-content {
-        padding: 20px;
-        filter: blur(2px);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .mock-image {
+      #screenshot-container {
         width: 100%;
-        height: 120px;
-        background: #e5e7eb;
-        border-radius: 4px;
+        max-height: 400px; /* Focus on hero section */
+        overflow: auto; /* Enable scrolling if needed */
+        display: block;
+        background: white;
       }
-      .mock-text {
-        width: 100%;
-        height: 20px;
-        background: #e5e7eb;
-        border-radius: 4px;
-      }
-      .mock-text.short {
-        width: 60%;
+      #screenshot {
+        width: 100%; /* Fill container */
+        max-width: 1200px; /* Increased for better resolution */
+        height: auto; /* Maintain aspect ratio */
+        display: block;
+        object-fit: contain; /* Prevent distortion */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
       }
       .analysis-meta {
         margin-top: 10px;
@@ -981,7 +1005,6 @@
         margin-bottom: 12px;
         border-radius: 8px;
         color: rgba(0, 0, 0, 0.8);
-        filter: blur(2px);
         user-select: none;
       }
       .priority-high {
@@ -1049,6 +1072,33 @@
         height: auto;
       }
 
+      .calculation-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .calculation-table th,
+      .calculation-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .calculation-table th {
+        background: rgba(0, 0, 0, 0.05);
+        font-weight: 700;
+        color: var(--brand);
+      }
+      .calculation-table td {
+        color: rgba(0, 0, 0, 0.8);
+      }
+      .calculation-table tr:last-child td {
+        border-bottom: none;
+      }
+
       .sr-only {
         position: absolute;
         width: 1px;
@@ -1059,6 +1109,16 @@
         clip: rect(0, 0, 0, 0);
         white-space: nowrap;
         border: 0;
+      }
+
+      #step7-screenshot {
+        width: 100%;
+        max-width: 1200px;
+        height: auto;
+        display: block;
+        object-fit: contain;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
       }
 
       @media (max-width: 640px) {
@@ -1104,6 +1164,7 @@
         input[type="number"],
         input[type="email"],
         input[type="url"],
+        input[type="tel"],
         select {
           padding: 12px;
           font-size: 14px;
@@ -1123,7 +1184,16 @@
           font-size: 16px;
         }
         .gt-browser-window {
-          height: 250px;
+          height: 350px;
+          max-width: 100%;
+        }
+        .browser-content {
+          height: 316px;
+        }
+        #screenshot-container {
+          max-height: 316px;
+        }
+        #screenshot {
           max-width: 100%;
         }
         .browser-url-bar {
@@ -1135,11 +1205,17 @@
         .shape-1,
         .shape-2,
         .shape-3 {
-          display: none; /* Hide floating shapes on small screens */
+          display: none;
         }
         .neon-line-1,
         .neon-line-2 {
-          display: none; /* Hide neon lines on small screens */
+          display: none;
+        }
+        .tooltip-text {
+          width: 150px;
+          font-size: 11px;
+          left: 20px;
+          top: -20px;
         }
       }
     </style>
@@ -1213,7 +1289,7 @@
         </div>
 
         <div class="step" id="step2">
-          <h2>Got it! What are you struggling with?</h2>
+          <h2>What's Your Biggest Issue?</h2>
           <div class="challenge-grid" id="challengeGrid">
             <div
               class="challenge-card"
@@ -1246,14 +1322,17 @@
         <div class="step" id="step3">
           <h2>Let's get started with your numbers!</h2>
           <div class="form-group">
-            <label>Monthly revenue ($)</label>
+            <label>
+              Monthly revenue ($)
+              <span class="tooltip">?
+                <span class="tooltip-text">Your store's total revenue per month from all sales channels.</span>
+              </span>
+            </label>
             <input
-              type="number"
+              type="text"
               id="monthlyRevenue"
-              placeholder="Total revenue per month"
+              placeholder="$ Total revenue per month"
               required
-              min="0"
-              step="any"
             />
             <div
               class="error-text"
@@ -1262,14 +1341,17 @@
             ></div>
           </div>
           <div class="form-group">
-            <label>Monthly ad spend ($)</label>
+            <label>
+              Monthly ad spend ($)
+              <span class="tooltip">?
+                <span class="tooltip-text">Total amount spent on advertising across all channels (e.g., Google Ads, Facebook Ads).</span>
+              </span>
+            </label>
             <input
-              type="number"
+              type="text"
               id="monthlyAdSpend"
-              placeholder="Total ad spend on all channels"
+              placeholder="$ Total ad spend on all channels"
               required
-              min="0"
-              step="any"
             />
             <div
               class="error-text"
@@ -1286,7 +1368,12 @@
         <div class="step" id="step4">
           <h2>Perfect! Now add your Shopify metrics</h2>
           <div class="form-group">
-            <label>Conversion rate (%)</label>
+            <label>
+              Conversion rate (%)
+              <span class="tooltip">?
+                <span class="tooltip-text">Percentage of website visitors who complete a purchase (e.g., 2% means 2 out of 100 visitors buy).</span>
+              </span>
+            </label>
             <input
               type="number"
               id="conversionRate"
@@ -1303,7 +1390,12 @@
             ></div>
           </div>
           <div class="form-group">
-            <label>Average order value ($)</label>
+            <label>
+              Average order value ($)
+              <span class="tooltip">?
+                <span class="tooltip-text">Average dollar amount per order, calculated as total revenue divided by number of orders.</span>
+              </span>
+            </label>
             <input
               type="number"
               id="aov"
@@ -1315,13 +1407,17 @@
             <div class="error-text" id="err-aov" style="display: none"></div>
           </div>
           <div class="form-group">
-            <label>Subscription rate (%)</label>
+            <label>
+              Subscription rate (%) (Optional)
+              <span class="tooltip">?
+                <span class="tooltip-text">Percentage of customers who opt for a subscription plan, if applicable to your store.</span>
+              </span>
+            </label>
             <input
               type="number"
               id="subscriptionRate"
               step="0.01"
               placeholder="For subscription brands"
-              required
               min="0"
               max="100"
             />
@@ -1364,8 +1460,8 @@
             <label>Type of page</label>
             <select id="pageType" required>
               <option value="">Select page type</option>
-              <option value="pdf">PDF</option>
-              <option value="lander">Lander</option>
+              <option value="Home">Home Page</option>
+              <option value="Landing Page">Landing Page</option>
               <option value="collection">Collection page</option>
               <option value="product">Product page</option>
               <option value="other">Other</option>
@@ -1418,10 +1514,8 @@
               </div>
               <div class="browser-content">
                 <div class="scan-overlay" id="scanOverlay"></div>
-                <div class="mock-content">
-                  <div class="mock-image"></div>
-                  <div class="mock-text"></div>
-                  <div class="mock-text short"></div>
+                <div id="screenshot-container">
+                  <img id="screenshot" alt="Website Hero Section Screenshot" src="https://i.gifer.com/ZZ5H.gif" onerror="this.src='https://via.placeholder.com/900x400?text=Screenshot+Unavailable';">
                 </div>
               </div>
             </div>
@@ -1443,59 +1537,53 @@
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
-          <img src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
+          <img id="step7-screenshot" src="https://staging.kodexolabs.com/wp-content/uploads/2025/09/website.png" alt="Website Preview" class="results-image">
           <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
-              Estimated CRO Results
+              Estimated Potential Revenue Uplift
             </h3>
-            <div class="metric-grid">
-              <div class="metric-box">
-                <div class="metric-value" id="revenuePotential">$151,828</div>
-                <div class="metric-label">Revenue Potential / Month</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value">+1.82%</div>
-                <div class="metric-label">Conversion Rate Uplift</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value" id="costInaction">-$629,606</div>
-                <div class="metric-label">Cost of Inaction / Month</div>
-              </div>
-              <div class="metric-box">
-                <div class="metric-value">-18,640</div>
-                <div class="metric-label">Orders Lost / Month</div>
-              </div>
-            </div>
+            <p class="description" id="upliftCalculation">
+              Based on your industry and current conversion rate, here's the potential revenue uplift:
+            </p>
+            <table class="calculation-table">
+              <tr>
+                <th>Metric</th>
+                <th>Value</th>
+              </tr>
+              <tr>
+                <td>Your Current Conversion Rate</td>
+                <td id="currentConversionRate"></td>
+              </tr>
+              <tr>
+                <td>Industry Benchmark Conversion Rate</td>
+                <td id="benchmarkConversionRate"></td>
+              </tr>
+              <tr>
+                <td>Potential Conversion Rate Uplift</td>
+                <td id="conversionRateUplift"></td>
+              </tr>
+              <tr>
+                <td>Estimated Monthly Revenue Uplift</td>
+                <td id="revenuePotential"></td>
+              </tr>
+              <tr>
+                <td>Cost of Inaction (Per Month)</td>
+                <td id="costInaction"></td>
+              </tr>
+            </table>
           </div>
           <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
-              Critical Issues Found (Preview)
+              Critical Issues Found <br> These issues are partly the reason why your <span id="mainMetric"></span> is low.
             </h3>
             <div class="issue-item priority-high">
-              🔴 High Priority: Site speed is 68% slower than competitors
+              🔴 A total of 6 High priority issues were found
             </div>
             <div class="issue-item priority-medium">
-              🟡 Medium Priority: 234 product pages have duplicate content
+              🟡 A total of 9 medium priority issues were found
             </div>
             <div class="issue-item priority-low">
-              🟢 Quick Win: 89 high-value keywords ranking on page 2
-            </div>
-          </div>
-          <div class="results-card">
-            <h3 style="color: var(--brand); margin-bottom: 20px">
-              Competitor Gap Analysis
-            </h3>
-            <div class="competitor-item">
-              <span>Competitor #1</span
-              ><span style="color: var(--brand)"
-                >145,000 monthly organic visitors</span
-              >
-            </div>
-            <div class="competitor-item">
-              <span>Competitor #2</span
-              ><span style="color: var(--brand)"
-                >89,000 monthly organic visitors</span
-              >
+              🟢 A total of 6 quick wins were found
             </div>
           </div>
           <div class="results-card">
@@ -1523,10 +1611,34 @@
               </div>
             </div>
           </div>
+
           <h3 style="color: var(--brand); text-align: center; margin: 30px 0">
-            Ready to Capture Your <span id="monthlyOpportunity">$151K</span>/mo
-            Opportunity?
+            Want to see the full report and all the issues uncovered?
           </h3>
+
+          <!-- New: Lead capture fields above the CTA -->
+          <div class="results-card" id="leadCaptureCard">
+            <h3 style="color: var(--brand); margin-bottom: 12px">Your details</h3>
+
+            <div class="form-group">
+              <label for="userName">Name</label>
+              <input type="text" id="userName" placeholder="Your full name" required />
+              <div class="error-text" id="err-userName" style="display: none"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="userEmail">Email</label>
+              <input type="email" id="userEmail" placeholder="you@company.com" required />
+              <div class="error-text" id="err-userEmail" style="display: none"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="userPhone">Phone number</label>
+              <input type="tel" id="userPhone" inputmode="tel" placeholder="+1 555 123 4567" required />
+              <div class="error-text" id="err-userPhone" style="display: none"></div>
+            </div>
+          </div>
+
           <button class="cta-button">Book Your Free Strategy Call →</button>
         </div>
       </div>
@@ -1534,393 +1646,584 @@
 
     <script>
       let currentStep = 1;
-      const totalSteps = 7;
-      const steps = document.querySelectorAll(".step");
-      const progressSteps = document.querySelectorAll(".progress-step");
-      const progressContainer = document.getElementById("progressContainer");
+const totalSteps = 7;
+const steps = document.querySelectorAll(".step");
+const progressSteps = document.querySelectorAll(".progress-step");
+const progressContainer = document.getElementById("progressContainer");
 
-      const topProgressEl = document.getElementById("topProgress");
-      const currentStepText = document.getElementById("currentStepText");
-      const totalStepsText = document.getElementById("totalStepsText");
-      const progressFillEl = document.getElementById("progressFill");
-      const progressPercentEl = document.getElementById("progressPercent");
-      if (totalStepsText) totalStepsText.textContent = totalSteps;
+const topProgressEl = document.getElementById("topProgress");
+const currentStepText = document.getElementById("currentStepText");
+const totalStepsText = document.getElementById("totalStepsText");
+const progressFillEl = document.getElementById("progressFill");
+const progressPercentEl = document.getElementById("progressPercent");
+if (totalStepsText) totalStepsText.textContent = totalSteps;
 
-      const analysis = {
-        rafId: null,
-        timeouts: [],
-        startTime: 0,
-        totalDuration: 0,
-        running: false,
-        countdownId: null,
-      };
+const analysis = {
+  rafId: null,
+  timeouts: [],
+  startTime: 0,
+  totalDuration: 0,
+  running: false,
+  countdownId: null,
+};
 
-      function cancelAnalysis() {
-        if (analysis.rafId) cancelAnimationFrame(analysis.rafId);
-        analysis.timeouts.forEach((t) => clearTimeout(t));
-        analysis.timeouts = [];
-        if (analysis.countdownId) clearInterval(analysis.countdownId);
-        analysis.running = false;
-      }
+// Industry benchmark conversion rates
+const benchmarkConversionRates = {
+  fashion: 2.5,
+  health: 3.0,
+  home: 2.8,
+  electronics: 2.0,
+  food: 2.7,
+  jewelry: 2.3,
+  sports: 2.4,
+  other: 2.5
+};
 
-      function showStep(stepNumber) {
-        steps.forEach((s) => s.classList.remove("active"));
-        const active = document.getElementById(`step${stepNumber}`);
-        if (active) active.classList.add("active");
+// Store form data
+let formData = {
+  challenge: '',
+  monthlyRevenue: 0,
+  monthlyAdSpend: 0,
+  conversionRate: 0,
+  aov: 0,
+  subscriptionRate: 0,
+  websiteUrl: '',
+  pageType: '',
+  industry: '',
+  name: '',
+  email: '',
+  phone: ''
+};
 
-        progressContainer.style.display =
-          stepNumber >= 2 && stepNumber <= 5 ? "flex" : "none";
+function formatCurrency(inputEl) {
+  let value = inputEl.value.replace(/[^0-9.]/g, '');
+  if (value === '' || isNaN(parseFloat(value))) {
+    inputEl.value = '';
+    return;
+  }
+  const num = parseFloat(value);
+  inputEl.value = '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
 
-        progressSteps.forEach((p, i) => {
-          const idx = i + 2;
-          p.classList.remove("active", "completed");
-          if (stepNumber > idx) p.classList.add("completed");
-          else if (stepNumber === idx) p.classList.add("active");
-        });
+function parseCurrency(value) {
+  return parseFloat(value.replace(/[^0-9.]/g, '')) || 0;
+}
 
-        topProgressEl.style.display = "block";
-        currentStepText.textContent = Math.min(stepNumber, totalSteps);
-        const percent = Math.round(((stepNumber - 1) / (totalSteps - 1)) * 100);
-        progressFillEl.style.width = percent + "%";
-        progressPercentEl.textContent = percent + "%";
-      }
+// Apply currency formatting to Step 3 inputs
+['monthlyRevenue', 'monthlyAdSpend'].forEach(id => {
+  const input = document.getElementById(id);
+  input.addEventListener('input', () => {
+    formatCurrency(input);
+    clearFieldError(input);
+  });
+  input.addEventListener('blur', () => {
+    if (input.value === '') return;
+    formatCurrency(input);
+  });
+});
 
-      function nextStep() {
-        if (currentStep < totalSteps) {
-          currentStep++;
-          showStep(currentStep);
+function cancelAnalysis() {
+  if (analysis.rafId) cancelAnimationFrame(analysis.rafId);
+  analysis.timeouts.forEach((t) => clearTimeout(t));
+  analysis.timeouts = [];
+  if (analysis.countdownId) clearInterval(analysis.countdownId);
+  analysis.running = false;
+}
+
+function showStep(stepNumber) {
+  steps.forEach((s) => s.classList.remove("active"));
+  const active = document.getElementById(`step${stepNumber}`);
+  if (active) active.classList.add("active");
+
+  progressContainer.style.display =
+    stepNumber >= 2 && stepNumber <= 5 ? "flex" : "none";
+
+  progressSteps.forEach((p, i) => {
+    const idx = i + 2;
+    p.classList.remove("active", "completed");
+    if (stepNumber > idx) p.classList.add("completed");
+    else if (stepNumber === idx) p.classList.add("active");
+  });
+
+  topProgressEl.style.display = "block";
+  currentStepText.textContent = Math.min(stepNumber, totalSteps);
+  const percent = Math.round(((stepNumber - 1) / (totalSteps - 1)) * 100);
+  progressFillEl.style.width = percent + "%";
+  progressPercentEl.textContent = percent + "%";
+}
+
+function nextStep() {
+  if (currentStep < totalSteps) {
+    currentStep++;
+    showStep(currentStep);
+  }
+}
+function previousStep() {
+  cancelAnalysis();
+  if (currentStep > 1) {
+    currentStep--;
+    showStep(currentStep);
+  }
+}
+
+function selectChallenge(el, value) {
+  document
+    .querySelectorAll(".challenge-card")
+    .forEach((c) => c.classList.remove("selected"));
+  el.classList.add("selected");
+  formData.challenge = value;
+}
+
+function showFieldError(inputEl, msg) {
+  if (!inputEl) return;
+  inputEl.classList.add("input-error");
+  const err = document.getElementById("err-" + inputEl.id);
+  if (err) {
+    err.textContent = msg;
+    err.style.display = "block";
+  }
+}
+function clearFieldError(inputEl) {
+  if (!inputEl) return;
+  inputEl.classList.remove("input-error");
+  const err = document.getElementById("err-" + inputEl.id);
+  if (err) {
+    err.textContent = "";
+    err.style.display = "none";
+  }
+}
+document.querySelectorAll("input,select").forEach((el) => {
+  el.addEventListener("input", () => clearFieldError(el));
+  el.addEventListener("change", () => clearFieldError(el));
+});
+
+function validateStep(stepId) {
+  if (stepId === "step1") return true;
+  if (stepId === "step2") {
+    const selected = document.querySelector(".challenge-card.selected");
+    const err = document.getElementById("challengeError");
+    if (!selected) {
+      err.style.display = "block";
+      return false;
+    }
+    err.style.display = "none";
+    return true;
+  }
+  if (stepId === "step3") {
+    let valid = true;
+    const rev = document.getElementById("monthlyRevenue");
+    const ad = document.getElementById("monthlyAdSpend");
+    const revVal = parseCurrency(rev.value);
+    const adVal = parseCurrency(ad.value);
+    formData.monthlyRevenue = revVal;
+    formData.monthlyAdSpend = adVal;
+    if (!(revVal >= 0)) {
+      showFieldError(rev, "Please enter a valid monthly revenue (>= 0).");
+      valid = false;
+    }
+    if (!(adVal >= 0)) {
+      showFieldError(ad, "Please enter a valid monthly ad spend (>= 0).");
+      valid = false;
+    }
+    return valid;
+  }
+  if (stepId === "step4") {
+    let valid = true;
+    const cr = document.getElementById("conversionRate");
+    const aov = document.getElementById("aov");
+    const sub = document.getElementById("subscriptionRate");
+    const crVal = parseFloat(cr.value) || 0;
+    const aovVal = parseFloat(aov.value) || 0;
+    const subVal = parseFloat(sub.value) || 0;
+    formData.conversionRate = crVal;
+    formData.aov = aovVal;
+    formData.subscriptionRate = subVal;
+    if (!(crVal >= 0 && crVal <= 100)) {
+      showFieldError(
+        cr,
+        "Enter a valid conversion rate between 0 and 100."
+      );
+      valid = false;
+    }
+    if (!(aovVal > 0)) {
+      showFieldError(aov, "Enter a valid AOV (> 0).");
+      valid = false;
+    }
+    if (subVal < 0 || subVal > 100) {
+      showFieldError(
+        sub,
+        "Enter a valid subscription rate between 0 and 100, or leave blank."
+      );
+      valid = false;
+    }
+    return valid;
+  }
+  if (stepId === "step5") {
+    let valid = true;
+    const urlEl = document.getElementById("websiteUrl");
+    const pageTypeEl = document.getElementById("pageType");
+    const industryEl = document.getElementById("industry");
+    formData.websiteUrl = urlEl.value;
+    formData.pageType = pageTypeEl.value;
+    formData.industry = industryEl.value;
+    let okUrl = true;
+    try {
+      const u = new URL(urlEl.value);
+      if (!/^https?:$/.test(u.protocol)) okUrl = false;
+      if (!u.hostname.includes(".")) okUrl = false;
+    } catch (e) {
+      okUrl = false;
+    }
+    if (!okUrl) {
+      showFieldError(urlEl, "Please enter a valid URL[](https://...)");
+      valid = false;
+    }
+    if (!pageTypeEl.value) {
+      pageTypeEl.classList.add("input-error");
+      const e1 = document.getElementById("err-pageType");
+      e1.textContent = "Please select a page type.";
+      e1.style.display = "block";
+      valid = false;
+    }
+    if (!industryEl.value) {
+      industryEl.classList.add("input-error");
+      const e2 = document.getElementById("err-industry");
+      e2.textContent = "Please select an industry.";
+      e2.style.display = "block";
+      valid = false;
+    }
+    pageTypeEl.addEventListener("change", () => {
+      pageTypeEl.classList.remove("input-error");
+      document.getElementById("err-pageType").style.display = "none";
+    });
+    industryEl.addEventListener("change", () => {
+      industryEl.classList.remove("input-error");
+      document.getElementById("err-industry").style.display = "none";
+    });
+    return valid;
+  }
+  return true;
+}
+
+// Validate name, email, phone on Step 7
+function validateLeadForm() {
+  const nameEl = document.getElementById('userName');
+  const emailEl = document.getElementById('userEmail');
+  const phoneEl = document.getElementById('userPhone');
+
+  [nameEl, emailEl, phoneEl].forEach(clearFieldError);
+
+  let valid = true;
+
+  const nameVal = nameEl.value.trim();
+  if (!nameVal) {
+    showFieldError(nameEl, 'Please enter your name.');
+    valid = false;
+  }
+
+  const emailVal = emailEl.value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+  if (!emailOk) {
+    showFieldError(emailEl, 'Enter a valid email address.');
+    valid = false;
+  }
+
+  const phoneVal = phoneEl.value.trim();
+  const phoneDigits = phoneVal.replace(/\D/g, '');
+  if (phoneDigits.length < 7) {
+    showFieldError(phoneEl, 'Enter a valid phone number.');
+    valid = false;
+  }
+
+  if (valid) {
+    formData.name = nameVal;
+    formData.email = emailVal;
+    formData.phone = phoneVal;
+  }
+  return valid;
+}
+
+const analysisItems = [
+  "Crawling your website structure",
+  "Analyzing copy related issue",
+  "Scanning for UX related issues bugs",
+  "Conducting full CRO Audit benchmarking",
+];
+
+function buildAnalysisList() {
+  const list = document.getElementById("analysisList");
+  list.innerHTML = "";
+  analysisItems.forEach((txt, i) => {
+    const li = document.createElement("li");
+    li.className = "analysis-item " + (i === 0 ? "active" : "pending");
+    li.innerHTML = `<span class="status-icon"></span><span class="analysis-text">${txt}</span>`;
+    list.appendChild(li);
+  });
+}
+
+function setAnalysisState(stepIndex) {
+  const items = document.querySelectorAll("#analysisList .analysis-item");
+  const aria = document.getElementById("ariaLive");
+  items.forEach((li, i) => {
+    li.classList.remove("pending", "active", "done");
+    if (i < stepIndex) li.classList.add("done");
+    else if (i === stepIndex) li.classList.add("active");
+    else li.classList.add("pending");
+  });
+  const activeItem = items[stepIndex];
+  if (activeItem && aria) {
+    aria.textContent =
+      "Now: " + activeItem.querySelector(".analysis-text").textContent;
+  }
+}
+
+function calculateUplift() {
+  const industry = formData.industry || 'other';
+  const benchmarkRate = benchmarkConversionRates[industry] || 2.5;
+  const currentRate = formData.conversionRate || 0;
+  const monthlyRevenue = formData.monthlyRevenue || 0;
+  const aov = formData.aov || 0;
+
+  // Calculate number of monthly visitors
+  const monthlyOrders = monthlyRevenue / aov;
+  const monthlyVisitors = monthlyOrders / (currentRate / 100);
+
+  // Calculate potential uplift
+  let upliftRate = 0;
+  if (currentRate < benchmarkRate) {
+    upliftRate = benchmarkRate - currentRate;
+  }
+  const potentialOrders = monthlyVisitors * (upliftRate / 100);
+  const revenueUplift = potentialOrders * aov;
+  const costOfInaction = revenueUplift / 6; // Assuming 6 months to achieve full potential
+
+  // Update Step 7 display
+  document.getElementById('currentConversionRate').textContent = currentRate.toFixed(2) + '%';
+  document.getElementById('benchmarkConversionRate').textContent = benchmarkRate.toFixed(2) + '%';
+  document.getElementById('conversionRateUplift').textContent = upliftRate.toFixed(2) + '%';
+  document.getElementById('revenuePotential').textContent = '$' + revenueUplift.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  document.getElementById('costInaction').textContent = '$' + costOfInaction.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  document.getElementById('mainMetric').textContent = formData.challenge === 'low-conversion' ? 'Conversion Rate' : formData.challenge === 'low-aov' ? 'Average Order Value' : 'Subscription Rate';
+}
+
+function startAnalysis() {
+  cancelAnalysis();
+  currentStep = 6;
+  showStep(currentStep);
+  buildAnalysisList();
+
+  const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
+  document.getElementById("analyzing-url").textContent = websiteUrl;
+  document.getElementById("browser-url").textContent = websiteUrl;
+
+  let domain = "yourstore.com";
+  try {
+    domain = new URL(websiteUrl).hostname;
+  } catch (e) {
+    console.error("Invalid URL:", websiteUrl);
+  }
+  document.getElementById("userDomain").textContent = domain;
+
+  // Load high-resolution screenshot of hero section
+  const screenshotUrl = `https://image.thum.io/get/width/1200/crop/600/noanimate/wait/2/${websiteUrl}`;
+  const screenshotImg = document.getElementById("screenshot");
+  const step7ScreenshotImg = document.getElementById("step7-screenshot");
+  screenshotImg.src = "https://i.gifer.com/ZZ5H.gif"; // Show loading GIF
+  step7ScreenshotImg.src = "https://i.gifer.com/ZZ5H.gif"; // Show loading GIF in step 7 as well
+
+  // Debug image loading
+  screenshotImg.onload = () => {
+    console.log("Screenshot loaded successfully:", screenshotUrl);
+  };
+  screenshotImg.onerror = () => {
+    console.error("Failed to load screenshot:", screenshotUrl);
+    screenshotImg.src = "https://via.placeholder.com/900x400?text=Screenshot+Unavailable";
+  };
+
+  setTimeout(() => {
+    screenshotImg.src = screenshotUrl; // Load screenshot after delay
+    step7ScreenshotImg.src = screenshotUrl; // Load the same screenshot in step 7
+  }, 1500);
+
+  const minMs = 10000,
+    maxMs = 20000;
+  const totalMs = Math.floor(minMs + Math.random() * (maxMs - minMs));
+  analysis.running = true;
+
+  const stepsCount = analysisItems.length;
+  const weights = Array.from(
+    { length: stepsCount },
+    () => 0.8 + Math.random() * 1.2
+  );
+  const wSum = weights.reduce((a, b) => a + b, 0);
+  const durations = weights.map((w) => Math.round((w / wSum) * totalMs));
+  const sumExceptLast = durations.slice(0, -1).reduce((a, b) => a + b, 0);
+  durations[durations.length - 1] = totalMs - sumExceptLast;
+
+  let acc = 0;
+  for (let i = 0; i < stepsCount; i++) {
+    analysis.timeouts.push(setTimeout(() => setAnalysisState(i), acc));
+    acc += durations[i];
+  }
+  analysis.timeouts.push(
+    setTimeout(() => {
+      if (!analysis.running) return;
+      analysis.running = false;
+      currentStep = 7;
+      calculateUplift();
+      showStep(currentStep);
+    }, totalMs + 120)
+  );
+
+  const timeLeft = document.getElementById("timeLeft");
+  let remainingMs = totalMs;
+  timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
+  analysis.countdownId = setInterval(() => {
+    remainingMs -= 100;
+    if (remainingMs <= 0) {
+      timeLeft.textContent = "0s";
+      clearInterval(analysis.countdownId);
+      return;
+    }
+    timeLeft.textContent =
+      (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
+  }, 100);
+}
+
+// Calendly loader with prefill support
+function loadCalendlyWidget(prefill = {}) {
+  const step7 = document.getElementById("step7");
+  step7.innerHTML = ""; // Replace Step 7 with Calendly embed
+  step7.classList.remove("no-scroll");
+
+  // Add the text above the Calendly widget
+  const textElement = document.createElement("h2");
+  textElement.textContent = "Book a quick 20 minute call with us get a walkthrough on how to fix all your issues";
+  textElement.style.textAlign = "center";
+  textElement.style.marginBottom = "20px";
+  step7.appendChild(textElement);
+
+  const calendlyContainer = document.createElement("div");
+  calendlyContainer.className = "calendly-container";
+  calendlyContainer.style.marginTop = "20px";
+
+  const calendlyDiv = document.createElement("div");
+  calendlyDiv.id = "calendlyInlineContainer";
+  calendlyDiv.style.minWidth = "320px";
+  calendlyDiv.style.height = "700px";
+
+  calendlyContainer.appendChild(calendlyDiv);
+  step7.appendChild(calendlyContainer);
+
+  const calendlyUrl = "https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1";
+
+  function initWidget() {
+    if (window.Calendly && typeof window.Calendly.initInlineWidget === "function") {
+      window.Calendly.initInlineWidget({
+        url: calendlyUrl,
+        parentElement: calendlyDiv,
+        prefill: {
+          name: prefill.name || "",
+          email: prefill.email || "",
+          customAnswers: {
+            a1: prefill.phone || ""
+          }
         }
-      }
-      function previousStep() {
-        cancelAnalysis();
-        if (currentStep > 1) {
-          currentStep--;
-          showStep(currentStep);
-        }
-      }
-
-      function selectChallenge(el) {
-        document
-          .querySelectorAll(".challenge-card")
-          .forEach((c) => c.classList.remove("selected"));
-        el.classList.add("selected");
-      }
-
-      function showFieldError(inputEl, msg) {
-        if (!inputEl) return;
-        inputEl.classList.add("input-error");
-        const err = document.getElementById("err-" + inputEl.id);
-        if (err) {
-          err.textContent = msg;
-          err.style.display = "block";
-        }
-      }
-      function clearFieldError(inputEl) {
-        if (!inputEl) return;
-        inputEl.classList.remove("input-error");
-        const err = document.getElementById("err-" + inputEl.id);
-        if (err) {
-          err.textContent = "";
-          err.style.display = "none";
-        }
-      }
-      document.querySelectorAll("input,select").forEach((el) => {
-        el.addEventListener("input", () => clearFieldError(el));
-        el.addEventListener("change", () => clearFieldError(el));
       });
+    }
+  }
 
-      function validateStep(stepId) {
-        if (stepId === "step1") return true;
-        if (stepId === "step2") {
-          const selected = document.querySelector(".challenge-card.selected");
-          const err = document.getElementById("challengeError");
-          if (!selected) {
-            err.style.display = "block";
-            return false;
-          }
-          err.style.display = "none";
-          return true;
-        }
-        if (stepId === "step3") {
-          let valid = true;
-          const rev = document.getElementById("monthlyRevenue");
-          const ad = document.getElementById("monthlyAdSpend");
-          const revVal = parseFloat(rev.value);
-          const adVal = parseFloat(ad.value);
-          if (!(revVal >= 0)) {
-            showFieldError(rev, "Please enter a valid monthly revenue (>= 0).");
-            valid = false;
-          }
-          if (!(adVal >= 0)) {
-            showFieldError(ad, "Please enter a valid monthly ad spend (>= 0).");
-            valid = false;
-          }
-          return valid;
-        }
-        if (stepId === "step4") {
-          let valid = true;
-          const cr = document.getElementById("conversionRate");
-          const aov = document.getElementById("aov");
-          const sub = document.getElementById("subscriptionRate");
-          const crVal = parseFloat(cr.value);
-          const aovVal = parseFloat(aov.value);
-          const subVal = parseFloat(sub.value);
-          if (!(crVal >= 0 && crVal <= 100)) {
-            showFieldError(
-              cr,
-              "Enter a valid conversion rate between 0 and 100."
-            );
-            valid = false;
-          }
-          if (!(aovVal > 0)) {
-            showFieldError(aov, "Enter a valid AOV (> 0).");
-            valid = false;
-          }
-          if (!(subVal >= 0 && subVal <= 100)) {
-            showFieldError(
-              sub,
-              "Enter a valid subscription rate between 0 and 100."
-            );
-            valid = false;
-          }
-          return valid;
-        }
-        if (stepId === "step5") {
-          let valid = true;
-          const urlEl = document.getElementById("websiteUrl");
-          const pageTypeEl = document.getElementById("pageType");
-          const industryEl = document.getElementById("industry");
-          let okUrl = true;
-          try {
-            const u = new URL(urlEl.value);
-            if (!/^https?:$/.test(u.protocol)) okUrl = false;
-            if (!u.hostname.includes(".")) okUrl = false;
-          } catch (e) {
-            okUrl = false;
-          }
-          if (!okUrl) {
-            showFieldError(urlEl, "Please enter a valid URL[](https://...)");
-            valid = false;
-          }
-          if (!pageTypeEl.value) {
-            pageTypeEl.classList.add("input-error");
-            const e1 = document.getElementById("err-pageType");
-            e1.textContent = "Please select a page type.";
-            e1.style.display = "block";
-            valid = false;
-          }
-          if (!industryEl.value) {
-            industryEl.classList.add("input-error");
-            const e2 = document.getElementById("err-industry");
-            e2.textContent = "Please select an industry.";
-            e2.style.display = "block";
-            valid = false;
-          }
-          pageTypeEl.addEventListener("change", () => {
-            pageTypeEl.classList.remove("input-error");
-            document.getElementById("err-pageType").style.display = "none";
-          });
-          industryEl.addEventListener("change", () => {
-            industryEl.classList.remove("input-error");
-            document.getElementById("err-industry").style.display = "none";
-          });
-          return valid;
-        }
-        return true;
-      }
+  // Load Calendly script if not present, then init
+  if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = initWidget;
+    document.body.appendChild(script);
+  } else {
+    initWidget();
+  }
+}
 
-      const analysisItems = [
-        "Crawling your website structure",
-        "Analyzing technical SEO health",
-        "Scanning competitor strategies",
-        "Finding keyword opportunities",
-        "Calculating revenue potential",
-        "Generating your custom roadmap",
-      ];
-
-      function buildAnalysisList() {
-        const list = document.getElementById("analysisList");
-        list.innerHTML = "";
-        analysisItems.forEach((txt, i) => {
-          const li = document.createElement("li");
-          li.className = "analysis-item " + (i === 0 ? "active" : "pending");
-          li.innerHTML = `<span class="status-icon"></span><span class="analysis-text">${txt}</span>`;
-          list.appendChild(li);
-        });
-      }
-
-      function setAnalysisState(stepIndex) {
-        const items = document.querySelectorAll("#analysisList .analysis-item");
-        const aria = document.getElementById("ariaLive");
-        items.forEach((li, i) => {
-          li.classList.remove("pending", "active", "done");
-          if (i < stepIndex) li.classList.add("done");
-          else if (i === stepIndex) li.classList.add("active");
-          else li.classList.add("pending");
-        });
-        const activeItem = items[stepIndex];
-        if (activeItem && aria) {
-          aria.textContent =
-            "Now: " + activeItem.querySelector(".analysis-text").textContent;
-        }
-      }
-
-      function startAnalysis() {
-        cancelAnalysis();
-        currentStep = 6;
-        showStep(currentStep);
-        buildAnalysisList();
-
-        const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
-        document.getElementById("analyzing-url").textContent = websiteUrl;
-        document.getElementById("browser-url").textContent = websiteUrl;
-
-        let domain = "yourstore.com";
-        try {
-          domain = new URL(websiteUrl).hostname;
-        } catch (e) {}
-        document.getElementById("userDomain").textContent = domain;
-
-        const minMs = 10000,
-          maxMs = 20000;
-        const totalMs = Math.floor(minMs + Math.random() * (maxMs - minMs));
-        analysis.running = true;
-
-        const stepsCount = analysisItems.length;
-        const weights = Array.from(
-          { length: stepsCount },
-          () => 0.8 + Math.random() * 1.2
-        );
-        const wSum = weights.reduce((a, b) => a + b, 0);
-        const durations = weights.map((w) => Math.round((w / wSum) * totalMs));
-        const sumExceptLast = durations.slice(0, -1).reduce((a, b) => a + b, 0);
-        durations[durations.length - 1] = totalMs - sumExceptLast;
-
-        let acc = 0;
-        for (let i = 0; i < stepsCount; i++) {
-          analysis.timeouts.push(setTimeout(() => setAnalysisState(i), acc));
-          acc += durations[i];
-        }
-        analysis.timeouts.push(
-          setTimeout(() => {
-            if (!analysis.running) return;
-            analysis.running = false;
-            currentStep = 7;
-            showStep(currentStep);
-          }, totalMs + 120)
-        );
-
-        const timeLeft = document.getElementById("timeLeft");
-        let remainingMs = totalMs;
-        timeLeft.textContent = (remainingMs / 1000).toFixed(1) + "s";
-        analysis.countdownId = setInterval(() => {
-          remainingMs -= 100;
-          if (remainingMs <= 0) {
-            timeLeft.textContent = "0s";
-            clearInterval(analysis.countdownId);
-            return;
-          }
-          timeLeft.textContent =
-            (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
-        }, 100);
-      }
-
-      function loadCalendlyWidget() {
-        const step7 = document.getElementById("step7");
-        step7.innerHTML = "";
-        step7.classList.remove("no-scroll"); // Remove no-scroll to allow scrolling
-
-        const logoContainer = document.createElement("div");
-        const calendlyContainer = document.createElement("div");
-        calendlyContainer.className = "calendly-container";
-        calendlyContainer.style.marginTop = "20px";
-        calendlyContainer.innerHTML = `
-          <div class="calendly-inline-widget" data-url="https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1" style="min-width:320px;height:700px;"></div>
-        `;
-        
-        step7.appendChild(logoContainer);
-        step7.appendChild(calendlyContainer);
-
-        if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
-          const script = document.createElement("script");
-          script.type = "text/javascript";
-          script.src = "https://assets.calendly.com/assets/external/widget.js";
-          script.async = true;
-          document.body.appendChild(script);
-        }
-      }
-
-      document.querySelectorAll(".cta-button").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const stepId = btn.closest(".step").id;
-          if (!validateStep(stepId)) return;
-          let cb = null;
-          if (
-            stepId === "step1" ||
-            stepId === "step2" ||
-            stepId === "step3" ||
-            stepId === "step4"
-          ) {
-            cb = nextStep;
-          } else if (stepId === "step5") {
-            cb = startAnalysis;
-          } else if (stepId === "step7") {
-            cb = loadCalendlyWidget;
-          }
-          if (cb) cb();
-        });
+// Button click handlers
+document.querySelectorAll(".cta-button").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const stepId = btn.closest(".step").id;
+    if (!validateStep(stepId)) return;
+    let cb = null;
+    if (
+      stepId === "step1" ||
+      stepId === "step2" ||
+      stepId === "step3" ||
+      stepId === "step4"
+    ) {
+      cb = nextStep;
+    } else if (stepId === "step5") {
+      cb = startAnalysis;
+    } else if (stepId === "step7") {
+      if (!validateLeadForm()) return;
+      cb = () => loadCalendlyWidget({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone
       });
+    }
+    if (cb) cb();
+  });
+});
 
-      function createBackButtons() {
-        steps.forEach((step) => {
-          if (step.id !== "step1" && !['step6', 'step7'].includes(step.id) && !step.querySelector(".back-button")) {
-            const backBtn = document.createElement("button");
-            backBtn.className = "back-button";
-            backBtn.type = "button";
-            backBtn.innerHTML = "← Back";
-            step.insertBefore(backBtn, step.firstElementChild);
-            backBtn.addEventListener("click", (e) => {
-              e.preventDefault();
-              previousStep();
-            });
-          }
-        });
-      }
-      createBackButtons();
-
-      const sliderContent = [
-        { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
-        { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
-        { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
-        { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
-      ];
-      let currentSlideIdx = 0;
-      const slideContainer = document.getElementById("slideContent");
-      function updateSlider() {
-        slideContainer.innerHTML = `<div class="slide-title">${sliderContent[currentSlideIdx].title}</div><div class="slide-desc">${sliderContent[currentSlideIdx].desc}</div>`;
-        currentSlideIdx = (currentSlideIdx + 1) % sliderContent.length;
-      }
-      updateSlider();
-      setInterval(updateSlider, 4000);
-
-      const websiteUrlInput = document.getElementById("websiteUrl");
-      websiteUrlInput.addEventListener("input", (e) => {
-        let value = e.target.value.trim();
-        if (value && !/^https?:\/\//i.test(value)) {
-          if (!e.target.dataset.isProcessing) {
-            e.target.dataset.isProcessing = "true";
-            const cursorPosition = e.target.selectionStart;
-            const beforeCursor = value.slice(0, cursorPosition);
-            const afterCursor = value.slice(cursorPosition);
-            e.target.value = "https://" + value;
-            const newCursorPosition = cursorPosition + "https://".length;
-            e.target.setSelectionRange(newCursorPosition, newCursorPosition);
-            delete e.target.dataset.isProcessing;
-          }
-        }
-        clearFieldError(e.target);
+function createBackButtons() {
+  steps.forEach((step) => {
+    if (step.id !== "step1" && !['step6', 'step7'].includes(step.id) && !step.querySelector(".back-button")) {
+      const backBtn = document.createElement("button");
+      backBtn.className = "back-button";
+      backBtn.type = "button";
+      backBtn.innerHTML = "← Back";
+      step.insertBefore(backBtn, step.firstElementChild);
+      backBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        previousStep();
       });
+    }
+  });
+}
+createBackButtons();
+
+const sliderContent = [
+  { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+  { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+  { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+  { title: "Slides Of What Is Inside Of An AI Report", desc: "" },
+];
+let currentSlideIdx = 0;
+const slideContainer = document.getElementById("slideContent");
+function updateSlider() {
+  slideContainer.innerHTML = `<div class="slide-title">${sliderContent[currentSlideIdx].title}</div><div class="slide-desc">${sliderContent[currentSlideIdx].desc}</div>`;
+  currentSlideIdx = (currentSlideIdx + 1) % sliderContent.length;
+}
+updateSlider();
+setInterval(updateSlider, 4000);
+
+const websiteUrlInput = document.getElementById("websiteUrl");
+websiteUrlInput.addEventListener("input", (e) => {
+  let value = e.target.value.trim();
+  if (value && !/^https?:\/\//i.test(value)) {
+    if (!e.target.dataset.isProcessing) {
+      e.target.dataset.isProcessing = "true";
+      const cursorPosition = e.target.selectionStart;
+      const beforeCursor = value.slice(0, cursorPosition);
+      const afterCursor = value.slice(cursorPosition);
+      e.target.value = "https://" + value;
+      const newCursorPosition = cursorPosition + "https://".length;
+      e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+      setTimeout(() => {
+        e.target.dataset.isProcessing = "";
+      }, 0);
+    }
+  }
+});
     </script>
   </body>
 </html>
