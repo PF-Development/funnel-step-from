@@ -1643,8 +1643,9 @@
       </div>
     </div>
 
-    <script>
-      let currentStep = 1;
+   <script>
+
+    let currentStep = 1;
 const totalSteps = 7;
 const steps = document.querySelectorAll(".step");
 const progressSteps = document.querySelectorAll(".progress-step");
@@ -1709,23 +1710,15 @@ function parseCurrency(value) {
 }
 
 // Apply currency formatting to Step 3 inputs
-// Apply currency formatting to Step 3 inputs
 ['monthlyRevenue', 'monthlyAdSpend'].forEach(id => {
   const input = document.getElementById(id);
-  
-  // Format currency on input
   input.addEventListener('input', () => {
     clearFieldError(input);
-    // Allow user to type without immediate formatting to avoid cursor issues
   });
-
-  // Format currency on blur (when user leaves the input field)
   input.addEventListener('blur', () => {
-    if (input.value.trim() === '') return; // Skip if empty
+    if (input.value.trim() === '') return;
     formatCurrency(input);
   });
-
-  // Optional: Format after a short delay to catch completed input
   let typingTimer;
   input.addEventListener('input', () => {
     clearTimeout(typingTimer);
@@ -1733,21 +1726,10 @@ function parseCurrency(value) {
       if (input.value.trim() !== '') {
         formatCurrency(input);
       }
-    }, 1000); // 1-second delay to assume user has finished typing
+    }, 1000);
   });
 });
 
-// Updated formatCurrency function
-function formatCurrency(inputEl) {
-  let value = inputEl.value.replace(/[^0-9.]/g, ''); // Remove non-numeric characters except decimal
-  if (value === '' || isNaN(parseFloat(value))) {
-    inputEl.value = ''; // Clear if invalid
-    return;
-  }
-  const num = parseFloat(value);
-  // Format with $ and ensure 2 decimal places
-  inputEl.value = '$' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
 function cancelAnalysis() {
   if (analysis.rafId) cancelAnimationFrame(analysis.rafId);
   analysis.timeouts.forEach((t) => clearTimeout(t));
@@ -1784,6 +1766,7 @@ function nextStep() {
     showStep(currentStep);
   }
 }
+
 function previousStep() {
   cancelAnalysis();
   if (currentStep > 1) {
@@ -1809,6 +1792,7 @@ function showFieldError(inputEl, msg) {
     err.style.display = "block";
   }
 }
+
 function clearFieldError(inputEl) {
   if (!inputEl) return;
   inputEl.classList.remove("input-error");
@@ -1818,6 +1802,7 @@ function clearFieldError(inputEl) {
     err.style.display = "none";
   }
 }
+
 document.querySelectorAll("input,select").forEach((el) => {
   el.addEventListener("input", () => clearFieldError(el));
   el.addEventListener("change", () => clearFieldError(el));
@@ -1843,8 +1828,8 @@ function validateStep(stepId) {
     const adVal = parseCurrency(ad.value);
     formData.monthlyRevenue = revVal;
     formData.monthlyAdSpend = adVal;
-    if (!(revVal >= 0)) {
-      showFieldError(rev, "Please enter a valid monthly revenue (>= 0).");
+    if (revVal < 50000) {
+      showFieldError(rev, "Monthly revenue must be at least $50,000.");
       valid = false;
     }
     if (!(adVal >= 0)) {
@@ -1901,7 +1886,7 @@ function validateStep(stepId) {
       okUrl = false;
     }
     if (!okUrl) {
-      showFieldError(urlEl, "Please enter a valid URL[](https://...)");
+      showFieldError(urlEl, "Please enter a valid URL (https://...)");
       valid = false;
     }
     if (!pageTypeEl.value) {
@@ -1931,7 +1916,6 @@ function validateStep(stepId) {
   return true;
 }
 
-// Validate name, email, phone on Step 7
 function validateLeadForm() {
   const nameEl = document.getElementById('userName');
   const emailEl = document.getElementById('userEmail');
@@ -2004,32 +1988,56 @@ function setAnalysisState(stepIndex) {
 }
 
 function calculateUplift() {
+  // Retrieve inputs from formData
   const industry = formData.industry || 'other';
+  const currentRate = parseFloat(formData.conversionRate) || 0;
+  const monthlyRevenue = parseFloat(formData.monthlyRevenue) || 0;
+  const aov = parseFloat(formData.aov) || 0;
   const benchmarkRate = benchmarkConversionRates[industry] || 2.5;
-  const currentRate = formData.conversionRate || 0;
-  const monthlyRevenue = formData.monthlyRevenue || 0;
-  const aov = formData.aov || 0;
 
-  // Calculate number of monthly visitors
-  const monthlyOrders = monthlyRevenue / aov;
-  const monthlyVisitors = monthlyOrders / (currentRate / 100);
-
-  // Calculate potential uplift
+  // Initialize output variables
   let upliftRate = 0;
-  if (currentRate < benchmarkRate) {
-    upliftRate = benchmarkRate - currentRate;
-  }
-  const potentialOrders = monthlyVisitors * (upliftRate / 100);
-  const revenueUplift = potentialOrders * aov;
-  const costOfInaction = revenueUplift / 6; // Assuming 6 months to achieve full potential
+  let revenueUplift = 0;
+  let costOfInaction = 0;
+  let monthlyVisitors = 0;
 
-  // Update Step 7 display
+  // Calculate uplift only if inputs are valid
+  if (aov > 0 && currentRate > 0 && monthlyRevenue > 0) {
+    // Calculate monthly orders and visitors
+    const monthlyOrders = monthlyRevenue / aov;
+    monthlyVisitors = monthlyOrders / (currentRate / 100);
+
+    // Calculate potential uplift
+    if (currentRate < benchmarkRate) {
+      // If current rate is below benchmark, use the difference
+      upliftRate = benchmarkRate - currentRate;
+    } else {
+      // If current rate is at or above benchmark, assume 10% relative uplift
+      upliftRate = currentRate * 0.1;
+    }
+    const potentialOrders = monthlyVisitors * (upliftRate / 100);
+    revenueUplift = potentialOrders * aov;
+    costOfInaction = revenueUplift / 6; // Assume 6 months to achieve full potential
+  }
+
+  // Update Step 7 table with formatted values
   document.getElementById('currentConversionRate').textContent = currentRate.toFixed(2) + '%';
   document.getElementById('benchmarkConversionRate').textContent = benchmarkRate.toFixed(2) + '%';
   document.getElementById('conversionRateUplift').textContent = upliftRate.toFixed(2) + '%';
-  document.getElementById('revenuePotential').textContent = '$' + revenueUplift.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  document.getElementById('costInaction').textContent = '$' + costOfInaction.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  document.getElementById('mainMetric').textContent = formData.challenge === 'low-conversion' ? 'Conversion Rate' : formData.challenge === 'low-aov' ? 'Average Order Value' : 'Subscription Rate';
+  document.getElementById('revenuePotential').textContent = revenueUplift > 0 
+    ? '$' + revenueUplift.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+    : '$0';
+  document.getElementById('costInaction').textContent = costOfInaction > 0 
+    ? '$' + costOfInaction.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })
+    : '$0';
+  
+  // Update main metric based on challenge
+  const metricMap = {
+    'low-conversion': 'Conversion Rate',
+    'low-aov': 'Average Order Value',
+    'low-subscription': 'Subscription Rate'
+  };
+  document.getElementById('mainMetric').textContent = metricMap[formData.challenge] || 'Conversion Rate';
 }
 
 function startAnalysis() {
@@ -2055,11 +2063,9 @@ function startAnalysis() {
   const screenshotImg = document.getElementById("screenshot");
   const step7ScreenshotImg = document.getElementById("step7-screenshot");
   
-  // Load screenshot directly
   screenshotImg.src = screenshotUrl;
   step7ScreenshotImg.src = screenshotUrl;
 
-  // Debug image loading
   screenshotImg.onload = () => {
     console.log("Screenshot loaded successfully:", screenshotUrl);
   };
@@ -2113,13 +2119,12 @@ function startAnalysis() {
       (Math.ceil(remainingMs / 100) / 10).toFixed(1).replace(/\.0$/, "") + "s";
   }, 100);
 }
-// Calendly loader with prefill support
+
 function loadCalendlyWidget(prefill = {}) {
   const step7 = document.getElementById("step7");
-  step7.innerHTML = ""; // Replace Step 7 with Calendly embed
+  step7.innerHTML = "";
   step7.classList.remove("no-scroll");
 
-  // Add the text above the Calendly widget
   const textElement = document.createElement("h2");
   textElement.textContent = "Book a quick 20 minute call with us get a walkthrough on how to fix all your issues";
   textElement.style.textAlign = "center";
@@ -2156,7 +2161,6 @@ function loadCalendlyWidget(prefill = {}) {
     }
   }
 
-  // Load Calendly script if not present, then init
   if (!document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]')) {
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -2169,7 +2173,6 @@ function loadCalendlyWidget(prefill = {}) {
   }
 }
 
-// Button click handlers
 document.querySelectorAll(".cta-button").forEach((btn) => {
   btn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -2247,6 +2250,7 @@ websiteUrlInput.addEventListener("input", (e) => {
     }
   }
 });
-    </script>
+   </script>
   </body>
 </html>
+
