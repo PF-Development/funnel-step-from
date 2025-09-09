@@ -22,18 +22,18 @@
         padding: 0;
         box-sizing: border-box;
       }
-      body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-        background: #fff;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-        position: relative;
-        overflow: hidden;
-      }
-
+     body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #fff;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start; /* Changed from center to allow scrolling */
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto; /* Enable scrolling on the body */
+}
       .shape {
         position: fixed;
         border: 2px solid var(--brand);
@@ -211,13 +211,11 @@
         }
       }
 
-      .step {
-        display: none;
-        animation: stepFadeIn 0.5s ease-out;
-        max-height: 70vh;
-        overflow-y: auto;
-        padding-right: 10px;
-      }
+     .step {
+  display: none;
+  animation: stepFadeIn 0.5s ease-out;
+  /* Removed max-height and overflow-y to disable card scrolling */
+}
       .step.active {
         display: block;
       }
