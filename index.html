@@ -399,9 +399,10 @@
         text-align: center;
       }
       .description {
-        font-size: 16px;
+        font-size: 60px;
         line-height: 1.8;
         color: #000;
+        margin-top: 20px;
         text-align: center;
         margin-bottom: 30px;
         max-width: 450px;
@@ -1321,12 +1322,12 @@
 .uplift {
   font-size: 18px;
   font-weight: 700;
-  color: #22c55e;
+  color: #39FF14;
   text-align: right; /* right aligned like screenshot */
 }
 
 .description {
-  font-size: 13px;
+  font-size: 20px;
   color: #94a3b8; /* light grey */
   line-height: 1.4;
 }
@@ -1396,6 +1397,8 @@
             </div>
           </div>
       <div class="slider-wrapper">
+             <div class="SliderText" ><h1 style="font-size: 35px;">Issues Our AI Can Find</h1></div>
+
   <div class="cards" id="cardSlider">
     <!-- Cards -->
     <div class="card">
@@ -1724,7 +1727,7 @@
         </div>
         <div class="step" id="step7">
           <h2>AI Conversion Report is completed!</h2>
-          <p class="description">
+          <p class="description" id="improvementsText">
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
@@ -1734,40 +1737,7 @@
             alt="Website Preview"
             class="results-image"
           />
-          <!-- <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
-              Estimated Potential Revenue Uplift
-            </h3>
-            <p class="description" id="upliftCalculation" style="text-align: left;">
-              Based on your industry and current conversion rate, here's the potential revenue uplift:
-            </p>
-            <table class="calculation-table">
-              <tr>
-                <th>Metric</th>
-                <th>Value</th>
-              </tr>
-              <tr>
-                <td>Your Current Conversion Rate</td>
-                <td id="currentConversionRate"></td>
-              </tr>
-              <tr>
-                <td>Industry Benchmark Conversion Rate</td>
-                <td id="benchmarkConversionRate"></td>
-              </tr>
-              <tr>
-                <td>Potential Conversion Rate Uplift</td>
-                <td id="conversionRateUplift"></td>
-              </tr>
-              <tr>
-                <td>Estimated Monthly Revenue Uplift</td>
-                <td id="revenuePotential"></td>
-              </tr>
-              <tr>
-                <td>Cost of Inaction (Per Month)</td>
-                <td id="costInaction"></td>
-              </tr>
-            </table>
-          </div> -->
+        
           <div class="results-card">
             <h3 style="color: black; margin-bottom: 20px">
               Estimated Potential Revenue Uplift
@@ -1820,31 +1790,37 @@
             <h3 style="color: black; margin-bottom: 20px">
               Critical Issues Found <br />
               These issues are partly the reason why your
-              <span id="mainMetric"></span> is low.
+              <span id="mainMetric">Conversion Rate</span> is low.
             </h3>
-            <div class="issue-item priority-high">
+
+            <!-- Dynamic issue counts -->
+            <div class="issue-item priority-high" id="highIssues">
               🔴 A total of 6 High priority issues were found
             </div>
-            <div class="issue-item priority-medium">
+            <div class="issue-item priority-medium" id="mediumIssues">
               🟡 A total of 9 medium priority issues were found
             </div>
-            <div class="issue-item priority-low">
+            <div class="issue-item priority-low" id="lowIssues">
               🟢 A total of 6 quick wins were found
             </div>
+
+            <!-- Dynamic italic line -->
             <div
               class="issue-item priority-low"
-              style="
-                font-style: italic;
-                color: #10b981;
-                border-left-color: #10b981;
-              "
+              id="pxlPipeline"
+              style="font-style: italic; color: #10b981; border-left-color: #10b981;"
             >
-              A full split-test pipeline with 6 using the PXL framework has been
+              A full split-test pipeline with 21 using the PXL framework has been
               created for you and is available in your audit
             </div>
           </div>
     <div class="results-card">
-  <h3>Performance Scorecards</h3>
+ <h3>
+  Performance Scorecards 
+  <span style="font-size:14px; color:#aaa; font-weight:normal; margin-left:6px;">
+    (1-100)
+  </span>
+</h3>
   <div class="score-grid">
     <div class="score-item">
       <div class="score-value" id="overallCROScore">0</div>
@@ -1999,6 +1975,50 @@
     }
   }
 
+  // Updated randomizeStep7 function
+  function randomizeStep7() {
+    // Pick a total improvements number (15–30)
+    const total = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
+
+    // Split into High / Medium / Low
+    const high = Math.floor(total * 0.3 + Math.random() * 2);
+    const medium = Math.floor(total * 0.4 + Math.random() * 2);
+    const low = total - (high + medium);
+
+    // Update improvements text
+    const domain = document.getElementById("userDomain").textContent;
+    document.getElementById("improvementsText").innerHTML =
+      `AI has detected <strong>${total} improvements</strong> on 
+      <span id="userDomain">${domain}</span>`;
+
+    // Update issues
+    document.getElementById("highIssues").textContent =
+      `🔴 A total of ${high} High priority issues were found`;
+    document.getElementById("mediumIssues").textContent =
+      `🟡 A total of ${medium} medium priority issues were found`;
+    document.getElementById("lowIssues").textContent =
+      `🟢 A total of ${low} quick wins were found`;
+
+    // Update italic line with same total
+    document.getElementById("pxlPipeline").textContent =
+      `A full split-test pipeline with ${total} using the PXL framework has been created for you and is available in your audit`;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const industrySelect = document.getElementById("industry");
+    if (industrySelect) {
+      new Choices(industrySelect, {
+        searchEnabled: true,
+        itemSelectText: "",
+        shouldSort: false,
+      });
+    }
+    // Run randomizeStep7 when the page loads if step7 is active
+    if (document.getElementById("step7").classList.contains("active")) {
+      randomizeStep7();
+    }
+  });
+
   // Optional: Reset counters to 0
   function resetCounters() {
     const elements = ["overallCROScore", "uxScore", "aovScore", "copyMessagingScore"];
@@ -2007,7 +2027,8 @@
       if (element) element.textContent = "0";
     });
   }
-document.addEventListener("DOMContentLoaded", function () {
+
+  document.addEventListener("DOMContentLoaded", function () {
     const industrySelect = document.getElementById("industry");
     if (industrySelect) {
       new Choices(industrySelect, {
@@ -2017,6 +2038,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
   });
+
   // ================= EXISTING FORM LOGIC =================
   // Industry data
   const industries = {
@@ -2310,6 +2332,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (stepNumber === 7) {
       setTimeout(() => {
         updateScoreCard();
+        randomizeStep7(); // Also trigger the randomization
       }, 500); // Small delay to ensure elements are rendered
     }
   }
@@ -2624,15 +2647,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     document.getElementById("mainMetric").textContent =
       metricMap[formData.challenge] || "Conversion Rate";
-
-    // === NEW PART: Step7 improvements randomize (15–30) ===
-    const randomImprovements = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
-    const domain = document.getElementById("userDomain").textContent;
-    const step7Desc = document.querySelector("#step7 .description");
-    if (step7Desc) {
-      step7Desc.innerHTML = `AI has detected <strong>${randomImprovements} improvements</strong> on 
-        <span id="userDomain">${domain}</span>`;
-    }
   }
 
   function startAnalysis() {
