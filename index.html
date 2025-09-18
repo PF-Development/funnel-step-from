@@ -314,21 +314,21 @@
 
       .top-progress {
         display: block;
-        margin-bottom: 24px;
+        margin-bottom: 28px;
       }
       .progress-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 8px;
-        font-weight: 700;
-        color: #000;
-        font-size: 13px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        color: #1a202c;
+        font-size: 14px;
       }
       .progress-bar {
         width: 100%;
         height: 8px;
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba(0, 0, 0, 0.08);
         border-radius: 999px;
         overflow: hidden;
       }
@@ -342,8 +342,8 @@
       .brand-tagline {
         text-align: center;
         font-size: 11px;
-        color: #000;
-        letter-spacing: 2px;
+        color: #4a5568;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
         font-weight: 700;
         margin-bottom: 20px;
@@ -356,11 +356,11 @@
         }
       }
       h1 {
-        font-size: 42px;
+        font-size: 36px;
         font-weight: 900;
-        line-height: 1.1;
+        line-height: 1.2;
         text-align: center;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         position: relative;
       }
       .text-white {
@@ -373,7 +373,7 @@
       .text-green {
         color: var(--brand);
         display: block;
-        font-size: 48px;
+        font-size: 42px;
         opacity: 0;
         animation: wordSlide 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1s
           forwards;
@@ -389,19 +389,20 @@
         }
       }
       h2 {
-        font-size: 32px;
+        font-size: 28px;
         font-weight: 700;
         color: #2b2a2a;
-        margin-bottom: 20px;
+        margin-bottom: 24px;
         text-align: center;
+        line-height: 1.3;
       }
       .description {
-        font-size: 60px;
-        line-height: 1.8;
+        font-size: 16px;
+        line-height: 1.6;
         color: #000;
-        margin-top: 20px;
+        margin-top: 16px;
         text-align: center;
-        margin-bottom: 30px;
+        margin-bottom: 24px;
         max-width: 450px;
         margin-left: auto;
         margin-right: auto;
@@ -453,15 +454,16 @@
       }
 
       .form-group {
-        margin-bottom: 16px;
+        margin-bottom: 20px;
         position: relative;
       }
       label {
         display: block;
-        color: rgba(0, 0, 0, 0.9);
-        font-size: 14px;
+        color: #1a202c;
+        font-size: 15px;
         font-weight: 600;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
+        text-align: left;
       }
       input[type="text"],
       input[type="number"],
@@ -470,23 +472,25 @@
       input[type="tel"],
       select {
         width: 100%;
-        padding: 16px;
-        background: rgba(0, 0, 0, 0.05);
-        border: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 14px 16px;
+        background: rgba(255, 255, 255, 0.95);
+        border: 2px solid rgba(0, 0, 0, 0.1);
         border-radius: 12px;
-        color: #000;
-        font-size: 16px;
+        color: #1a202c;
+        font-size: 15px;
         transition: all 0.3s ease;
+        font-weight: 500;
       }
       input:focus,
       select:focus {
         outline: none;
         border-color: var(--brand);
-        background: rgba(0, 0, 0, 0.08);
-        box-shadow: 0 0 20px rgba(171, 255, 0, 0.2);
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
       }
       input::placeholder {
-        color: rgba(0, 0, 0, 0.4);
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 14px;
       }
 
       .input-error {
@@ -551,15 +555,15 @@
 
       .cta-button {
         width: 100%;
-        padding: 20px;
+        padding: 16px 24px;
         background: linear-gradient(135deg, var(--brand) 0%, var(--brand) 100%);
         color: #000;
         border: none;
-        border-radius: 15px;
-        font-size: 16px;
-        font-weight: 800;
+        border-radius: 12px;
+        font-size: 15px;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
+        letter-spacing: 1px;
         cursor: pointer;
         position: relative;
         overflow: hidden;
@@ -567,9 +571,9 @@
         opacity: 0;
         animation: buttonSlideUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)
           1.4s forwards;
-
         background-color: #000;
         color: #fff;
+        margin-top: 20px;
       }
       @keyframes buttonSlideUp {
         from {
@@ -1074,31 +1078,180 @@
         height: auto;
       }
 
+      .table-wrapper {
+        overflow-x: auto;
+        margin: 20px -10px;
+        padding: 0 10px;
+      }
       .calculation-table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0 1px;
         margin: 20px 0;
-        font-size: 14px;
-        background: rgba(0, 0, 0, 0.03);
-        border-radius: 8px;
+        font-size: 15px;
+        background: transparent;
+        border-radius: 16px;
         overflow: hidden;
       }
       .calculation-table th,
       .calculation-table td {
-        padding: 12px;
+        padding: 18px 24px;
         text-align: left;
-        border-bottom: 1px solid #4caf50;
+        position: relative;
       }
       .calculation-table th {
-        background: rgba(0, 0, 0, 0.05);
+        background: linear-gradient(135deg, var(--brand) 0%, #2e7d32 100%);
         font-weight: 700;
-        color: black;
+        color: #fff;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        border: none;
+      }
+      .calculation-table th:first-child {
+        border-radius: 16px 0 0 0;
+      }
+      .calculation-table th:last-child {
+        border-radius: 0 16px 0 0;
+        text-align: right;
       }
       .calculation-table td {
-        color: rgba(0, 0, 0, 0.8);
-      }
-      .calculation-table tr:last-child td {
+        color: #2d3748;
+        font-weight: 500;
+        background: #fff;
+        border: 1px solid rgba(76, 175, 80, 0.1);
+        border-top: none;
         border-bottom: none;
+      }
+      .calculation-table tr td:first-child {
+        border-left: 3px solid transparent;
+        transition: all 0.3s ease;
+      }
+      .calculation-table tr:hover td:first-child {
+        border-left: 3px solid var(--brand);
+        padding-left: 28px;
+      }
+      .calculation-table tr:nth-child(2) td {
+        background: linear-gradient(90deg, rgba(76, 175, 80, 0.03) 0%, rgba(255, 255, 255, 1) 100%);
+      }
+      .calculation-table tr:nth-child(3) td,
+      .calculation-table tr:nth-child(5) td {
+        background: rgba(76, 175, 80, 0.02);
+      }
+      .calculation-table td:first-child {
+        color: #1a202c;
+        font-weight: 600;
+        padding-left: 24px;
+        font-size: 14px;
+      }
+      .calculation-table td:last-child {
+        text-align: right;
+        font-weight: 700;
+        font-size: 17px;
+        padding-right: 28px;
+        color: #2d3748;
+        font-family: 'Inter', monospace;
+      }
+      .metric-icon {
+        display: inline-block;
+        margin-right: 12px;
+        font-size: 20px;
+        vertical-align: middle;
+      }
+      .increase-value {
+        color: var(--brand) !important;
+        font-weight: 800 !important;
+        position: relative;
+      }
+      .increase-value::before {
+        content: "↗";
+        margin-right: 6px;
+        font-size: 14px;
+      }
+      /* Highlight yearly revenue row */
+      .calculation-table tr.highlight-row td {
+        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.08) 100%);
+        border-top: 2px solid var(--brand);
+        border-bottom: 2px solid var(--brand);
+        position: relative;
+      }
+      .calculation-table tr.highlight-row td:first-child {
+        border-left: 3px solid var(--brand);
+      }
+      .calculation-table tr.highlight-row td:last-child {
+        color: var(--brand);
+        font-size: 24px;
+        font-weight: 900;
+        position: relative;
+      }
+      .calculation-table tr.highlight-row td:last-child::after {
+        content: "💰";
+        position: absolute;
+        right: -5px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 20px;
+        animation: bounce 2s infinite;
+      }
+      @keyframes bounce {
+        0%, 100% { transform: translateY(-50%) scale(1); }
+        50% { transform: translateY(-50%) scale(1.1); }
+      }
+      /* Warning row styling */
+      .calculation-table tr.warning-row td {
+        background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%);
+        border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+      }
+      .calculation-table tr.warning-row td:first-child {
+        border-left: 3px solid #ef4444;
+      }
+      .calculation-table tr.warning-row td:last-child {
+        color: #dc2626;
+        font-size: 18px;
+        font-weight: 800;
+      }
+      .calculation-table tr:last-child td:first-child {
+        border-radius: 0 0 0 16px;
+      }
+      .calculation-table tr:last-child td:last-child {
+        border-radius: 0 0 16px 0;
+      }
+      /* Add pulse animation to highlight row */
+      @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+        70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+      }
+      .calculation-table tr.highlight-row {
+        animation: pulse 2s infinite;
+      }
+      /* Mobile responsive */
+      @media (max-width: 640px) {
+        .calculation-table {
+          font-size: 13px;
+        }
+        .calculation-table th,
+        .calculation-table td {
+          padding: 12px 14px;
+        }
+        .calculation-table td:first-child {
+          padding-left: 14px;
+          font-size: 12px;
+        }
+        .calculation-table td:last-child {
+          padding-right: 14px;
+          font-size: 14px;
+        }
+        .calculation-table tr.highlight-row td:last-child {
+          font-size: 18px;
+        }
+        .metric-icon {
+          font-size: 16px;
+          margin-right: 6px;
+        }
+        .calculation-table tr.highlight-row td:last-child::after {
+          display: none;
+        }
       }
 
       .sr-only {
@@ -1199,20 +1352,22 @@
 
       @media (max-width: 640px) {
         .form-card {
-          padding: 30px 20px;
+          padding: 24px 16px;
         }
         h1 {
-          font-size: 28px;
+          font-size: 26px;
         }
         .text-green {
-          font-size: 32px;
+          font-size: 30px;
         }
         h2 {
-          font-size: 24px;
+          font-size: 22px;
+          margin-bottom: 18px;
         }
         .description {
           font-size: 14px;
           max-width: 100%;
+          margin-bottom: 20px;
         }
         .challenge-grid {
           grid-template-columns: 1fr;
@@ -1234,7 +1389,7 @@
           font-size: 12px;
         }
         .form-group {
-          margin-bottom: 12px;
+          margin-bottom: 16px;
         }
         input[type="text"],
         input[type="number"],
@@ -1242,22 +1397,22 @@
         input[type="url"],
         input[type="tel"],
         select {
-          padding: 12px;
+          padding: 12px 14px;
           font-size: 14px;
         }
         .cta-button {
-          padding: 16px;
+          padding: 14px 20px;
           font-size: 14px;
         }
         .back-button {
           padding: 8px 12px;
-          font-size: 12px;
+          font-size: 13px;
         }
         .analysis-title {
-          font-size: 24px;
+          font-size: 22px;
         }
         .analyzing-url {
-          font-size: 16px;
+          font-size: 14px;
         }
         .gt-browser-window {
           height: 350px;
@@ -1273,7 +1428,7 @@
           max-width: 100%;
         }
         .browser-url-bar {
-          font-size: 10px;
+          font-size: 11px;
         }
         .container {
           padding: 10px;
@@ -1289,9 +1444,30 @@
         }
         .tooltip-text {
           width: 150px;
-          font-size: 11px;
+          font-size: 12px;
           left: 20px;
           top: -20px;
+        }
+        .results-card {
+          padding: 20px 16px;
+        }
+        .results-card h3 {
+          font-size: 18px;
+        }
+        .issue-item {
+          font-size: 13px;
+          padding: 12px 14px;
+        }
+        .footer-text {
+          font-size: 13px;
+          padding: 12px 8px;
+        }
+        label {
+          font-size: 14px;
+        }
+        .challenge-card {
+          font-size: 14px;
+          padding: 16px;
         }
 
         .choices__inner {
@@ -1315,16 +1491,6 @@
           line-height: 1.4;
           padding: 10px;
           font-size: 13px;
-        }
-
-        @media (max-width: 640px) {
-          .choices__inner {
-            font-size: 13px;
-            padding: 10px;
-          }
-          .choices__list--dropdown {
-            font-size: 13px;
-          }
         }
       }
     </style>
@@ -1742,43 +1908,58 @@
               id="upliftCalculation"
               style="text-align: left"
             >
-              Based on your industry and current conversion rate, here's the
-              potential revenue uplift:
+              Based on our analysis, here's your potential revenue uplift:
             </p>
-            <table class="calculation-table">
-              <tr>
-                <th>Metric</th>
-                <th>Value</th>
-              </tr>
-              <tr>
-                <td>Your Current Conversion Rate</td>
-                <td id="currentConversionRate"></td>
-              </tr>
-              <tr>
-                <td>Industry Benchmark Conversion Rate</td>
-                <td id="benchmarkConversionRate"></td>
-              </tr>
-              <tr>
-                <td>Potential Conversion Rate Uplift</td>
-                <td id="conversionRateUplift"></td>
-              </tr>
-              <tr>
-                <td>Your Current Average Order Value</td>
-                <td id="currentAov"></td>
-              </tr>
-              <tr>
-                <td>Potential Average Order Value</td>
-                <td id="potentialAov"></td>
-              </tr>
-              <tr>
-                <td>Estimated Monthly Revenue Uplift</td>
-                <td id="revenuePotential"></td>
-              </tr>
-              <tr>
-                <td>Cost of Inaction (Per Month)</td>
-                <td id="costInaction"></td>
-              </tr>
-            </table>
+            <div class="table-wrapper">
+              <table class="calculation-table">
+                <tr>
+                  <th>Metric</th>
+                  <th>Current vs Potential</th>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="metric-icon">📊</span>
+                    Your Current Conversion Rate
+                  </td>
+                  <td id="currentConversionRate"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="metric-icon">🚀</span>
+                    Potential Conversion Rate Increase
+                  </td>
+                  <td id="conversionRateIncrease" class="increase-value"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="metric-icon">💰</span>
+                    Your Current Average Order Value
+                  </td>
+                  <td id="currentAov"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <span class="metric-icon">📈</span>
+                    Potential AOV Increase
+                  </td>
+                  <td id="aovIncrease" class="increase-value"></td>
+                </tr>
+                <tr class="highlight-row">
+                  <td>
+                    <span class="metric-icon">💎</span>
+                    <strong>Estimated Additional Yearly Revenue</strong>
+                  </td>
+                  <td id="revenuePotential"></td>
+                </tr>
+                <tr class="warning-row">
+                  <td>
+                    <span class="metric-icon">⚠️</span>
+                    Cost of Inaction (Per Month)
+                  </td>
+                  <td id="costInaction"></td>
+                </tr>
+              </table>
+            </div>
           </div>
 
           <div class="results-card">
@@ -1929,6 +2110,7 @@
 
       // Store the analysis results globally
       let analysisResults = null;
+      let savedResults = {};
 
       // Store form data
       let formData = {
@@ -1939,129 +2121,12 @@
         aov: 0,
         subscriptionRate: 0,
         websiteUrl: "",
+        fullWebsiteUrl: "", // Store full URL
         pageType: "",
         industry: "",
         name: "",
         email: "",
         phone: "",
-      };
-
-      // Industry data
-      const industries = {
-        fashion_apparel: {
-          baseline: { cvr: 0.019, aov: 196 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.2,
-        },
-        beauty_personalcare: {
-          baseline: { cvr: [0.02, 0.035], aov: 71 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.2,
-        },
-        health_wellness: {
-          baseline: { cvr: 0.036, aov: 54 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.1,
-        },
-        food_beverage: {
-          baseline: { cvr: 0.015, aov: 114 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.1,
-        },
-        home_furniture: {
-          baseline: { cvr: [0.006, 0.01], aov: 253 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.15,
-        },
-        electronics: {
-          baseline: { cvr: 0.018, aov: 170 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.15,
-        },
-        jewelry_accessories: {
-          baseline: { cvr: [0.009, 0.012], aov: 436 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.2,
-        },
-        pet_products: {
-          baseline: { cvr: 0.02, aov: 117 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.1,
-        },
-        baby_kids: {
-          baseline: { cvr: [0.008, 0.01], aov: 248 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.1,
-        },
-        outdoor_sports: {
-          baseline: { cvr: [0.014, 0.017], aov: 124 },
-          multipliers: {
-            tier1: { cvr: 0.8, aov: 0.95 },
-            tier2: { cvr: 1.0, aov: 1.05 },
-            tier3: { cvr: 1.2, aov: 1.15 },
-          },
-          stretch: { cvr: 1.35, aov: 1.1 },
-          seasonality: 1.15,
-        },
-      };
-
-      const industryMap = {
-        fashion: "fashion_apparel",
-        health: "health_wellness",
-        home: "home_furniture",
-        electronics: "electronics",
-        food: "food_beverage",
-        jewelry: "jewelry_accessories",
-        sports: "outdoor_sports",
-        beauty: "beauty_personalcare",
-        pet: "pet_products",
-        baby: "baby_kids",
-        other: "fashion_apparel",
       };
 
       const analysisItems = [
@@ -2070,6 +2135,30 @@
         "Scanning for UX related issues bugs",
         "Conducting full CRO Audit benchmarking",
       ];
+
+      // ================= COOKIE FUNCTIONS =================
+      function setCookie(name, value, days = 30) {
+        const expires = new Date(Date.now() + days * 86400000).toUTCString();
+        document.cookie = `${name}=${encodeURIComponent(JSON.stringify(value))}; expires=${expires}; path=/`;
+      }
+
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+          try {
+            return JSON.parse(decodeURIComponent(parts.pop().split(';').shift()));
+          } catch (e) {
+            return null;
+          }
+        }
+        return null;
+      }
+
+      function getResultsKey(data) {
+        // Create a unique key based on URL and metrics
+        return `${data.websiteUrl}_${data.conversionRate}_${data.aov}_${data.monthlyRevenue}`;
+      }
 
       // ================= HELPER FUNCTIONS =================
       function randomScore(min, max) {
@@ -2119,10 +2208,11 @@
         }
       }
 
+      // FIXED: Better currency formatting that doesn't interfere with typing
       function formatCurrency(inputEl) {
+        // Only format if user has finished typing (on blur or after delay)
         let value = inputEl.value.replace(/[^0-9.]/g, "");
         if (value === "" || isNaN(parseFloat(value))) {
-          inputEl.value = "";
           return;
         }
         const num = parseFloat(value);
@@ -2219,10 +2309,133 @@
         }
       }
 
+      // ================= CALCULATION FUNCTIONS =================
+      // Generate deterministic "random" number based on input values
+      function seededRandom(seed) {
+        const x = Math.sin(seed) * 10000;
+        return x - Math.floor(x);
+      }
+      
+      // Create a hash from form data to use as seed
+      function getDataHash() {
+        const str = `${formData.websiteUrl}_${formData.conversionRate}_${formData.aov}_${formData.monthlyRevenue}_${formData.industry}`;
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          const char = str.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // Convert to 32bit integer
+        }
+        return Math.abs(hash);
+      }
+      
+      function calculateNewUplift() {
+        // Get or generate percentages based on form data - CONSISTENT for same data
+        const dataKey = getResultsKey(formData);
+        let savedPercentages = getCookie(`percentages_${dataKey}`);
+        
+        let cvrIncreasePercent, aovIncreasePercent;
+        
+        if (savedPercentages) {
+          // Use saved percentages for consistent results
+          cvrIncreasePercent = savedPercentages.cvr;
+          aovIncreasePercent = savedPercentages.aov;
+        } else {
+          // Generate new percentages using deterministic seed for consistency
+          const seed = getDataHash();
+          // Conversion rate increase: 15-59% as per client requirement
+          cvrIncreasePercent = 15 + seededRandom(seed) * 44;
+          // AOV increase: 9-41% as per client requirement
+          aovIncreasePercent = 9 + seededRandom(seed + 1) * 32;
+          
+          // Save percentages for consistency
+          setCookie(`percentages_${dataKey}`, {
+            cvr: cvrIncreasePercent,
+            aov: aovIncreasePercent
+          }, 30);
+        }
+        
+        const currentCvr = parseFloat(formData.conversionRate) || 0;
+        const currentAov = parseFloat(formData.aov) || 0;
+        const monthlyRevenue = parseFloat(formData.monthlyRevenue) || 0;
+        
+        // Calculate what the new CVR and AOV would be with the percentage increases
+        const newCvr = currentCvr * (1 + cvrIncreasePercent / 100);
+        const newAov = currentAov * (1 + aovIncreasePercent / 100);
+        
+        // Calculate current monthly visitors based on current metrics
+        let monthlyVisitors = 0;
+        if (currentAov > 0 && currentCvr > 0 && monthlyRevenue > 0) {
+          // Monthly Revenue = Visitors × (CVR/100) × AOV
+          // Therefore: Visitors = Monthly Revenue / ((CVR/100) × AOV)
+          monthlyVisitors = monthlyRevenue / ((currentCvr / 100) * currentAov);
+        }
+        
+        // Calculate new monthly revenue with improved CVR and AOV
+        const newMonthlyRevenue = monthlyVisitors * (newCvr / 100) * newAov;
+        const additionalMonthlyRevenue = newMonthlyRevenue - monthlyRevenue;
+        
+        // Calculate yearly additional revenue (monthly × 12) as per client requirement
+        const additionalYearlyRevenue = additionalMonthlyRevenue * 12;
+        
+        // Update all display elements with calculated values
+        // Current metrics
+        document.getElementById("currentConversionRate").textContent = currentCvr.toFixed(2) + "%";
+        document.getElementById("currentAov").textContent = "$" + Math.round(currentAov).toLocaleString("en-US");
+        
+        // Show percentage increases (not absolute values) - formatted as +XX%
+        document.getElementById("conversionRateIncrease").textContent = "+" + Math.round(cvrIncreasePercent) + "%";
+        document.getElementById("aovIncrease").textContent = "+" + Math.round(aovIncreasePercent) + "%";
+        
+        // Show financial impact - yearly revenue and monthly cost of inaction
+        document.getElementById("revenuePotential").textContent = "$" + Math.round(additionalYearlyRevenue).toLocaleString("en-US") + "/year";
+        document.getElementById("costInaction").textContent = "$" + Math.round(additionalMonthlyRevenue).toLocaleString("en-US");
+        
+        // Update main metric label based on selected challenge
+        const metricMap = {
+          "low-conversion": "Conversion Rate",
+          "low-aov": "Average Order Value",
+          "low-subscription": "Subscription Rate",
+        };
+        document.getElementById("mainMetric").textContent = metricMap[formData.challenge] || "Conversion Rate";
+        
+        return {
+          cvrIncrease: cvrIncreasePercent,
+          aovIncrease: aovIncreasePercent,
+          yearlyRevenue: additionalYearlyRevenue,
+          monthlyRevenue: additionalMonthlyRevenue
+        };
+      }
+
       // ================= WEBHOOK FUNCTIONS =================
       async function triggerAnalysisWebhook() {
         try {
-          // Send form data directly to webhook
+          // Generate RANDOM issue counts
+          const highIssues = 3 + Math.floor(Math.random() * 5); // 3-8 random
+          const mediumIssues = 5 + Math.floor(Math.random() * 7); // 5-12 random
+          const lowIssues = 4 + Math.floor(Math.random() * 6); // 4-10 random
+          
+          // Total should be sum of all issues
+          const totalImprovements = highIssues + mediumIssues + lowIssues;
+          
+          const finalResult = {
+            success: true,
+            report: {
+              improvements: totalImprovements, // This will now match the sum
+              issues: {
+                high: highIssues,
+                medium: mediumIssues,
+                low: lowIssues
+              },
+              scores: {
+                overall: 30 + Math.floor(Math.random() * 40), // 30-70 random
+                ux: 30 + Math.floor(Math.random() * 40), // 30-70 random
+                aov: 30 + Math.floor(Math.random() * 40), // 30-70 random
+                copy: 30 + Math.floor(Math.random() * 40) // 30-70 random
+              }
+            }
+          };
+          
+          // Send to webhook for tracking (optional)
           const analysisData = {
             challenge: formData.challenge,
             monthlyRevenue: formData.monthlyRevenue,
@@ -2230,148 +2443,84 @@
             conversionRate: formData.conversionRate,
             aov: formData.aov,
             subscriptionRate: formData.subscriptionRate,
-            websiteUrl: formData.websiteUrl,
+            websiteUrl: formData.fullWebsiteUrl,
             pageType: formData.pageType,
             industry: formData.industry,
-            timestamp: new Date().toISOString()
+            timestamp: new Date().toISOString(),
+            results: finalResult.report
           };
 
           console.log('Sending analysis data:', analysisData);
 
-          const response = await fetch(WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(analysisData) // Send data directly
-          });
-
-          if (!response.ok) {
-            console.error(`Webhook returned status: ${response.status}`);
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const result = await response.json();
-          console.log('Analysis webhook response:', result);
-          
-          // If webhook doesn't return expected format, use the data as-is or return mock data
-          if (!result.report && !result.improvements) {
-            console.log('Webhook response missing expected format, using mock data');
-            return {
-              success: true,
-              report: {
-                improvements: Math.floor(Math.random() * 15) + 15,
-                issues: {
-                  high: Math.floor(Math.random() * 5) + 3,
-                  medium: Math.floor(Math.random() * 7) + 5,
-                  low: Math.floor(Math.random() * 6) + 4
-                },
-                scores: {
-                  overall: randomScore(30, 70),
-                  ux: randomScore(30, 70),
-                  aov: randomScore(30, 70),
-                  copy: randomScore(30, 70)
-                },
-                uplift: {
-                  currentCvr: formData.conversionRate,
-                  benchmarkCvr: formData.conversionRate * 1.2,
-                  cvrUplift: formData.conversionRate * 0.2,
-                  currentAov: formData.aov,
-                  potentialAov: formData.aov * 1.1,
-                  monthlyUplift: formData.monthlyRevenue * 0.15,
-                  costInaction: formData.monthlyRevenue * 0.15
-                }
-              }
-            };
+          // Try to send to webhook but don't fail if it doesn't work
+          try {
+            const response = await fetch(WEBHOOK_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(analysisData)
+            });
+            console.log('Webhook response status:', response.status);
+          } catch (webhookError) {
+            console.log('Webhook error (non-critical):', webhookError);
           }
           
-          return result;
+          // Don't save these results to cookie - let them be random each time
+          return finalResult;
         } catch (error) {
-          console.error('Analysis webhook error:', error);
-          // Return mock data as fallback
-          return {
+          console.error('Analysis error:', error);
+          
+          // Generate random fallback results
+          const highIssues = 3 + Math.floor(Math.random() * 5);
+          const mediumIssues = 5 + Math.floor(Math.random() * 7);
+          const lowIssues = 4 + Math.floor(Math.random() * 6);
+          const totalImprovements = highIssues + mediumIssues + lowIssues;
+          
+          const fallbackResult = {
             success: true,
             report: {
-              improvements: Math.floor(Math.random() * 15) + 15,
+              improvements: totalImprovements, // Sum of all issues
               issues: {
-                high: Math.floor(Math.random() * 5) + 3,
-                medium: Math.floor(Math.random() * 7) + 5,
-                low: Math.floor(Math.random() * 6) + 4
+                high: highIssues,
+                medium: mediumIssues,
+                low: lowIssues
               },
               scores: {
-                overall: randomScore(30, 70),
-                ux: randomScore(30, 70),
-                aov: randomScore(30, 70),
-                copy: randomScore(30, 70)
-              },
-              uplift: {
-                currentCvr: formData.conversionRate,
-                benchmarkCvr: formData.conversionRate * 1.2,
-                cvrUplift: formData.conversionRate * 0.2,
-                currentAov: formData.aov,
-                potentialAov: formData.aov * 1.1,
-                monthlyUplift: formData.monthlyRevenue * 0.15,
-                costInaction: formData.monthlyRevenue * 0.15
+                overall: 30 + Math.floor(Math.random() * 40),
+                ux: 30 + Math.floor(Math.random() * 40),
+                aov: 30 + Math.floor(Math.random() * 40),
+                copy: 30 + Math.floor(Math.random() * 40)
               }
             }
           };
+          
+          return fallbackResult;
         }
       }
 
       async function saveLeadWebhook() {
         try {
-          // Get all the calculated values from the DOM
-          const getTextContent = (id) => {
-            const element = document.getElementById(id);
-            return element ? element.textContent : '';
-          };
-
-          // Get all results data from the page
           const resultsData = {
-            // Basic form fields
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
+            smsPhone: formData.phone, // Add phone to SMS field
             challenge: formData.challenge,
             monthlyRevenue: formData.monthlyRevenue,
             monthlyAdSpend: formData.monthlyAdSpend,
             conversionRate: formData.conversionRate,
             aov: formData.aov,
             subscriptionRate: formData.subscriptionRate,
-            websiteUrl: formData.websiteUrl,
+            websiteUrl: formData.fullWebsiteUrl, // Use full URL
             pageType: formData.pageType,
             industry: formData.industry,
-            
-            // Calculated uplift values from the table
-            currentConversionRate: getTextContent('currentConversionRate'),
-            benchmarkConversionRate: getTextContent('benchmarkConversionRate'),
-            conversionRateUplift: getTextContent('conversionRateUplift'),
-            currentAov: getTextContent('currentAov'),
-            potentialAov: getTextContent('potentialAov'),
-            revenuePotential: getTextContent('revenuePotential'),
-            costInaction: getTextContent('costInaction'),
-            
-            // Issues count
-            totalImprovements: document.getElementById('improvementsText')?.querySelector('strong')?.textContent || '21',
-            highPriorityIssues: getTextContent('highIssues'),
-            mediumPriorityIssues: getTextContent('mediumIssues'),
-            lowPriorityIssues: getTextContent('lowIssues'),
-            
-            // Performance scores
-            overallCROScore: getTextContent('overallCROScore'),
-            uxScore: getTextContent('uxScore'),
-            aovScore: getTextContent('aovScore'),
-            copyMessagingScore: getTextContent('copyMessagingScore'),
-            
-            // Additional metadata
-            domain: getTextContent('userDomain'),
-            screenshotUrl: document.getElementById('step7-screenshot')?.src || '',
-            mainMetric: getTextContent('mainMetric'),
-            
-            // Analysis results if available
-            analysisResults: analysisResults,
-            
-            // Timestamp
+            currentConversionRate: document.getElementById('currentConversionRate').textContent,
+            conversionRateIncrease: document.getElementById('conversionRateIncrease').textContent,
+            currentAov: document.getElementById('currentAov').textContent,
+            aovIncrease: document.getElementById('aovIncrease').textContent,
+            revenuePotential: document.getElementById('revenuePotential').textContent,
+            costInaction: document.getElementById('costInaction').textContent,
             timestamp: new Date().toISOString()
           };
 
@@ -2382,35 +2531,24 @@
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(resultsData) // Send all data directly
+            body: JSON.stringify(resultsData)
           });
 
-          // Log the raw response for debugging
           const responseText = await response.text();
           console.log('Webhook raw response:', responseText);
 
-          // Try to parse as JSON if possible
           let result;
           try {
             result = JSON.parse(responseText);
           } catch (e) {
-            // If the response is not JSON, consider it successful if status is OK
             if (response.ok) {
-              console.log('Webhook returned non-JSON response but status is OK');
               result = { success: true };
             } else {
               throw new Error(`Webhook error: ${responseText}`);
             }
           }
 
-          console.log('Save lead webhook response:', result);
-          
-          // If webhook doesn't explicitly return success: false, consider it successful
-          if (result.success !== false) {
-            return { success: true, ...result };
-          }
-          
-          return result;
+          return result.success !== false ? { success: true, ...result } : result;
         } catch (error) {
           console.error('Save lead webhook error:', error);
           alert(`Debug info: ${error.message}\n\nPlease check browser console for details.`);
@@ -2452,13 +2590,17 @@
         showStep(currentStep);
         buildAnalysisList();
 
-        const websiteUrl = document.getElementById("websiteUrl")?.value || "https://www.yourstore.com";
+        // Use the full URL that was entered
+        const websiteUrl = formData.fullWebsiteUrl || formData.websiteUrl || "https://www.yourstore.com";
         document.getElementById("analyzing-url").textContent = websiteUrl;
         document.getElementById("browser-url").textContent = websiteUrl;
 
-        let domain = "yourstore.com";
+        // Extract just domain for the final page
+        let domain = websiteUrl;
         try {
-          domain = new URL(websiteUrl).hostname;
+          const url = new URL(websiteUrl);
+          // Keep the path if it exists
+          domain = url.hostname + (url.pathname !== '/' ? url.pathname : '');
         } catch (e) {
           console.error("Invalid URL:", websiteUrl);
         }
@@ -2487,7 +2629,7 @@
           if (analysisComplete && animationComplete && analysis.running) {
             analysis.running = false;
             currentStep = 7;
-            calculateUplift();
+            calculateNewUplift();
             populateStep7(analysisResults?.report || analysisResults);
             showStep(currentStep);
           }
@@ -2541,12 +2683,12 @@
       }
 
       function populateStep7(data) {
-        if (!data) {
-          // Fallback to random if no data
-          const total = Math.floor(Math.random() * (30 - 15 + 1)) + 15;
-          const high = Math.floor(total * 0.3 + Math.random() * 2);
-          const medium = Math.floor(total * 0.4 + Math.random() * 2);
-          const low = total - (high + medium);
+        if (!data || !data.report) {
+          // Fallback with random values
+          const high = Math.floor(Math.random() * 5) + 3; // 3-8
+          const medium = Math.floor(Math.random() * 7) + 5; // 5-12
+          const low = Math.floor(Math.random() * 6) + 4; // 4-10
+          const total = high + medium + low;
 
           const domain = document.getElementById("userDomain").textContent;
           document.getElementById("improvementsText").innerHTML =
@@ -2572,11 +2714,14 @@
           return;
         }
 
-        // Use data from webhook
-        const { improvements, issues = {}, scores = {}, uplift = {} } = data.report || data;
+        // Use data from webhook - ensure all numbers match
+        const { issues = {}, scores = {} } = data.report || data;
+        
+        // Calculate total from individual issues
+        const totalImprovements = (issues.high || 6) + (issues.medium || 9) + (issues.low || 6);
 
         document.getElementById("improvementsText").innerHTML =
-          `AI has detected <strong>${improvements || 21} improvements</strong> on 
+          `AI has detected <strong>${totalImprovements} improvements</strong> on 
           <span id="userDomain">${document.getElementById("userDomain").textContent}</span>`;
 
         document.getElementById("highIssues").textContent =
@@ -2587,83 +2732,10 @@
           `🟢 A total of ${issues.low || 6} quick wins were found`;
 
         document.getElementById("pxlPipeline").textContent =
-          `A full split-test pipeline with ${improvements || 21} using the PXL framework has been created for you and is available in your audit`;
-
-        // Update uplift table if data provided
-        if (uplift.currentCvr !== undefined) {
-          document.getElementById("currentConversionRate").textContent = `${uplift.currentCvr}%`;
-          document.getElementById("benchmarkConversionRate").textContent = `${uplift.benchmarkCvr || 3.0}%`;
-          document.getElementById("conversionRateUplift").textContent = `${uplift.cvrUplift || 0.5}%`;
-          document.getElementById("currentAov").textContent = `$${uplift.currentAov?.toLocaleString() || '100'}`;
-          document.getElementById("potentialAov").textContent = `$${uplift.potentialAov?.toLocaleString() || '110'}`;
-          document.getElementById("revenuePotential").textContent = `$${uplift.monthlyUplift?.toLocaleString() || '5000'}`;
-          document.getElementById("costInaction").textContent = `$${uplift.costInaction?.toLocaleString() || '5000'}`;
-        }
+          `A full split-test pipeline with ${totalImprovements} using the PXL framework has been created for you and is available in your audit`;
 
         // Animate scores
         updateScoreCard(scores);
-      }
-
-      function calculateUplift() {
-        const industry = formData.industry || "other";
-        const currentRatePercent = parseFloat(formData.conversionRate) || 0;
-        const monthlyRevenue = parseFloat(formData.monthlyRevenue) || 0;
-        const currentAov = parseFloat(formData.aov) || 0;
-        const currentCvrDecimal = currentRatePercent / 100;
-
-        const indKey = industryMap[industry] || "fashion_apparel";
-        const ind = industries[indKey] || industries["fashion_apparel"];
-
-        let tier = monthlyRevenue < 100000 ? "tier1" : monthlyRevenue < 500000 ? "tier2" : "tier3";
-
-        let benchmarkCvrDecimal = Array.isArray(ind.baseline.cvr)
-          ? (ind.baseline.cvr[0] + ind.baseline.cvr[1]) / 2
-          : ind.baseline.cvr;
-        benchmarkCvrDecimal *= ind.multipliers[tier].cvr;
-        let benchmarkAov = ind.baseline.aov * ind.multipliers[tier].aov;
-
-        let potentialCvrDecimal;
-        if (currentCvrDecimal < benchmarkCvrDecimal) {
-          potentialCvrDecimal = benchmarkCvrDecimal * 1.35;
-        } else {
-          const randUplift = 0.15 + Math.random() * 0.15;
-          potentialCvrDecimal = currentCvrDecimal * (1 + randUplift);
-        }
-
-        let potentialAov;
-        if (currentAov < benchmarkAov) {
-          potentialAov = benchmarkAov;
-        } else {
-          potentialAov = currentAov * 1.1;
-        }
-
-        let monthlyVisitors = 0, revenueUplift = 0, yearlyUplift = 0, costOfInaction = 0;
-
-        if (currentAov > 0 && currentCvrDecimal > 0 && monthlyRevenue > 0) {
-          monthlyVisitors = monthlyRevenue / (currentCvrDecimal * currentAov);
-          const potentialRevenue = monthlyVisitors * potentialCvrDecimal * potentialAov;
-          revenueUplift = (potentialRevenue - monthlyRevenue) * ind.seasonality;
-          yearlyUplift = revenueUplift * 12;
-          costOfInaction = yearlyUplift / 12;
-        }
-
-        // Only update if not already populated by webhook data
-        if (!document.getElementById("currentConversionRate").textContent) {
-          document.getElementById("currentConversionRate").textContent = currentRatePercent.toFixed(2) + "%";
-          document.getElementById("benchmarkConversionRate").textContent = (benchmarkCvrDecimal * 100).toFixed(2) + "%";
-          document.getElementById("conversionRateUplift").textContent = ((potentialCvrDecimal - currentCvrDecimal) * 100).toFixed(2) + "%";
-          document.getElementById("currentAov").textContent = "$" + currentAov.toLocaleString("en-US");
-          document.getElementById("potentialAov").textContent = "$" + Math.round(potentialAov).toLocaleString("en-US");
-          document.getElementById("revenuePotential").textContent = "$" + Math.round(revenueUplift).toLocaleString("en-US");
-          document.getElementById("costInaction").textContent = "$" + Math.round(costOfInaction).toLocaleString("en-US");
-        }
-
-        const metricMap = {
-          "low-conversion": "Conversion Rate",
-          "low-aov": "Average Order Value",
-          "low-subscription": "Subscription Rate",
-        };
-        document.getElementById("mainMetric").textContent = metricMap[formData.challenge] || "Conversion Rate";
       }
 
       // ================= VALIDATION FUNCTIONS =================
@@ -2727,6 +2799,7 @@
           const pageTypeEl = document.getElementById("pageType");
           const industryEl = document.getElementById("industry");
           formData.websiteUrl = urlEl.value;
+          formData.fullWebsiteUrl = urlEl.value; // Store the full URL
           formData.pageType = pageTypeEl.value;
           formData.industry = industryEl.value;
           let okUrl = true;
@@ -2834,6 +2907,7 @@
 
         function initWidget() {
           if (window.Calendly && typeof window.Calendly.initInlineWidget === "function") {
+            // Phone number goes to customAnswers.a1 for SMS field in Calendly
             window.Calendly.initInlineWidget({
               url: calendlyUrl,
               parentElement: calendlyDiv,
@@ -2841,8 +2915,8 @@
                 name: prefill.name || "",
                 email: prefill.email || "",
                 customAnswers: {
-                  a1: prefill.phone || "",
-                },
+                  a1: prefill.phone || "" // Phone goes to SMS field (a1)
+                }
               },
             });
           }
@@ -2861,23 +2935,19 @@
       }
 
       // ================= EVENT LISTENERS =================
+      // FIXED: Better handling of currency input
       ["monthlyRevenue", "monthlyAdSpend"].forEach((id) => {
         const input = document.getElementById(id);
+        
+        // Don't format while typing
         input.addEventListener("input", () => {
           clearFieldError(input);
         });
+        
+        // Only format on blur
         input.addEventListener("blur", () => {
           if (input.value.trim() === "") return;
           formatCurrency(input);
-        });
-        let typingTimer;
-        input.addEventListener("input", () => {
-          clearTimeout(typingTimer);
-          typingTimer = setTimeout(() => {
-            if (input.value.trim() !== "") {
-              formatCurrency(input);
-            }
-          }, 1000);
         });
       });
 
@@ -2896,11 +2966,10 @@
           if (stepId === "step1" || stepId === "step2" || stepId === "step3" || stepId === "step4") {
             cb = nextStep;
           } else if (stepId === "step5") {
-            cb = startAnalysis; // This now triggers the webhook
+            cb = startAnalysis;
           } else if (stepId === "step7") {
             if (!validateLeadForm()) return;
             
-            // Save lead data
             const submitBtn = btn;
             const originalText = submitBtn.textContent;
             submitBtn.textContent = "Saving...";
