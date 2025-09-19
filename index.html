@@ -1152,12 +1152,6 @@
         color: #2d3748;
         font-family: 'Inter', monospace;
       }
-      .metric-icon {
-        display: inline-block;
-        margin-right: 12px;
-        font-size: 20px;
-        vertical-align: middle;
-      }
       .increase-value {
         color: var(--brand) !important;
         font-weight: 800 !important;
@@ -1183,19 +1177,6 @@
         font-size: 24px;
         font-weight: 900;
         position: relative;
-      }
-      .calculation-table tr.highlight-row td:last-child::after {
-        content: "💰";
-        position: absolute;
-        right: -5px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 20px;
-        animation: bounce 2s infinite;
-      }
-      @keyframes bounce {
-        0%, 100% { transform: translateY(-50%) scale(1); }
-        50% { transform: translateY(-50%) scale(1.1); }
       }
       /* Warning row styling */
       .calculation-table tr.warning-row td {
@@ -1244,13 +1225,6 @@
         }
         .calculation-table tr.highlight-row td:last-child {
           font-size: 18px;
-        }
-        .metric-icon {
-          font-size: 16px;
-          margin-right: 6px;
-        }
-        .calculation-table tr.highlight-row td:last-child::after {
-          display: none;
         }
       }
 
@@ -1661,6 +1635,8 @@
               type="text"
               id="monthlyRevenue"
               placeholder="$ Total revenue per month"
+              inputmode="numeric"
+              pattern="[0-9]*"
               required
             />
             <div
@@ -1684,6 +1660,8 @@
               type="text"
               id="monthlyAdSpend"
               placeholder="$ Total ad spend on all channels"
+              inputmode="numeric"
+              pattern="[0-9]*"
               required
             />
             <div
@@ -1917,45 +1895,27 @@
                   <th>Current vs Potential</th>
                 </tr>
                 <tr>
-                  <td>
-                    <span class="metric-icon">📊</span>
-                    Your Current Conversion Rate
-                  </td>
+                  <td>Current Conversion Rate</td>
                   <td id="currentConversionRate"></td>
                 </tr>
                 <tr>
-                  <td>
-                    <span class="metric-icon">🚀</span>
-                    Potential Conversion Rate Increase
-                  </td>
+                  <td>CVR Increase Potential</td>
                   <td id="conversionRateIncrease" class="increase-value"></td>
                 </tr>
                 <tr>
-                  <td>
-                    <span class="metric-icon">💰</span>
-                    Your Current Average Order Value
-                  </td>
+                  <td>Current AOV</td>
                   <td id="currentAov"></td>
                 </tr>
                 <tr>
-                  <td>
-                    <span class="metric-icon">📈</span>
-                    Potential AOV Increase
-                  </td>
+                  <td>AOV Increase Potential</td>
                   <td id="aovIncrease" class="increase-value"></td>
                 </tr>
                 <tr class="highlight-row">
-                  <td>
-                    <span class="metric-icon">💎</span>
-                    <strong>Estimated Additional Yearly Revenue</strong>
-                  </td>
+                  <td><strong>Additional Yearly Revenue</strong></td>
                   <td id="revenuePotential"></td>
                 </tr>
                 <tr class="warning-row">
-                  <td>
-                    <span class="metric-icon">⚠️</span>
-                    Cost of Inaction (Per Month)
-                  </td>
+                  <td>Monthly Cost of Inaction</td>
                   <td id="costInaction"></td>
                 </tr>
               </table>
@@ -2084,7 +2044,7 @@
 
     <script>
       // ================= GLOBAL VARIABLES =================
-      const WEBHOOK_URL = "https://mhanzala.app.n8n.cloud/webhook/2380f899-57d2-480d-bd11-5783be95d76e";
+      const WEBHOOK_URL = "https://n8n.srv979440.hstgr.cloud/webhook-test/044a9ac6-0c05-4592-b4ca-97432b9ca1c8";
       
       let currentStep = 1;
       const totalSteps = 7;
@@ -2903,21 +2863,27 @@
         calendlyContainer.appendChild(calendlyDiv);
         step7.appendChild(calendlyContainer);
 
-        const calendlyUrl = "https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1";
+        const phoneNumber = prefill.phone || '';
+        
+        // Try both answer fields - a1 might be the text field, a2 might be SMS
+        // Or vice versa - we'll skip a1 since that showed in wrong field
+        const calendlyUrl = `https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1&name=${encodeURIComponent(prefill.name || '')}&email=${encodeURIComponent(prefill.email || '')}&answer_2=${encodeURIComponent(phoneNumber)}&question_2=${encodeURIComponent(phoneNumber)}`;
 
         function initWidget() {
           if (window.Calendly && typeof window.Calendly.initInlineWidget === "function") {
-            // Phone number goes to customAnswers.a1 for SMS field in Calendly
             window.Calendly.initInlineWidget({
               url: calendlyUrl,
               parentElement: calendlyDiv,
               prefill: {
                 name: prefill.name || "",
                 email: prefill.email || "",
+                phoneNumber:prefill.phone||"",
                 customAnswers: {
-                  a1: prefill.phone || "" // Phone goes to SMS field (a1)
+                  "Send text messages to": phoneNumber,
+                  "question_2": phoneNumber,
+                  "answer_2": phoneNumber
                 }
-              },
+              }
             });
           }
         }
@@ -2935,19 +2901,59 @@
       }
 
       // ================= EVENT LISTENERS =================
-      // FIXED: Better handling of currency input
+      // FIXED: Better handling of currency input with number-only validation
       ["monthlyRevenue", "monthlyAdSpend"].forEach((id) => {
         const input = document.getElementById(id);
         
-        // Don't format while typing
-        input.addEventListener("input", () => {
-          clearFieldError(input);
+        // Force numbers only and show warning for non-numeric input
+        input.addEventListener("input", (e) => {
+          const value = e.target.value;
+          const cleanValue = value.replace(/[^0-9.]/g, "");
+          
+          // Check if non-numeric characters were entered
+          if (value !== cleanValue) {
+            // Show error message
+            showFieldError(input, "Only numbers are allowed.");
+            
+            // Remove non-numeric characters
+            e.target.value = cleanValue;
+            
+            // Clear error after 3 seconds
+            setTimeout(() => {
+              clearFieldError(input);
+            }, 3000);
+          } else {
+            clearFieldError(input);
+          }
         });
         
         // Only format on blur
         input.addEventListener("blur", () => {
           if (input.value.trim() === "") return;
           formatCurrency(input);
+        });
+        
+        // Prevent non-numeric keys (except backspace, delete, arrows, etc.)
+        input.addEventListener("keydown", (e) => {
+          // Allow: backspace, delete, tab, escape, enter, decimal point
+          if ([8, 9, 27, 13, 46, 110, 190].indexOf(e.keyCode) !== -1 ||
+              // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+              (e.keyCode === 65 && e.ctrlKey === true) ||
+              (e.keyCode === 67 && e.ctrlKey === true) ||
+              (e.keyCode === 86 && e.ctrlKey === true) ||
+              (e.keyCode === 88 && e.ctrlKey === true) ||
+              // Allow: home, end, left, right, down, up
+              (e.keyCode >= 35 && e.keyCode <= 40)) {
+            return;
+          }
+          // Ensure that it is a number and stop the keypress
+          if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+            showFieldError(input, "Only numbers are allowed.");
+            setTimeout(() => {
+              clearFieldError(input);
+            }, 3000);
+          }
         });
       });
 
