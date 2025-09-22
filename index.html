@@ -2012,7 +2012,8 @@
 
     <script>
       // ================= GLOBAL VARIABLES =================
-      const WEBHOOK_URL = "https://n8n.srv979440.hstgr.cloud/webhook-test/044a9ac6-0c05-4592-b4ca-97432b9ca1c8";
+      // const WEBHOOK_URL = "https://n8n.srv979440.hstgr.cloud/webhook-test/044a9ac6-0c05-4592-b4ca-97432b9ca1c8";
+      const WEBHOOK_URL = "https://mhanzala.app.n8n.cloud/webhook/2380f899-57d2-480d-bd11-5783be95d76e";
       
       let currentStep = 1;
       const totalSteps = 7;
@@ -2333,7 +2334,7 @@
         };
       }
 
-      // ================= WEBHOOK FUNCTIONS =================
+      // ================= WEBHOOK FUNCTIONS WITH ENHANCED LOGGING =================
       async function triggerAnalysisWebhook() {
         try {
           // Generate RANDOM issue counts
@@ -2347,22 +2348,22 @@
           const finalResult = {
             success: true,
             report: {
-              improvements: totalImprovements, // This will now match the sum
+              improvements: totalImprovements,
               issues: {
                 high: highIssues,
                 medium: mediumIssues,
                 low: lowIssues
               },
               scores: {
-                overall: 30 + Math.floor(Math.random() * 40), // 30-70 random
-                ux: 30 + Math.floor(Math.random() * 40), // 30-70 random
-                aov: 30 + Math.floor(Math.random() * 40), // 30-70 random
-                copy: 30 + Math.floor(Math.random() * 40) // 30-70 random
+                overall: 30 + Math.floor(Math.random() * 40),
+                ux: 30 + Math.floor(Math.random() * 40),
+                aov: 30 + Math.floor(Math.random() * 40),
+                copy: 30 + Math.floor(Math.random() * 40)
               }
             }
           };
           
-          // Send to webhook for tracking (optional)
+          // Send to webhook for tracking
           const analysisData = {
             challenge: formData.challenge,
             monthlyRevenue: formData.monthlyRevenue,
@@ -2377,9 +2378,30 @@
             results: finalResult.report
           };
 
-          console.log('Sending analysis data:', analysisData);
+          // Enhanced console logging with styling
+          console.group('%c📊 ANALYSIS WEBHOOK DATA', 'background: #4CAF50; color: white; padding: 5px; font-weight: bold;');
+          console.log('%cTimestamp:', 'color: #2196F3; font-weight: bold;', new Date().toISOString());
+          console.log('%cWebhook URL:', 'color: #2196F3; font-weight: bold;', WEBHOOK_URL);
+          console.log('%cData being sent:', 'color: #FF9800; font-weight: bold;');
+          console.log(JSON.stringify(analysisData, null, 2));
+          console.table({
+            'Challenge': analysisData.challenge,
+            'Monthly Revenue': `$${analysisData.monthlyRevenue}`,
+            'Monthly Ad Spend': `$${analysisData.monthlyAdSpend}`,
+            'Conversion Rate': `${analysisData.conversionRate}%`,
+            'AOV': `$${analysisData.aov}`,
+            'Subscription Rate': `${analysisData.subscriptionRate}%`,
+            'Website URL': analysisData.websiteUrl,
+            'Page Type': analysisData.pageType,
+            'Industry': analysisData.industry
+          });
+          console.log('%cIssues Found:', 'color: #FF5722; font-weight: bold;');
+          console.table(finalResult.report.issues);
+          console.log('%cScores:', 'color: #9C27B0; font-weight: bold;');
+          console.table(finalResult.report.scores);
+          console.groupEnd();
 
-          // Try to send to webhook but don't fail if it doesn't work
+          // Try to send to webhook
           try {
             const response = await fetch(WEBHOOK_URL, {
               method: 'POST',
@@ -2388,15 +2410,15 @@
               },
               body: JSON.stringify(analysisData)
             });
-            console.log('Webhook response status:', response.status);
+            
+            console.log('%c✅ Analysis webhook response status:', 'color: #4CAF50; font-weight: bold;', response.status);
           } catch (webhookError) {
-            console.log('Webhook error (non-critical):', webhookError);
+            console.error('%c❌ Analysis webhook error:', 'color: #F44336; font-weight: bold;', webhookError);
           }
           
-          // Don't save these results to cookie - let them be random each time
           return finalResult;
         } catch (error) {
-          console.error('Analysis error:', error);
+          console.error('%c❌ Analysis error:', 'color: #F44336; font-weight: bold;', error);
           
           // Generate random fallback results
           const highIssues = 3 + Math.floor(Math.random() * 5);
@@ -2407,7 +2429,7 @@
           const fallbackResult = {
             success: true,
             report: {
-              improvements: totalImprovements, // Sum of all issues
+              improvements: totalImprovements,
               issues: {
                 high: highIssues,
                 medium: mediumIssues,
@@ -2432,26 +2454,66 @@
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
-            smsPhone: formData.phone, // Add phone to SMS field
+            smsPhone: formData.phone,
             challenge: formData.challenge,
             monthlyRevenue: formData.monthlyRevenue,
             monthlyAdSpend: formData.monthlyAdSpend,
             conversionRate: formData.conversionRate,
             aov: formData.aov,
             subscriptionRate: formData.subscriptionRate,
-            websiteUrl: formData.fullWebsiteUrl, // Use full URL
+            websiteUrl: formData.fullWebsiteUrl,
             pageType: formData.pageType,
             industry: formData.industry,
             currentConversionRate: document.getElementById('currentConversionRate').textContent,
             conversionRateIncrease: document.getElementById('conversionRateIncrease').textContent,
             currentAov: document.getElementById('currentAov').textContent,
             aovIncrease: document.getElementById('aovIncrease').textContent,
-            // Removed revenuePotential
             costInaction: document.getElementById('costInaction').textContent,
             timestamp: new Date().toISOString()
           };
 
-          console.log('Sending complete data to webhook:', resultsData);
+          // Enhanced console logging with styling
+          console.group('%c💾 LEAD SUBMISSION WEBHOOK DATA', 'background: #FF5722; color: white; padding: 5px; font-weight: bold;');
+          console.log('%cTimestamp:', 'color: #2196F3; font-weight: bold;', new Date().toISOString());
+          console.log('%cWebhook URL:', 'color: #2196F3; font-weight: bold;', WEBHOOK_URL);
+          console.log('%cComplete JSON Data:', 'color: #4CAF50; font-weight: bold;');
+          console.log(JSON.stringify(resultsData, null, 2));
+          
+          // Display in table format for better readability
+          console.log('%cUser Information:', 'color: #9C27B0; font-weight: bold;');
+          console.table({
+            'Name': resultsData.name,
+            'Email': resultsData.email,
+            'Phone': resultsData.phone
+          });
+          
+          console.log('%cBusiness Metrics:', 'color: #FF9800; font-weight: bold;');
+          console.table({
+            'Challenge': resultsData.challenge,
+            'Monthly Revenue': `$${resultsData.monthlyRevenue}`,
+            'Monthly Ad Spend': `$${resultsData.monthlyAdSpend}`,
+            'Conversion Rate': `${resultsData.conversionRate}%`,
+            'AOV': `$${resultsData.aov}`,
+            'Subscription Rate': `${resultsData.subscriptionRate}%`
+          });
+          
+          console.log('%cWebsite Details:', 'color: #00BCD4; font-weight: bold;');
+          console.table({
+            'Website URL': resultsData.websiteUrl,
+            'Page Type': resultsData.pageType,
+            'Industry': resultsData.industry
+          });
+          
+          console.log('%cCalculated Results:', 'color: #E91E63; font-weight: bold;');
+          console.table({
+            'Current CVR': resultsData.currentConversionRate,
+            'CVR Increase': resultsData.conversionRateIncrease,
+            'Current AOV': resultsData.currentAov,
+            'AOV Increase': resultsData.aovIncrease,
+            'Cost of Inaction': resultsData.costInaction
+          });
+          
+          console.groupEnd();
 
           const response = await fetch(WEBHOOK_URL, {
             method: 'POST',
@@ -2462,7 +2524,7 @@
           });
 
           const responseText = await response.text();
-          console.log('Webhook raw response:', responseText);
+          console.log('%c📨 Lead webhook response:', 'color: #4CAF50; font-weight: bold;', responseText);
 
           let result;
           try {
@@ -2477,11 +2539,21 @@
 
           return result.success !== false ? { success: true, ...result } : result;
         } catch (error) {
-          console.error('Save lead webhook error:', error);
+          console.error('%c❌ Save lead webhook error:', 'color: #F44336; font-weight: bold;', error);
           alert(`Debug info: ${error.message}\n\nPlease check browser console for details.`);
           return { success: false, error: error.message };
         }
       }
+
+      // Add helper function to display all form data at any point
+      window.debugFormData = function() {
+        console.group('%c🔍 CURRENT FORM DATA', 'background: #673AB7; color: white; padding: 5px; font-weight: bold;');
+        console.log('%cRaw FormData Object:', 'color: #4CAF50; font-weight: bold;');
+        console.log(JSON.stringify(formData, null, 2));
+        console.log('%cFormatted View:', 'color: #2196F3; font-weight: bold;');
+        console.table(formData);
+        console.groupEnd();
+      };
 
       // ================= ANALYSIS FUNCTIONS =================
       function buildAnalysisList() {
@@ -2832,8 +2904,6 @@
 
         const phoneNumber = prefill.phone || '';
         
-        // Try both answer fields - a1 might be the text field, a2 might be SMS
-        // Or vice versa - we'll skip a1 since that showed in wrong field
         const calendlyUrl = `https://calendly.com/d/cv3b-wzr-hvc/purplefire-s-cro-audit-strategy-call?hide_gdpr_banner=1&name=${encodeURIComponent(prefill.name || '')}&email=${encodeURIComponent(prefill.email || '')}&answer_2=${encodeURIComponent(phoneNumber)}&question_2=${encodeURIComponent(phoneNumber)}`;
 
         function initWidget() {
@@ -3018,6 +3088,13 @@
           }
         }
       });
+
+      // Log instructions when page loads
+      console.log('%c📋 WEBHOOK DATA LOGGER ACTIVE', 'background: #2196F3; color: white; padding: 10px; font-weight: bold; font-size: 16px;');
+      console.log('%cThe following data will be logged:', 'color: #4CAF50; font-weight: bold;');
+      console.log('1. Analysis webhook data (Step 6)');
+      console.log('2. Lead submission webhook data (Step 7)');
+      console.log('%cTip: Type debugFormData() in console anytime to see current form data', 'color: #FF9800; font-weight: bold;');
 
       // Initialize on DOM load
       document.addEventListener("DOMContentLoaded", function () {
