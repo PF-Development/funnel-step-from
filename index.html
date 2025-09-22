@@ -1162,22 +1162,6 @@
         margin-right: 6px;
         font-size: 14px;
       }
-      /* Highlight yearly revenue row */
-      .calculation-table tr.highlight-row td {
-        background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(76, 175, 80, 0.08) 100%);
-        border-top: 2px solid var(--brand);
-        border-bottom: 2px solid var(--brand);
-        position: relative;
-      }
-      .calculation-table tr.highlight-row td:first-child {
-        border-left: 3px solid var(--brand);
-      }
-      .calculation-table tr.highlight-row td:last-child {
-        color: var(--brand);
-        font-size: 24px;
-        font-weight: 900;
-        position: relative;
-      }
       /* Warning row styling */
       .calculation-table tr.warning-row td {
         background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%);
@@ -1197,15 +1181,6 @@
       .calculation-table tr:last-child td:last-child {
         border-radius: 0 0 16px 0;
       }
-      /* Add pulse animation to highlight row */
-      @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
-        70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
-      }
-      .calculation-table tr.highlight-row {
-        animation: pulse 2s infinite;
-      }
       /* Mobile responsive */
       @media (max-width: 640px) {
         .calculation-table {
@@ -1222,9 +1197,6 @@
         .calculation-table td:last-child {
           padding-right: 14px;
           font-size: 14px;
-        }
-        .calculation-table tr.highlight-row td:last-child {
-          font-size: 18px;
         }
       }
 
@@ -1910,10 +1882,6 @@
                   <td>AOV Increase Potential</td>
                   <td id="aovIncrease" class="increase-value"></td>
                 </tr>
-                <tr class="highlight-row">
-                  <td><strong>Additional Yearly Revenue</strong></td>
-                  <td id="revenuePotential"></td>
-                </tr>
                 <tr class="warning-row">
                   <td>Monthly Cost of Inaction</td>
                   <td id="costInaction"></td>
@@ -2346,8 +2314,7 @@
         document.getElementById("conversionRateIncrease").textContent = "+" + Math.round(cvrIncreasePercent) + "%";
         document.getElementById("aovIncrease").textContent = "+" + Math.round(aovIncreasePercent) + "%";
         
-        // Show financial impact - yearly revenue and monthly cost of inaction
-        document.getElementById("revenuePotential").textContent = "$" + Math.round(additionalYearlyRevenue).toLocaleString("en-US") + "/year";
+        // Show monthly cost of inaction only (yearly revenue row has been removed)
         document.getElementById("costInaction").textContent = "$" + Math.round(additionalMonthlyRevenue).toLocaleString("en-US");
         
         // Update main metric label based on selected challenge
@@ -2479,7 +2446,7 @@
             conversionRateIncrease: document.getElementById('conversionRateIncrease').textContent,
             currentAov: document.getElementById('currentAov').textContent,
             aovIncrease: document.getElementById('aovIncrease').textContent,
-            revenuePotential: document.getElementById('revenuePotential').textContent,
+            // Removed revenuePotential
             costInaction: document.getElementById('costInaction').textContent,
             timestamp: new Date().toISOString()
           };
