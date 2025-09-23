@@ -980,12 +980,20 @@
       }
 
       .results-card {
-        background: rgba(171, 255, 0, 0.05);
-        border: 1px solid rgb(0, 0, 0);
+        background: rgba(64, 31, 134, 0.05);
+        border: 2px solid rgba(64, 31, 134, 0.2);
         border-radius: 16px;
         padding: 24px;
         margin-bottom: 24px;
         color: #000;
+        box-shadow: 0 4px 20px rgba(64, 31, 134, 0.1);
+        transition: all 0.3s ease;
+      }
+      
+      .results-card:hover {
+        border-color: var(--brand);
+        box-shadow: 0 6px 25px rgba(64, 31, 134, 0.15);
+        transform: translateY(-2px);
       }
       .metric-grid {
         display: grid;
@@ -1008,22 +1016,47 @@
         margin-top: 8px;
       }
       .issue-item {
-        background: rgba(0, 0, 0, 0.03);
-        border-left: 3px solid var(--brand);
-        padding: 16px;
-        margin-bottom: 12px;
-        border-radius: 8px;
+        background: rgba(64, 31, 134, 0.05);
+        border-left: 4px solid var(--brand);
+        border: 1px solid rgba(64, 31, 134, 0.1);
+        padding: 18px;
+        margin-bottom: 14px;
+        border-radius: 12px;
         color: rgba(0, 0, 0, 0.8);
         user-select: none;
+        transition: all 0.3s ease;
+        font-weight: 500;
       }
+      
+      .issue-item:hover {
+        background: rgba(64, 31, 134, 0.08);
+        border-color: rgba(64, 31, 134, 0.2);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(64, 31, 134, 0.1);
+      }
+      
       .priority-high {
         border-left-color: #ef4444;
+        background: rgba(239, 68, 68, 0.05);
       }
+      .priority-high:hover {
+        background: rgba(239, 68, 68, 0.08);
+      }
+      
       .priority-medium {
         border-left-color: #f59e0b;
+        background: rgba(245, 158, 11, 0.05);
       }
+      .priority-medium:hover {
+        background: rgba(245, 158, 11, 0.08);
+      }
+      
       .priority-low {
         border-left-color: #10b981;
+        background: rgba(16, 185, 129, 0.05);
+      }
+      .priority-low:hover {
+        background: rgba(16, 185, 129, 0.08);
       }
       .competitor-item {
         display: flex;
@@ -1044,7 +1077,7 @@
         background: linear-gradient(
           90deg,
           transparent 0%,
-          rgba(76, 175, 80, 0.4) 50%,
+          rgba(64, 31, 134, 0.4) 50%,
           transparent 100%
         );
         transform: translateX(-100%);
@@ -1074,20 +1107,35 @@
         margin-top: 20px;
       }
       .score-item {
-        background: rgba(0, 0, 0, 0.05);
-        border-radius: 12px;
-        padding: 16px;
+        background: rgba(64, 31, 134, 0.05);
+        border: 2px solid rgba(64, 31, 134, 0.1);
+        border-radius: 16px;
+        padding: 20px;
         text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 10px rgba(64, 31, 134, 0.05);
       }
+      
+      .score-item:hover {
+        background: rgba(64, 31, 134, 0.08);
+        border-color: rgba(64, 31, 134, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px rgba(64, 31, 134, 0.12);
+      }
+      
       .score-value {
-        font-size: 24px;
-        font-weight: 700;
+        font-size: 28px;
+        font-weight: 800;
         color: var(--brand);
+        text-shadow: 0 1px 3px rgba(64, 31, 134, 0.2);
       }
       .score-label {
-        font-size: 12px;
-        color: rgba(0, 0, 0, 0.6);
-        margin-top: 4px;
+        font-size: 13px;
+        color: rgba(0, 0, 0, 0.7);
+        margin-top: 6px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
       }
       .results-image {
         width: 100%;
@@ -1121,27 +1169,40 @@
       .calculation-table {
         width: 100%;
         border-collapse: separate;
-        border-spacing: 0 1px;
-        margin: 20px 0;
+        border-spacing: 0;
+        margin: 24px 0;
         font-size: 15px;
-        background: transparent;
+        background: #fff;
         border-radius: 16px;
         overflow: hidden;
+        box-shadow: 0 8px 32px rgba(64, 31, 134, 0.12);
+        border: 2px solid rgba(64, 31, 134, 0.1);
       }
       .calculation-table th,
       .calculation-table td {
-        padding: 18px 24px;
+        padding: 20px 28px;
         text-align: left;
         position: relative;
+        border: none;
       }
       .calculation-table th {
-        background: linear-gradient(135deg, var(--brand) 0%, #2e7d32 100%);
+        background: linear-gradient(135deg, var(--brand) 0%, #5b21b6 100%);
         font-weight: 700;
         color: #fff;
-        font-size: 13px;
+        font-size: 14px;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        border: none;
+        letter-spacing: 1.2px;
+        position: relative;
+      }
+      
+      .calculation-table th::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 100%);
       }
       .calculation-table th:first-child {
         border-radius: 16px 0 0 0;
@@ -1154,43 +1215,60 @@
         color: #2d3748;
         font-weight: 500;
         background: #fff;
-        border: 1px solid rgba(76, 175, 80, 0.1);
-        border-top: none;
-        border-bottom: none;
-      }
-      .calculation-table tr td:first-child {
-        border-left: 3px solid transparent;
+        border-bottom: 1px solid rgba(64, 31, 134, 0.08);
         transition: all 0.3s ease;
       }
-      .calculation-table tr:hover td:first-child {
-        border-left: 3px solid var(--brand);
-        padding-left: 28px;
+      
+      .calculation-table tr:last-child td {
+        border-bottom: none;
       }
-      .calculation-table tr:nth-child(2) td {
-        background: linear-gradient(90deg, rgba(76, 175, 80, 0.03) 0%, rgba(255, 255, 255, 1) 100%);
+      .calculation-table tbody tr {
+        transition: all 0.3s ease;
       }
-      .calculation-table tr:nth-child(3) td,
-      .calculation-table tr:nth-child(5) td {
-        background: rgba(76, 175, 80, 0.02);
+      
+      .calculation-table tbody tr:hover {
+        background: rgba(64, 31, 134, 0.03);
+      }
+      
+      .calculation-table tbody tr:hover td {
+        background: rgba(64, 31, 134, 0.03);
+      }
+      .calculation-table tbody tr:nth-child(even) {
+        background: rgba(64, 31, 134, 0.02);
+      }
+      
+      .calculation-table tbody tr:nth-child(even):hover {
+        background: rgba(64, 31, 134, 0.05);
       }
       .calculation-table td:first-child {
         color: #1a202c;
         font-weight: 600;
-        padding-left: 24px;
-        font-size: 14px;
+        font-size: 15px;
+        position: relative;
       }
+      
+      .calculation-table td:first-child::before {
+        content: '▶';
+        color: var(--brand);
+        margin-right: 8px;
+        font-size: 12px;
+        opacity: 0.6;
+      }
+      
       .calculation-table td:last-child {
         text-align: right;
         font-weight: 700;
-        font-size: 17px;
-        padding-right: 28px;
-        color: #2d3748;
+        font-size: 18px;
+        color: var(--brand);
         font-family: 'Inter', monospace;
+        position: relative;
       }
       .increase-value {
-        color: var(--brand) !important;
+        color: #10b981 !important;
         font-weight: 800 !important;
+        font-size: 19px !important;
         position: relative;
+        text-shadow: 0 1px 3px rgba(16, 185, 129, 0.3);
       }
       .increase-value::before {
         content: "↗";
@@ -1198,16 +1276,32 @@
         font-size: 14px;
       }
       /* Warning row styling */
+      .calculation-table tr.warning-row {
+        position: relative;
+      }
+      
       .calculation-table tr.warning-row td {
-        background: linear-gradient(90deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.04) 100%);
-        border-bottom: 1px solid rgba(239, 68, 68, 0.2);
+        background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+        border-bottom: 2px solid rgba(239, 68, 68, 0.3);
+        font-weight: 600;
       }
+      
       .calculation-table tr.warning-row td:first-child {
-        border-left: 3px solid #ef4444;
+        border-left: 4px solid #ef4444;
+        color: #dc2626;
       }
+      
+      .calculation-table tr.warning-row td:first-child::before {
+        content: '⚠️';
+        color: #ef4444;
+        margin-right: 8px;
+      }
+      
       .calculation-table tr.warning-row td:last-child {
         color: #dc2626;
-        font-size: 18px;
+        font-size: 20px;
+        font-weight: 900;
+        text-shadow: 0 1px 3px rgba(220, 38, 38, 0.3);
         font-weight: 800;
       }
       .calculation-table tr:last-child td:first-child {
@@ -1861,7 +1955,7 @@
 
         <div class="step" id="step7">
           <h2>AI Conversion Report is completed!</h2>
-          <p class="description" id="improvementsText">
+          <p class="main-description" id="improvementsText">
             AI has detected <strong>21 improvements</strong> on
             <span id="userDomain">yourstore.com</span>
           </p>
@@ -1873,11 +1967,11 @@
           />
         
           <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
+            <h3 style="color: #1a202c; margin-bottom: 20px; font-weight: 700;">
               Estimated Potential Revenue Uplift
             </h3>
             <p
-              class="description"
+              class="main-description"
               id="upliftCalculation"
               style="text-align: left"
             >
@@ -1914,10 +2008,10 @@
           </div>
 
           <div class="results-card">
-            <h3 style="color: black; margin-bottom: 20px">
+            <h3 style="color: #1a202c; margin-bottom: 20px; font-weight: 700;">
               Critical Issues Found <br />
               These issues are partly the reason why your
-              <span id="mainMetric">Conversion Rate</span> is low.
+              <span id="mainMetric" style="color: var(--brand); font-weight: 800;">Conversion Rate</span> is low.
             </h3>
 
             <div class="issue-item priority-high" id="highIssues">
@@ -1933,7 +2027,7 @@
             <div
               class="issue-item priority-low"
               id="pxlPipeline"
-              style="font-style: italic; color: #10b981; border-left-color: #10b981;"
+              style="font-style: italic; color: var(--brand); border-left-color: var(--brand);"
             >
               A full split-test pipeline with 21 using the PXL framework has been
               created for you and is available in your audit
