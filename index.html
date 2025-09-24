@@ -2357,108 +2357,10 @@
       }
 
       // ================= WEBHOOK FUNCTIONS =================
-      async function triggerAnalysisWebhook() {
-        try {
-          const highIssues = 3 + Math.floor(Math.random() * 5);
-          const mediumIssues = 5 + Math.floor(Math.random() * 7);
-          const lowIssues = 4 + Math.floor(Math.random() * 6);
-          const totalImprovements = highIssues + mediumIssues + lowIssues;
-          
-          const finalResult = {
-            success: true,
-            report: {
-              improvements: totalImprovements,
-              issues: {
-                high: highIssues,
-                medium: mediumIssues,
-                low: lowIssues
-              },
-              scores: {
-                overall: 30 + Math.floor(Math.random() * 40),
-                ux: 30 + Math.floor(Math.random() * 40),
-                aov: 30 + Math.floor(Math.random() * 40),
-                copy: 30 + Math.floor(Math.random() * 40)
-              }
-            }
-          };
-
-          const analysisData = {
-            type: "analysis",
-            challenge: formData.challenge,
-            monthlyRevenue: formData.monthlyRevenue,
-            monthlyAdSpend: formData.monthlyAdSpend,
-            conversionRate: formData.conversionRate,
-            aov: formData.aov,
-            subscriptionRate: formData.subscriptionRate,
-            websiteUrl: formData.fullWebsiteUrl,
-            pageType: formData.pageType,
-            industry: formData.industry,
-            // Include UTM parameters and fbclid
-            utm_source: formData.utm_source,
-            utm_medium: formData.utm_medium,
-            utm_campaign: formData.utm_campaign,
-            utm_term: formData.utm_term,
-            utm_content: formData.utm_content,
-            fbclid: formData.fbclid,
-            landing_page: formData.landing_page,
-            timestamp: new Date().toISOString(),
-            results: finalResult.report
-          };
-
-          console.group('%c📊 ANALYSIS WEBHOOK DATA', 'background: #4CAF50; color: white; padding: 5px; font-weight: bold;');
-          console.log('%cTimestamp:', 'color: #2196F3; font-weight: bold;', new Date().toISOString());
-          console.log('%cWebhook URL:', 'color: #2196F3; font-weight: bold;', WEBHOOK_URL);
-          console.log('%cData being sent:', 'color: #FF9800; font-weight: bold;');
-          console.log(JSON.stringify(analysisData, null, 2));
-          console.groupEnd();
-
-          try {
-            const response = await fetch(WEBHOOK_URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(analysisData)
-            });
-            
-            console.log('%c✅ Analysis webhook response status:', 'color: #4CAF50; font-weight: bold;', response.status);
-          } catch (webhookError) {
-            console.error('%c❌ Analysis webhook error:', 'color: #F44336; font-weight: bold;', webhookError);
-          }
-          
-          return finalResult;
-        } catch (error) {
-          console.error('%c❌ Analysis error:', 'color: #F44336; font-weight: bold;', error);
-          
-          const highIssues = 3 + Math.floor(Math.random() * 5);
-          const mediumIssues = 5 + Math.floor(Math.random() * 7);
-          const lowIssues = 4 + Math.floor(Math.random() * 6);
-          const totalImprovements = highIssues + mediumIssues + lowIssues;
-          
-          return {
-            success: true,
-            report: {
-              improvements: totalImprovements,
-              issues: {
-                high: highIssues,
-                medium: mediumIssues,
-                low: lowIssues
-              },
-              scores: {
-                overall: 30 + Math.floor(Math.random() * 40),
-                ux: 30 + Math.floor(Math.random() * 40),
-                aov: 30 + Math.floor(Math.random() * 40),
-                copy: 30 + Math.floor(Math.random() * 40)
-              }
-            }
-          };
-        }
-      }
-
       async function saveLeadWebhook() {
         try {
           const resultsData = {
-            type: "lead_submission",
+            type: "form_submission",
             name: formData.name,
             email: formData.email,
             phone: formData.phone,
@@ -2479,6 +2381,8 @@
             utm_content: formData.utm_content,
             fbclid: formData.fbclid,
             landing_page: formData.landing_page,
+            // Analysis results
+            analysisResults: analysisResults ? analysisResults.report : null,
             currentConversionRate: document.getElementById('currentConversionRate').textContent,
             conversionRateIncrease: document.getElementById('conversionRateIncrease').textContent,
             currentAov: document.getElementById('currentAov').textContent,
@@ -2487,7 +2391,7 @@
             timestamp: new Date().toISOString()
           };
 
-          console.group('%c💾 LEAD SUBMISSION WEBHOOK DATA', 'background: #FF5722; color: white; padding: 5px; font-weight: bold;');
+          console.group('%c💾 FORM SUBMISSION WEBHOOK DATA', 'background: #FF5722; color: white; padding: 5px; font-weight: bold;');
           console.log('%cTimestamp:', 'color: #2196F3; font-weight: bold;', new Date().toISOString());
           console.log('%cWebhook URL:', 'color: #2196F3; font-weight: bold;', WEBHOOK_URL);
           console.log('%cComplete JSON Data:', 'color: #4CAF50; font-weight: bold;');
@@ -2503,7 +2407,7 @@
           });
 
           const responseText = await response.text();
-          console.log('%c📨 Lead webhook response:', 'color: #4CAF50; font-weight: bold;', responseText);
+          console.log('%c📨 Webhook response:', 'color: #4CAF50; font-weight: bold;', responseText);
 
           let result;
           try {
@@ -2546,6 +2450,11 @@
         if (Object.values(trackingData).some(val => val)) {
           console.log('%cTracking Parameters (UTM & fbclid):', 'color: #9C27B0; font-weight: bold;');
           console.table(trackingData);
+        }
+        
+        if (analysisResults) {
+          console.log('%cAnalysis Results:', 'color: #FF9800; font-weight: bold;');
+          console.log(JSON.stringify(analysisResults, null, 2));
         }
         
         console.groupEnd();
@@ -2624,11 +2533,31 @@
           }
         };
 
-        triggerAnalysisWebhook().then(result => {
-          analysisResults = result;
-          analysisComplete = true;
-          proceedToResults();
-        });
+        // Generate analysis results locally without sending webhook
+        const highIssues = 3 + Math.floor(Math.random() * 5);
+        const mediumIssues = 5 + Math.floor(Math.random() * 7);
+        const lowIssues = 4 + Math.floor(Math.random() * 6);
+        
+        analysisResults = {
+          success: true,
+          report: {
+            improvements: highIssues + mediumIssues + lowIssues,
+            issues: {
+              high: highIssues,
+              medium: mediumIssues,
+              low: lowIssues
+            },
+            scores: {
+              overall: 30 + Math.floor(Math.random() * 40),
+              ux: 30 + Math.floor(Math.random() * 40),
+              aov: 30 + Math.floor(Math.random() * 40),
+              copy: 30 + Math.floor(Math.random() * 40)
+            }
+          }
+        };
+        
+        // Mark analysis as complete
+        analysisComplete = true;
 
         const minMs = 10000, maxMs = 15000;
         const totalMs = Math.floor(minMs + Math.random() * (maxMs - minMs));
@@ -3061,12 +2990,14 @@
       });
 
       // Log instructions when page loads
-      console.log('%c📋 WEBHOOK DATA LOGGER ACTIVE', 'background: #2196F3; color: white; padding: 10px; font-weight: bold; font-size: 16px;');
-      console.log('%cThe following data will be logged:', 'color: #4CAF50; font-weight: bold;');
-      console.log('1. Analysis webhook data (Step 6)');
-      console.log('2. Lead submission webhook data (Step 7 - when "GET YOUR FULL CRO AUDIT" is clicked)');
-      console.log('3. UTM parameters from URL (if present)');
-      console.log('4. Facebook Click ID (fbclid) from URL (if present)');
+      console.log('%c📋 FORM DATA LOGGER ACTIVE', 'background: #2196F3; color: white; padding: 10px; font-weight: bold; font-size: 16px;');
+      console.log('%c✅ SINGLE WEBHOOK SUBMISSION', 'background: #4CAF50; color: white; padding: 5px; font-weight: bold;');
+      console.log('Data will be sent ONLY when form is submitted (before Calendly)');
+      console.log('The following data will be captured:');
+      console.log('1. All form fields');
+      console.log('2. UTM parameters from URL (if present)');
+      console.log('3. Facebook Click ID (fbclid) from URL (if present)');
+      console.log('4. Analysis results');
       console.log('%cTip: Type debugFormData() in console anytime to see current form data', 'color: #FF9800; font-weight: bold;');
 
       // Initialize on DOM load
@@ -3087,4 +3018,3 @@
     </script>
   </body>
 </html>
-
