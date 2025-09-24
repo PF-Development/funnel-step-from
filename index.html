@@ -2065,6 +2065,7 @@
         utm_campaign: "",
         utm_term: "",
         utm_content: "",
+        fbclid: "",  // Facebook Click ID
         landing_page: ""  // Store the full landing page URL
       };
 
@@ -2084,19 +2085,21 @@
           utm_campaign: urlParams.get('utm_campaign') || '',
           utm_term: urlParams.get('utm_term') || '',
           utm_content: urlParams.get('utm_content') || '',
+          fbclid: urlParams.get('fbclid') || '',  // Facebook Click ID
           landing_page: window.location.href  // Capture the full landing page URL
         };
         
-        // Log UTM parameters if they exist
+        // Log UTM parameters and fbclid if they exist
         const hasUTM = Object.keys(utmData).some(key => key !== 'landing_page' && utmData[key]);
         if (hasUTM) {
-          console.group('%c🎯 UTM PARAMETERS CAPTURED', 'background: #9C27B0; color: white; padding: 5px; font-weight: bold;');
+          console.group('%c🎯 UTM PARAMETERS & TRACKING IDs CAPTURED', 'background: #9C27B0; color: white; padding: 5px; font-weight: bold;');
           console.log('%cLanding Page:', 'color: #673AB7; font-weight: bold;', utmData.landing_page);
           console.log('%cUTM Source:', 'color: #2196F3; font-weight: bold;', utmData.utm_source || '(not set)');
           console.log('%cUTM Medium:', 'color: #2196F3; font-weight: bold;', utmData.utm_medium || '(not set)');
           console.log('%cUTM Campaign:', 'color: #2196F3; font-weight: bold;', utmData.utm_campaign || '(not set)');
           console.log('%cUTM Term:', 'color: #2196F3; font-weight: bold;', utmData.utm_term || '(not set)');
           console.log('%cUTM Content:', 'color: #2196F3; font-weight: bold;', utmData.utm_content || '(not set)');
+          console.log('%cFacebook Click ID:', 'color: #1877F2; font-weight: bold;', utmData.fbclid || '(not set)');
           console.groupEnd();
         }
         
@@ -2390,12 +2393,13 @@
             websiteUrl: formData.fullWebsiteUrl,
             pageType: formData.pageType,
             industry: formData.industry,
-            // Include UTM parameters
+            // Include UTM parameters and fbclid
             utm_source: formData.utm_source,
             utm_medium: formData.utm_medium,
             utm_campaign: formData.utm_campaign,
             utm_term: formData.utm_term,
             utm_content: formData.utm_content,
+            fbclid: formData.fbclid,
             landing_page: formData.landing_page,
             timestamp: new Date().toISOString(),
             results: finalResult.report
@@ -2467,12 +2471,13 @@
             websiteUrl: formData.fullWebsiteUrl,
             pageType: formData.pageType,
             industry: formData.industry,
-            // Include UTM parameters
+            // Include UTM parameters and fbclid
             utm_source: formData.utm_source,
             utm_medium: formData.utm_medium,
             utm_campaign: formData.utm_campaign,
             utm_term: formData.utm_term,
             utm_content: formData.utm_content,
+            fbclid: formData.fbclid,
             landing_page: formData.landing_page,
             currentConversionRate: document.getElementById('currentConversionRate').textContent,
             conversionRateIncrease: document.getElementById('conversionRateIncrease').textContent,
@@ -2519,7 +2524,7 @@
         }
       }
 
-      // Debug function - Enhanced to show UTM parameters
+      // Debug function - Enhanced to show UTM parameters and fbclid
       window.debugFormData = function() {
         console.group('%c🔍 CURRENT FORM DATA', 'background: #673AB7; color: white; padding: 5px; font-weight: bold;');
         console.log('%cRaw FormData Object:', 'color: #4CAF50; font-weight: bold;');
@@ -2527,19 +2532,20 @@
         console.log('%cFormatted View:', 'color: #2196F3; font-weight: bold;');
         console.table(formData);
         
-        // Highlight UTM parameters if present
-        const utmData = {
+        // Highlight tracking parameters if present
+        const trackingData = {
           utm_source: formData.utm_source,
           utm_medium: formData.utm_medium,
           utm_campaign: formData.utm_campaign,
           utm_term: formData.utm_term,
           utm_content: formData.utm_content,
+          fbclid: formData.fbclid,
           landing_page: formData.landing_page
         };
         
-        if (Object.values(utmData).some(val => val)) {
-          console.log('%cUTM Parameters:', 'color: #9C27B0; font-weight: bold;');
-          console.table(utmData);
+        if (Object.values(trackingData).some(val => val)) {
+          console.log('%cTracking Parameters (UTM & fbclid):', 'color: #9C27B0; font-weight: bold;');
+          console.table(trackingData);
         }
         
         console.groupEnd();
@@ -3060,6 +3066,7 @@
       console.log('1. Analysis webhook data (Step 6)');
       console.log('2. Lead submission webhook data (Step 7 - when "GET YOUR FULL CRO AUDIT" is clicked)');
       console.log('3. UTM parameters from URL (if present)');
+      console.log('4. Facebook Click ID (fbclid) from URL (if present)');
       console.log('%cTip: Type debugFormData() in console anytime to see current form data', 'color: #FF9800; font-weight: bold;');
 
       // Initialize on DOM load
