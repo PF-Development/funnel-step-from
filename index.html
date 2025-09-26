@@ -1578,6 +1578,15 @@
         }
       }
     </style>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DPJF0CSF3B"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DPJF0CSF3B');
+    </script>
   </head>
   <body>
     <div class="transition-overlay" id="transitionOverlay">
@@ -2206,26 +2215,215 @@
           landing_page: window.location.href  // Capture the full landing page URL
         };
 
-        // Log UTM parameters and fbclid if they exist
-        const hasUTM = Object.keys(utmData).some(key => key !== 'landing_page' && utmData[key]);
-        if (hasUTM) {
-          console.group('%c🎯 UTM PARAMETERS & TRACKING IDs CAPTURED', 'background: #9C27B0; color: white; padding: 5px; font-weight: bold;');
-          console.log('%cLanding Page:', 'color: #673AB7; font-weight: bold;', utmData.landing_page);
-          console.log('%cUTM Source:', 'color: #2196F3; font-weight: bold;', utmData.utm_source || '(not set)');
-          console.log('%cUTM Medium:', 'color: #2196F3; font-weight: bold;', utmData.utm_medium || '(not set)');
-          console.log('%cUTM Campaign:', 'color: #2196F3; font-weight: bold;', utmData.utm_campaign || '(not set)');
-          console.log('%cUTM Term:', 'color: #2196F3; font-weight: bold;', utmData.utm_term || '(not set)');
-          console.log('%cUTM Content:', 'color: #2196F3; font-weight: bold;', utmData.utm_content || '(not set)');
-          console.log('%cFacebook Click ID:', 'color: #1877F2; font-weight: bold;', utmData.fbclid || '(not set)');
-          console.groupEnd();
-        }
-
         return utmData;
       }
 
       // Capture UTM parameters when page loads
       const utmParams = getUTMParameters();
       Object.assign(formData, utmParams);
+
+      // ================= GA4 TRACKING FUNCTIONS =================
+      
+      // Simple step completion tracking
+      function trackStepComplete(stepNumber, stepName = '') {
+        if (typeof gtag === 'undefined') return;
+
+        gtag('event', 'step_complete', {
+          step_number: stepNumber,
+          step_name: stepName || `Step ${stepNumber}`,
+          funnel_name: 'conversion_funnel',
+          ...utmParams
+        });
+      }
+
+      // Step bounce tracking - when user exits without completing
+      function trackStepBounce(stepNumber, reason = 'unknown') {
+        if (typeof gtag === 'undefined') return;
+
+        gtag('event', 'step_bounce', {
+          step_number: stepNumber,
+          bounce_reason: reason,
+          funnel_name: 'conversion_funnel',
+          time_on_step: Date.now() - (window.stepStartTime || Date.now()),
+          ...utmParams
+        });
+      }
+
+      // Track step answers when Continue is clicked
+      function trackStepAnswers(stepNumber) {
+        if (typeof gtag === 'undefined') return;
+
+        let answers = {};
+        
+        // Step 1: Landing page (no inputs, just button click)
+        if (stepNumber === 1) {
+          answers.action = 'started_audit';
+        }
+        
+        // Step 2: Challenge Selection
+        else if (stepNumber === 2) {
+          const selectedChallenge = formData.challenge || 'none';
+          answers.challenge_type = selectedChallenge;
+        }
+        
+        // Step 3: Revenue and Ad Spend
+        else if (stepNumber === 3) {
+          const monthlyRevenue = document.getElementById('monthlyRevenue')?.value || '';
+          const monthlyAdSpend = document.getElementById('monthlyAdSpend')?.value || '';
+          
+          // Parse currency values and send actual numbers
+          const revenueValue = parseCurrency(monthlyRevenue);
+          const adSpendValue = parseCurrency(monthlyAdSpend);
+          
+          answers.monthly_revenue_value = revenueValue || 0;
+          answers.monthly_ad_spend_value = adSpendValue || 0;
+          answers.monthly_revenue_status = monthlyRevenue ? 'provided' : 'empty';
+          answers.monthly_ad_spend_status = monthlyAdSpend ? 'provided' : 'empty';
+        }
+        
+        // Step 4: Shopify Metrics
+        else if (stepNumber === 4) {
+          const conversionRate = document.getElementById('conversionRate')?.value || '';
+          const aov = document.getElementById('aov')?.value || '';
+          const subscriptionRate = document.getElementById('subscriptionRate')?.value || '';
+          
+          // Send actual numeric values
+          answers.conversion_rate_value = parseFloat(conversionRate) || 0;
+          answers.aov_value = parseFloat(aov) || 0;
+          answers.subscription_rate_value = parseFloat(subscriptionRate) || 0;
+          answers.conversion_rate_status = conversionRate ? 'provided' : 'empty';
+          answers.aov_status = aov ? 'provided' : 'empty'; 
+          answers.subscription_rate_status = subscriptionRate ? 'provided' : 'empty';
+        }
+        
+        // Step 5: Website URL + Page Type
+        else if (stepNumber === 5) {
+          const websiteUrl = document.getElementById('websiteUrl')?.value || '';
+          const pageType = document.getElementById('pageType')?.value || '';
+          
+          answers.website_url = websiteUrl ? 'provided' : 'empty';
+          answers.page_type = pageType || 'none';
+        }
+        
+        // Step 6: Analysis (no inputs, just waiting)
+        else if (stepNumber === 6) {
+          answers.action = 'analysis_completed';
+        }
+        
+        // Step 7: Lead Form
+        else if (stepNumber === 7) {
+          const userName = document.getElementById('userName')?.value || '';
+          const userEmail = document.getElementById('userEmail')?.value || '';
+          const userPhone = document.getElementById('userPhone')?.value || '';
+          
+          answers.name = userName ? 'provided' : 'empty';
+          answers.email = userEmail ? 'provided' : 'empty';
+          answers.phone = userPhone ? 'provided' : 'empty';
+        }
+
+        // Send the answers event only if we have answers
+        if (Object.keys(answers).length > 0) {
+          gtag('event', `answers_of_step_${stepNumber}`, {
+            step_number: stepNumber,
+            funnel_name: 'conversion_funnel',
+            ...answers,
+            ...utmParams
+          });
+        }
+      }
+
+      // Track form field interactions
+      function trackFormInteraction(fieldName, fieldValue = '', stepNumber = 1) {
+        if (typeof gtag === 'undefined') return;
+
+        gtag('event', 'form_interaction', {
+          field_name: fieldName,
+          field_value: fieldValue ? 'filled' : 'empty',
+          step_number: stepNumber,
+          funnel_name: 'conversion_report_funnel',
+          engagement_score: fieldValue ? 1 : 0,
+          ...utmParams
+        });
+      }
+
+
+
+
+
+      // Initialize page tracking
+      function initializePageTracking() {
+        if (typeof gtag === 'undefined') return;
+
+        // Track initial page view with enhanced data
+        gtag('event', 'page_view', {
+          page_title: document.title,
+          page_location: window.location.href,
+          funnel_name: 'conversion_report_funnel',
+          landing_step: 1,
+          ...utmParams
+        });
+
+        // Set up exit tracking
+        window.stepStartTime = Date.now();
+        
+        // Track page visibility changes (tab switches, etc.)
+        document.addEventListener('visibilitychange', function() {
+          if (document.hidden) {
+            trackStepBounce(currentStep || 1, 'tab_hidden');
+          }
+        });
+
+        // Track beforeunload (user leaving page)
+        window.addEventListener('beforeunload', function() {
+          trackStepBounce(currentStep || 1, 'page_exit');
+        });
+
+        // Enhanced engagement tracking
+        let engagementTimer = setInterval(function() {
+          if (!document.hidden && typeof gtag !== 'undefined') {
+            gtag('event', 'engagement', {
+              step_number: currentStep || 1,
+              engagement_time: 30, // 30 second intervals
+              funnel_name: 'conversion_report_funnel',
+              still_engaged: true,
+              ...utmParams
+            });
+          }
+        }, 30000); // Every 30 seconds
+
+        // Track scroll engagement
+        let hasScrolled = false;
+        window.addEventListener('scroll', function() {
+          if (!hasScrolled) {
+            hasScrolled = true;
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'scroll', {
+                step_number: currentStep || 1,
+                scroll_depth: Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100),
+                funnel_name: 'conversion_report_funnel',
+                first_scroll: true,
+                ...utmParams
+              });
+            }
+          }
+        });
+
+        // Track mouse movement engagement
+        let mouseActivity = 0;
+        document.addEventListener('mousemove', function() {
+          mouseActivity++;
+          if (mouseActivity === 50) { // After 50 mouse movements
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'user_engagement', {
+                engagement_type: 'mouse_active',
+                step_number: currentStep || 1,
+                funnel_name: 'conversion_report_funnel',
+                ...utmParams
+              });
+            }
+          }
+        });
+      }
 
       // ================= COOKIE FUNCTIONS =================
       function setCookie(name, value, days = 30) {
@@ -2349,15 +2547,35 @@
         progressFillEl.style.width = percent + "%";
         progressPercentEl.textContent = percent + "%";
 
+        // Update step start time for bounce tracking
+        window.stepStartTime = Date.now();
+
         if (stepNumber === 7) {
           setTimeout(() => {
             populateStep7(analysisResults);
+            // Track final results step completion
+            trackStepComplete(7, 'Results Generated');
           }, 500);
         }
       }
 
       function nextStep() {
         if (currentStep < totalSteps) {
+          // Track step answers FIRST (before completion)
+          trackStepAnswers(currentStep);
+          
+          // Track step completion with descriptive names
+          const stepNames = {
+            1: 'Website URL Entered',
+            2: 'Challenge Selected', 
+            3: 'Revenue Entered',
+            4: 'Ad Spend Entered',
+            5: 'Company Info Completed',
+            6: 'Analysis Started'
+          };
+          
+          trackStepComplete(currentStep, stepNames[currentStep]);
+          
           currentStep++;
           showStep(currentStep);
         }
@@ -2366,6 +2584,9 @@
       function previousStep() {
         cancelAnalysis();
         if (currentStep > 1) {
+          // Track step bounce (going back)
+          trackStepBounce(currentStep, 'back_button');
+          
           currentStep--;
           showStep(currentStep);
         }
@@ -2377,6 +2598,16 @@
           .forEach((c) => c.classList.remove("selected"));
         el.classList.add("selected");
         formData.challenge = value;
+        
+        // GA4 Tracking: Challenge selection
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'challenge_selected', {
+            challenge_type: value,
+            step_number: 2,
+            funnel_name: 'conversion_funnel',
+            ...utmParams
+          });
+        }
       }
 
       function showFieldError(inputEl, msg) {
@@ -2521,14 +2752,7 @@
             timestamp: new Date().toISOString()
           };
 
-          // Enhanced console logging with styling
-          console.group('%c💾 FORM SUBMISSION WEBHOOK DATA', 'background: #FF5722; color: white; padding: 5px; font-weight: bold;');
-          console.log('%cTimestamp:', 'color: #2196F3; font-weight: bold;', new Date().toISOString());
-          console.log('%cWebhook URL:', 'color: #2196F3; font-weight: bold;', WEBHOOK_URL);
-          console.log('%cComplete JSON Data:', 'color: #401f86; font-weight: bold;');
-          console.log(JSON.stringify(resultsData, null, 2));
 
-          console.groupEnd();
 
           const response = await fetch(WEBHOOK_URL, {
             method: 'POST',
@@ -2539,8 +2763,7 @@
           });
 
           const responseText = await response.text();
-          console.log('%c📨 Webhook response:', 'color: #401f86; font-weight: bold;', responseText);
-
+          
           let result;
           try {
             result = JSON.parse(responseText);
@@ -2554,43 +2777,12 @@
 
           return result.success !== false ? { success: true, ...result } : result;
         } catch (error) {
-          console.error('%c❌ Save lead webhook error:', 'color: #F44336; font-weight: bold;', error);
-          alert(`Error submitting form. Please check browser console for details.`);
+          alert(`Error submitting form. Please try again.`);
           return { success: false, error: error.message };
         }
       }
 
-      // Debug function - Enhanced to show UTM parameters and fbclid
-      window.debugFormData = function() {
-        console.group('%c🔍 CURRENT FORM DATA', 'background: #673AB7; color: white; padding: 5px; font-weight: bold;');
-        console.log('%cRaw FormData Object:', 'color: #401f86; font-weight: bold;');
-        console.log(JSON.stringify(formData, null, 2));
-        console.log('%cFormatted View:', 'color: #2196F3; font-weight: bold;');
-        console.table(formData);
-        
-        // Highlight tracking parameters if present
-        const trackingData = {
-          utm_source: formData.utm_source,
-          utm_medium: formData.utm_medium,
-          utm_campaign: formData.utm_campaign,
-          utm_term: formData.utm_term,
-          utm_content: formData.utm_content,
-          fbclid: formData.fbclid,
-          landing_page: formData.landing_page
-        };
 
-        if (Object.values(trackingData).some(val => val)) {
-          console.log('%cTracking Parameters (UTM & fbclid):', 'color: #9C27B0; font-weight: bold;');
-          console.table(trackingData);
-        }
-
-        if (analysisResults) {
-          console.log('%cAnalysis Results:', 'color: #FF9800; font-weight: bold;');
-          console.log(JSON.stringify(analysisResults, null, 2));
-        }
-
-        console.groupEnd();
-      };
 
       // ================= ANALYSIS FUNCTIONS =================
       function buildAnalysisList() {
@@ -2992,6 +3184,9 @@
           const value = e.target.value;
           const cleanValue = value.replace(/[^0-9.]/g, "");
           
+          // GA4 Tracking: Form interaction
+          trackFormInteraction(id, cleanValue, currentStep || 1);
+          
           // Check if non-numeric characters were entered
           if (value !== cleanValue) {
             // Show error message
@@ -3048,6 +3243,9 @@
         btn.addEventListener("click", async (e) => {
           e.preventDefault();
           const stepId = btn.closest(".step").id;
+          
+          // This will be tracked by the nextStep() function when step completes
+          
           if (!validateStep(stepId)) return;
           
           if (stepId === "step1" || stepId === "step2" || stepId === "step3" || stepId === "step4") {
@@ -3066,6 +3264,9 @@
 
           if (!validateLeadForm()) return;
 
+          // Track step 7 answers FIRST (before submission)
+          trackStepAnswers(7);
+
           const originalText = finalSubmitBtn.textContent;
           finalSubmitBtn.textContent = "Submitting...";
           finalSubmitBtn.disabled = true;
@@ -3073,6 +3274,19 @@
           const result = await saveLeadWebhook();
 
           if (result.success) {
+            // Track final conversion
+            trackStepComplete(7, 'Lead Submitted');
+            
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'conversion', {
+                event_category: 'funnel',
+                event_label: 'lead_generated',
+                value: 1,
+                funnel_name: 'conversion_funnel',
+                ...utmParams
+              });
+            }
+            
             loadCalendlyWidget({
               name: formData.name,
               email: formData.email,
@@ -3121,6 +3335,10 @@
       const websiteUrlInput = document.getElementById("websiteUrl");
       websiteUrlInput.addEventListener("input", (e) => {
         let value = e.target.value.trim();
+        
+        // GA4 Tracking: Website URL input
+        trackFormInteraction('website_url', value, 1);
+        
         if (value && !/^https?:\/\//i.test(value)) {
           if (!e.target.dataset.isProcessing) {
             e.target.dataset.isProcessing = "true";
@@ -3137,19 +3355,21 @@
         }
       });
 
-      // Log instructions when page loads
-      console.log('%c📋 FORM DATA LOGGER ACTIVE', 'background: #2196F3; color: white; padding: 10px; font-weight: bold; font-size: 16px;');
-      console.log('%c✅ SINGLE WEBHOOK SUBMISSION', 'background: #4CAF50; color: white; padding: 5px; font-weight: bold;');
-      console.log('Data will be sent ONLY when form is submitted (before Calendly)');
-      console.log('The following data will be captured:');
-      console.log('1. All form fields');
-      console.log('2. UTM parameters from URL (if present)');
-      console.log('3. Facebook Click ID (fbclid) from URL (if present)');
-      console.log('4. Analysis results');
-      console.log('%cTip: Type debugFormData() in console anytime to see current form data', 'color: #FF9800; font-weight: bold;');
+
 
       // Initialize on DOM load
       document.addEventListener("DOMContentLoaded", function () {
+        // Initialize GA4 tracking
+        initializePageTracking();
+        
+        // Track funnel start
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'funnel_start', {
+            funnel_name: 'conversion_funnel',
+            ...utmParams
+          });
+        }
+
         const industrySelect = document.getElementById("industry");
         if (industrySelect) {
           new Choices(industrySelect, {
